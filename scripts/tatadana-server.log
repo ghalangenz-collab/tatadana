@@ -1,0 +1,2147 @@
+
+> tatadana@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 113.4s
+ ○ Compiling /register ...
+ ✓ Compiled /register in 85.5s (537 modules)
+ ✓ Compiled in 3.4s (276 modules)
+ GET /register 200 in 90567ms
+ ✓ Compiled in 361ms (262 modules)
+ ✓ Compiled in 6.3s (523 modules)
+ ✓ Compiled in 3.9s (537 modules)
+ ✓ Compiled in 1285ms (276 modules)
+ ✓ Compiled in 1482ms (523 modules)
+ ✓ Compiled in 1048ms (523 modules)
+ ✓ Compiled in 1635ms (276 modules)
+ ✓ Compiled in 3.1s (537 modules)
+ ✓ Compiled in 1053ms (276 modules)
+ ✓ Compiled in 1302ms (523 modules)
+ ✓ Compiled in 1277ms (276 modules)
+ ✓ Compiled in 1430ms (276 modules)
+ ✓ Compiled in 1380ms (523 modules)
+ ✓ Compiled in 1332ms (276 modules)
+ ✓ Compiled in 1423ms (276 modules)
+ ✓ Compiled in 1103ms (523 modules)
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 5.4s (577 modules)
+ GET /admin 200 in 6433ms
+ GET /register 200 in 265ms
+ ○ Compiling /verify ...
+ ✓ Compiled /verify in 3.5s (589 modules)
+ GET /admin 200 in 675ms
+ GET /admin 200 in 144ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 3.4s (611 modules)
+ ✓ Compiled in 1942ms (310 modules)
+ HEAD /admin 200 in 2129ms
+ GET /admin 200 in 166ms
+ ✓ Compiled in 3s (597 modules)
+ ✓ Compiled in 4s (611 modules)
+ ✓ Compiled in 3.5s (611 modules)
+ GET /admin?autologin=true 200 in 981ms
+ GET /verify 200 in 1673ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 30.2s (710 modules)
+ ✓ Compiled in 3.1s (359 modules)
+ GET /register 200 in 1925ms
+ GET /verify 200 in 288ms
+ GET /admin?autologin=true 200 in 12979ms
+ ○ Compiling /api/telegram/poll ...
+ ✓ Compiled /dashboard/wallets in 22.5s (389 modules)
+ ✓ Compiled in 8.2s (367 modules)
+ POST /api/telegram/poll 200 in 42111ms
+ GET /api/telegram/poll 200 in 44859ms
+ GET /api/telegram/poll 200 in 24549ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.6s (718 modules)
+ ○ Compiling /api/telegram/poll ...
+ ✓ Compiled /api/telegram/poll in 704ms (399 modules)
+ POST /api/telegram/poll 200 in 717ms
+ ○ Compiling /api/telegram/simulate ...
+ ✓ Compiled /api/telegram/simulate in 626ms (401 modules)
+ GET /api/telegram/simulate 200 in 918ms
+ GET /api/telegram/poll 200 in 4850ms
+ GET /api/telegram/poll 200 in 684ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 1003ms (407 modules)
+ POST /api/telegram/poll 200 in 1101ms
+ GET /admin?autologin=true 200 in 760ms
+ GET /verify 200 in 275ms
+ GET /api/telegram/poll 200 in 1489ms
+ GET /api/telegram/poll 200 in 615ms
+ POST /api/telegram/poll 200 in 668ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 3236ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 240ms
+ GET /api/telegram/simulate 200 in 40ms
+ POST /api/telegram/poll 200 in 3246ms
+ GET /api/telegram/simulate 200 in 33ms
+ ○ Compiling /dashboard/transactions ...
+ ✓ Compiled /dashboard/transactions in 5.1s (779 modules)
+ ○ Compiling /dashboard/simulator ...
+ ✓ Compiled /dashboard/simulator in 4s (789 modules)
+ GET /api/telegram/poll 200 in 1862ms
+ POST /api/telegram/poll 200 in 269ms
+ GET /api/telegram/simulate 200 in 51ms
+ GET /api/telegram/poll 200 in 1493ms
+ POST /api/telegram/poll 200 in 3239ms
+ GET /api/telegram/simulate 200 in 41ms
+ POST /api/telegram/poll 200 in 233ms
+ GET /api/telegram/simulate 200 in 37ms
+ POST /api/telegram/poll 200 in 3238ms
+ GET /api/telegram/simulate 200 in 30ms
+ POST /api/telegram/poll 200 in 235ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 3756ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 235ms
+ GET /api/telegram/simulate 200 in 39ms
+ POST /api/telegram/poll 200 in 3235ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 2634ms
+ GET /api/telegram/simulate 200 in 44ms
+ POST /api/telegram/poll 200 in 249ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 3252ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 249ms
+ GET /api/telegram/simulate 200 in 40ms
+ POST /api/telegram/poll 200 in 1494ms
+ GET /api/telegram/simulate 200 in 89ms
+ POST /api/telegram/poll 200 in 252ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 3234ms
+ GET /api/telegram/simulate 200 in 42ms
+ POST /api/telegram/poll 200 in 268ms
+ GET /api/telegram/simulate 200 in 37ms
+ POST /api/telegram/poll 200 in 3234ms
+ GET /api/telegram/simulate 200 in 43ms
+ POST /api/telegram/poll 200 in 243ms
+ GET /api/telegram/simulate 200 in 37ms
+ POST /api/telegram/poll 200 in 3250ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 273ms
+ GET /api/telegram/simulate 200 in 40ms
+ POST /api/telegram/poll 200 in 3254ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 237ms
+ GET /api/telegram/simulate 200 in 36ms
+ POST /api/telegram/poll 200 in 3256ms
+ GET /api/telegram/simulate 200 in 94ms
+ POST /api/telegram/poll 200 in 261ms
+ GET /api/telegram/simulate 200 in 42ms
+ POST /api/telegram/poll 200 in 3248ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 234ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3237ms
+ GET /api/telegram/simulate 200 in 43ms
+ POST /api/telegram/poll 200 in 234ms
+ GET /api/telegram/simulate 200 in 38ms
+ POST /api/telegram/poll 200 in 3236ms
+ GET /api/telegram/simulate 200 in 35ms
+ POST /api/telegram/poll 200 in 228ms
+ GET /api/telegram/simulate 200 in 43ms
+ POST /api/telegram/poll 200 in 3259ms
+ GET /api/telegram/simulate 200 in 263ms
+ POST /api/telegram/poll 200 in 322ms
+ GET /api/telegram/simulate 200 in 777ms
+ POST /api/telegram/poll 200 in 3247ms
+ GET /api/telegram/simulate 200 in 34ms
+ POST /api/telegram/poll 200 in 234ms
+ GET /api/telegram/simulate 200 in 30ms
+ POST /api/telegram/poll 200 in 3233ms
+ GET /api/telegram/simulate 200 in 47ms
+ POST /api/telegram/poll 200 in 228ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 1945ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 265ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 3320ms
+ GET /api/telegram/simulate 200 in 35ms
+ POST /api/telegram/poll 200 in 307ms
+ GET /api/telegram/simulate 200 in 46ms
+ POST /api/telegram/poll 200 in 3333ms
+ GET /api/telegram/simulate 200 in 32ms
+ POST /api/telegram/poll 200 in 274ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 3300ms
+ GET /api/telegram/simulate 200 in 41ms
+ POST /api/telegram/poll 200 in 270ms
+ GET /api/telegram/simulate 200 in 35ms
+ POST /api/telegram/poll 200 in 3242ms
+ GET /api/telegram/simulate 200 in 73ms
+ POST /api/telegram/poll 200 in 230ms
+ GET /api/telegram/simulate 200 in 28ms
+ POST /api/telegram/poll 200 in 3271ms
+ GET /api/telegram/simulate 200 in 37ms
+ POST /api/telegram/poll 200 in 240ms
+ GET /api/telegram/simulate 200 in 31ms
+ POST /api/telegram/poll 200 in 1276ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 3288ms
+ GET /api/telegram/simulate 200 in 46ms
+ POST /api/telegram/poll 200 in 266ms
+ GET /api/telegram/simulate 200 in 42ms
+ POST /api/telegram/poll 200 in 1547ms
+ GET /api/telegram/simulate 200 in 33ms
+ POST /api/telegram/poll 200 in 262ms
+ GET /api/telegram/simulate 200 in 46ms
+ ✓ Compiled in 5.8s (762 modules)
+ ✓ Compiled in 1305ms (356 modules)
+ ○ Compiling /api/telegram/poll ...
+ ✓ Compiled /api/telegram/poll in 1449ms (394 modules)
+ POST /api/telegram/poll 200 in 7096ms
+ ○ Compiling /api/telegram/simulate ...
+ ✓ Compiled /api/telegram/simulate in 1777ms (396 modules)
+ GET /api/telegram/simulate 200 in 2642ms
+ ✓ Compiled in 1781ms (396 modules)
+ ○ Compiling /login ...
+ POST /api/telegram/poll 200 in 1354ms
+ ✓ Compiled /login in 2.3s (402 modules)
+ GET /api/telegram/simulate 200 in 3134ms
+ GET /login 200 in 4507ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 770ms (392 modules)
+ ✓ Compiled in 1106ms (382 modules)
+ ✓ Compiled in 882ms (382 modules)
+ ○ Compiling /verify ...
+ ✓ Compiled /verify in 916ms (388 modules)
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1449ms (405 modules)
+ ✓ Compiled in 9.3s (357 modules)
+ GET /verify 200 in 10986ms
+ ✓ Compiled in 3.2s (380 modules)
+ ✓ Compiled in 3.3s (380 modules)
+ GET /verify 200 in 1065ms
+ ✓ Compiled in 2.3s (380 modules)
+ ✓ Compiled in 3.3s (380 modules)
+ ✓ Compiled in 1843ms (380 modules)
+ GET /verify 200 in 207ms
+ ✓ Compiled in 15.2s (737 modules)
+ GET /verify 200 in 13361ms
+ GET /dashboard/simulator 200 in 291ms
+ ○ Compiling /api/telegram/poll ...
+ ✓ Compiled /api/telegram/poll in 2.3s (395 modules)
+ ✓ Compiled in 1ms (395 modules)
+ ✓ Compiled in 3ms (395 modules)
+ ✓ Compiled in 1ms (395 modules)
+ GET /api/telegram/poll 200 in 7033ms
+ POST /api/telegram/poll 200 in 4828ms
+ GET /login 200 in 5445ms
+ ✓ Compiled in 3s (775 modules)
+ ✓ Compiled in 5.4s (776 modules)
+ ✓ Compiled in 3.4s (751 modules)
+ ✓ Compiled in 713ms (333 modules)
+ ✓ Compiled in 3.5s (713 modules)
+ ✓ Compiled in 3s (713 modules)
+ ✓ Compiled in 2.3s (699 modules)
+ ✓ Compiled in 3.2s (699 modules)
+ ✓ Compiled in 2.3s (699 modules)
+ ✓ Compiled in 1861ms (699 modules)
+ ⨯ ./lib/store/demo-store.ts
+Error: 
+  [31mx[0m Unexpected token `{`. Expected * for generator, private key, identifier or async
+     ,-[[36;1;4mC:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\lib\store\demo-store.ts[0m:830:1]
+ [2m830[0m |       return { ...tx, category: cat, wallet: wal, to_wallet: toWal };
+ [2m831[0m |     });
+ [2m832[0m |   }
+ [2m833[0m |       return { ...tx, category: cat, wallet: wal, to_wallet: toWal };
+     : [31;1m             ^[0m
+ [2m834[0m |     });
+ [2m835[0m |   }
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./lib/store/demo-store.ts
+./app/register/page.tsx
+ ✓ Compiled in 3.1s (699 modules)
+ ✓ Compiled in 2.3s (699 modules)
+ ✓ Compiled in 1935ms (699 modules)
+ ✓ Compiled in 5.9s (713 modules)
+ ✓ Compiled in 4.9s (713 modules)
+ ✓ Compiled in 1301ms (380 modules)
+ ✓ Compiled in 1255ms (380 modules)
+ ✓ Compiled in 1196ms (380 modules)
+ ✓ Compiled in 3.6s (713 modules)
+ ✓ Compiled in 3.3s (721 modules)
+ ✓ Compiled in 3.1s (721 modules)
+ ✓ Compiled in 2.9s (721 modules)
+ ✓ Compiled in 2.4s (721 modules)
+ ✓ Compiled in 3.6s (707 modules)
+ ⨯ ./components/simulator/TelegramSimulator.tsx
+Error: 
+  [31mx[0m Expression expected
+     ,-[[36;1;4mC:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\components\simulator\TelegramSimulator.tsx[0m:396:1]
+ [2m396[0m |               const icon = w.type === 'bank' ? '🏦' : w.type === 'ewallet' ? '📱' : '💵';
+ [2m397[0m |               reply += `${icon} *${w.name}*: Rp${w.balance.toLocaleString('id-ID')}${isDef}\n`;
+ [2m398[0m |               reply += `👉 Bayar via ini: \`/bayar_${slug} ${amountStr}${noteStr}\`\n\n`;
+ [2m399[0m |             });
+     : [31;1m             ^[0m
+ [2m400[0m |             reply += `💡 _Klik perintah di atas atau pilih langsung tombol rekening di bawah._`;
+ [2m401[0m | 
+ [2m402[0m |             demoStore.addSimMessage({
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/simulator/TelegramSimulator.tsx
+./app/dashboard/page.tsx
+ ✓ Compiled in 6.4s (721 modules)
+ ✓ Compiled in 3.5s (721 modules)
+ ✓ Compiled in 3s (721 modules)
+ GET /admin 200 in 2921ms
+ GET /register 200 in 298ms
+ GET /verify 200 in 344ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 4.6s (362 modules)
+ ○ Compiling /dashboard/transactions ...
+ ✓ Compiled /dashboard/transactions in 6.1s (351 modules)
+ ✓ Compiled (363 modules)
+ GET /verify 200 in 1251ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2s (379 modules)
+ GET /verify 200 in 862ms
+ GET /verify 200 in 272ms
+ ✓ Compiled in 12.2s (746 modules)
+ ⨯ SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at loadManifest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\load-manifest.js:36:25)
+    at DevServer.getNextFontManifest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\next-server.js:750:47)
+    at DevServer.findPageComponents (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\next-dev-server.js:571:43)
+    at async DevServer.renderPageComponent (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:818:17)
+    at async C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  page: '/admin'
+}
+ ✓ Compiled in 2.4s (384 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 14.3s (973 modules)
+ ✓ Compiled in 3.9s (973 modules)
+ ✓ Compiled in 4.9s (973 modules)
+ GET /admin 200 in 1327ms
+ GET /register 200 in 335ms
+ GET /login 200 in 310ms
+ ○ Compiling /api/telegram/poll ...
+ ✓ Compiled /api/telegram/poll in 2.8s (440 modules)
+ POST /api/telegram/poll 200 in 3009ms
+ ○ Compiling /api/telegram/simulate ...
+ GET /api/telegram/poll 200 in 6198ms
+ ✓ Compiled /dashboard/wallets in 1227ms (442 modules)
+ ✓ Compiled in 3ms (452 modules)
+ ✓ Compiled in 1ms (452 modules)
+ ✓ Compiled in 2ms (452 modules)
+ GET /api/telegram/simulate 200 in 5634ms
+ GET /api/telegram/poll 200 in 5585ms
+ POST /api/telegram/poll 200 in 358ms
+ ○ Compiling /dashboard/transactions ...
+ ✓ Compiled /dashboard/transactions in 1790ms (408 modules)
+ ⨯ ./lib/telegram/bot-service.ts
+Error: 
+  [31mx[0m Expression expected
+     ,-[[36;1;4mC:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\lib\telegram\bot-service.ts[0m:144:1]
+ [2m144[0m | 
+ [2m145[0m |   return { wallet: null, cleanText: text };
+ [2m146[0m | }
+ [2m147[0m | }
+     : [31;1m^[0m
+ [2m148[0m | 
+ [2m149[0m | // In-memory response cache and in-flight promise map for idempotency
+ [2m150[0m | interface CachedBotReply {
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./lib/telegram/bot-service.ts
+./components/simulator/TelegramSimulator.tsx
+./app/dashboard/page.tsx
+ ✓ Compiled in 3.1s (956 modules)
+ ✓ Compiled in 2.4s (956 modules)
+ ✓ Compiled in 4.1s (970 modules)
+ ✓ Compiled in 2.4s (970 modules)
+ ✓ Compiled in 3.1s (970 modules)
+ ✓ Compiled in 4.1s (970 modules)
+ ✓ Compiled in 2.2s (956 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 2.1s (406 modules)
+ GET / 200 in 2928ms
+ ○ Compiling /register ...
+ ✓ Compiled /register in 2.3s (413 modules)
+ GET /verify 200 in 4340ms
+ GET /admin 200 in 4352ms
+ GET /dashboard 200 in 4356ms
+ GET /dashboard/transactions 200 in 4360ms
+ GET /dashboard/wallets 200 in 4367ms
+ GET /register 200 in 4386ms
+ ✓ Compiled in 2.7s (968 modules)
+ ✓ Compiled in 3.8s (968 modules)
+ GET /dashboard 200 in 1318ms
+ ✓ Compiled in 3.1s (968 modules)
+ ○ Compiling /api/telegram/poll ...
+ ✓ Compiled /api/telegram/poll in 2.3s (446 modules)
+ POST /api/telegram/poll 200 in 1834ms
+ ○ Compiling /api/telegram/simulate ...
+ ✓ Compiled /api/telegram/simulate in 660ms (448 modules)
+ GET /api/telegram/poll 200 in 4761ms
+ GET /api/telegram/simulate 200 in 1184ms
+ GET /api/telegram/poll 200 in 1044ms
+ ✓ Compiled in 3.4s (996 modules)
+ ✓ Compiled in 4.6s (1010 modules)
+ ✓ Compiled in 4.6s (1010 modules)
+ ○ Compiling /api/transactions ...
+ ✓ Compiled /api/transactions in 836ms (443 modules)
+ POST /api/transactions 200 in 1167ms
+ ✓ Compiled in 4.2s (1002 modules)
+ ○ Compiling /api/telegram/poll ...
+ ✓ Compiled /api/telegram/poll in 1408ms (439 modules)
+ ○ Compiling /dashboard/budgets ...
+ POST /api/telegram/poll 200 in 2660ms
+ GET /api/telegram/poll 200 in 5538ms
+ ✓ Compiled /dashboard/simulator in 8.4s (1012 modules)
+ GET /api/telegram/simulate 200 in 8661ms
+ GET /api/telegram/poll 200 in 1045ms
+ GET /api/telegram/poll 200 in 9575ms
+ GET /api/telegram/poll 200 in 692ms
+ POST /api/telegram/poll 200 in 324ms
+ GET /api/telegram/simulate 200 in 42ms
+ POST /api/telegram/poll 200 in 313ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 3308ms
+ GET /api/telegram/simulate 200 in 135ms
+ POST /api/telegram/poll 200 in 321ms
+ GET /api/telegram/simulate 200 in 106ms
+ POST /api/telegram/poll 200 in 3428ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 297ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 3324ms
+ GET /api/telegram/simulate 200 in 73ms
+ POST /api/telegram/poll 200 in 420ms
+ GET /api/telegram/simulate 200 in 92ms
+ POST /api/telegram/poll 200 in 3276ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 275ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3277ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 292ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3350ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 298ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 3361ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 309ms
+ GET /api/telegram/simulate 200 in 98ms
+ ✓ Compiled in 6.4s (1006 modules)
+ POST /api/telegram/poll 200 in 6728ms
+ GET /api/telegram/simulate 200 in 108ms
+ GET /admin 200 in 928ms
+ POST /api/telegram/poll 200 in 3275ms
+ GET /api/telegram/simulate 200 in 83ms
+ POST /api/telegram/poll 200 in 275ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3262ms
+ ✓ Compiled in 4.1s (1014 modules)
+ ✓ Compiled in 2ms (441 modules)
+ GET /api/telegram/simulate 200 in 2688ms
+ POST /api/telegram/poll 200 in 1953ms
+ ✓ Compiled in 3s (1014 modules)
+ ✓ Compiled in 3ms (441 modules)
+ ✓ Compiled in 1ms (441 modules)
+ ✓ Compiled in 2ms (441 modules)
+ GET /api/telegram/simulate 200 in 4261ms
+ POST /api/telegram/poll 200 in 731ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 3339ms
+ GET /api/telegram/simulate 200 in 59ms
+ POST /api/telegram/poll 200 in 291ms
+ GET /api/telegram/simulate 200 in 1812ms
+ ✓ Compiled in 3s (1014 modules)
+ POST /api/telegram/poll 200 in 2772ms
+ GET /api/telegram/simulate 200 in 83ms
+ ✓ Compiled in 2.6s (1014 modules)
+ POST /api/telegram/poll 200 in 3637ms
+ GET /api/telegram/simulate 200 in 256ms
+ POST /api/telegram/poll 200 in 308ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 3250ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 282ms
+ GET /api/telegram/simulate 200 in 46ms
+ ✓ Compiled in 2.3s (1014 modules)
+ ✓ Compiled in 1ms (441 modules)
+ POST /api/telegram/poll 200 in 2596ms
+ ✓ Compiled in 2ms (441 modules)
+ ✓ Compiled in 1ms (441 modules)
+ ✓ Compiled in 1ms (441 modules)
+ GET /api/telegram/simulate 200 in 2703ms
+ POST /api/telegram/poll 200 in 259ms
+ GET /api/telegram/simulate 200 in 45ms
+ POST /api/telegram/poll 200 in 3271ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 274ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 3253ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 776ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 3282ms
+ GET /api/telegram/simulate 200 in 82ms
+ POST /api/telegram/poll 200 in 302ms
+ GET /api/telegram/simulate 200 in 63ms
+ ✓ Compiled in 3.4s (1014 modules)
+ POST /api/telegram/poll 200 in 3526ms
+ GET /api/telegram/simulate 200 in 125ms
+ POST /api/telegram/poll 200 in 418ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 3277ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 271ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 4404ms
+ ✓ Compiled in 4.1s (1014 modules)
+ ✓ Compiled in 2ms (441 modules)
+ GET /api/telegram/simulate 200 in 3422ms
+ ✓ Compiled in 1ms (441 modules)
+ ✓ Compiled in 1ms (441 modules)
+ ✓ Compiled in 1ms (441 modules)
+ POST /api/telegram/poll 200 in 6137ms
+ ✓ Compiled in 3s (1014 modules)
+ ✓ Compiled in 1ms (441 modules)
+ ✓ Compiled in 0ms (441 modules)
+ ✓ Compiled in 2ms (441 modules)
+ GET /api/telegram/simulate 200 in 4757ms
+ ✓ Compiled in 2.7s (1014 modules)
+ ✓ Compiled in 1ms (441 modules)
+ POST /api/telegram/poll 200 in 5282ms
+ GET /api/telegram/simulate 200 in 99ms
+ POST /api/telegram/poll 200 in 3277ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 343ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 4699ms
+ GET /api/telegram/simulate 200 in 102ms
+ ✓ Compiled in 4.5s (1014 modules)
+ ✓ Compiled in 3ms (441 modules)
+ ✓ Compiled in 1ms (441 modules)
+ ✓ Compiled in 1ms (441 modules)
+ POST /api/telegram/poll 200 in 6571ms
+ GET /api/telegram/simulate 200 in 140ms
+ POST /api/telegram/poll 200 in 3318ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 256ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 3386ms
+ GET /api/telegram/simulate 200 in 45ms
+ POST /api/telegram/poll 200 in 275ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 3336ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 273ms
+ GET /api/telegram/simulate 200 in 46ms
+ POST /api/telegram/poll 200 in 3311ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 309ms
+ GET /api/telegram/simulate 200 in 101ms
+ POST /api/telegram/poll 200 in 3295ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 287ms
+ GET /api/telegram/simulate 200 in 84ms
+ POST /api/telegram/poll 200 in 3367ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 304ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3293ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 270ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 3290ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 320ms
+ GET /api/telegram/simulate 200 in 110ms
+ POST /api/telegram/poll 200 in 3274ms
+ GET /api/telegram/simulate 200 in 2020ms
+ POST /api/telegram/poll 200 in 363ms
+ GET /api/telegram/simulate 200 in 87ms
+ POST /api/telegram/poll 200 in 1386ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 604ms
+ GET /api/telegram/simulate 200 in 109ms
+ POST /api/telegram/poll 200 in 3296ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 393ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 3261ms
+ GET /api/telegram/simulate 200 in 128ms
+ POST /api/telegram/poll 200 in 290ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3285ms
+ GET /api/telegram/simulate 200 in 93ms
+ POST /api/telegram/poll 200 in 296ms
+ GET /api/telegram/simulate 200 in 92ms
+ POST /api/telegram/poll 200 in 3330ms
+ GET /api/telegram/simulate 200 in 93ms
+ POST /api/telegram/poll 200 in 297ms
+ GET /api/telegram/simulate 200 in 117ms
+ POST /api/telegram/simulate 200 in 117ms
+ POST /api/telegram/poll 200 in 3295ms
+ GET /api/telegram/simulate 200 in 131ms
+ POST /api/telegram/poll 200 in 377ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3292ms
+ GET /api/telegram/simulate 200 in 85ms
+ POST /api/telegram/poll 200 in 340ms
+ GET /api/telegram/simulate 200 in 112ms
+ POST /api/telegram/poll 200 in 3392ms
+ GET /api/telegram/simulate 200 in 86ms
+ POST /api/telegram/poll 200 in 400ms
+ GET /api/telegram/simulate 200 in 85ms
+ POST /api/telegram/simulate 200 in 109ms
+ POST /api/telegram/poll 200 in 3400ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 286ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/simulate 200 in 115ms
+ POST /api/telegram/poll 200 in 3290ms
+ GET /api/telegram/simulate 200 in 78ms
+ POST /api/telegram/poll 200 in 308ms
+ GET /api/telegram/simulate 200 in 92ms
+ POST /api/telegram/poll 200 in 3311ms
+ GET /api/telegram/simulate 200 in 120ms
+ POST /api/telegram/poll 200 in 723ms
+ GET /api/telegram/simulate 200 in 83ms
+ POST /api/telegram/poll 200 in 3322ms
+ GET /api/telegram/simulate 200 in 87ms
+ POST /api/telegram/poll 200 in 289ms
+ GET /api/telegram/simulate 200 in 157ms
+ POST /api/telegram/poll 200 in 4043ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 362ms
+ GET /api/telegram/simulate 200 in 119ms
+ POST /api/telegram/poll 200 in 3303ms
+ GET /api/telegram/simulate 200 in 84ms
+ POST /api/telegram/poll 200 in 301ms
+ GET /api/telegram/simulate 200 in 104ms
+ POST /api/telegram/poll 200 in 3299ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 255ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 3288ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 258ms
+ GET /api/telegram/simulate 200 in 52ms
+ POST /api/telegram/poll 200 in 3289ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 281ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 3284ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 269ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3116ms
+ GET /api/telegram/simulate 200 in 111ms
+ POST /api/telegram/poll 200 in 313ms
+ GET /api/telegram/simulate 200 in 94ms
+ POST /api/telegram/poll 200 in 3297ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 260ms
+ GET /api/telegram/simulate 200 in 87ms
+ POST /api/telegram/poll 200 in 3307ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 302ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3365ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 271ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 3269ms
+ GET /api/telegram/simulate 200 in 97ms
+ POST /api/telegram/poll 200 in 1352ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 279ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 3281ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 301ms
+ GET /api/telegram/simulate 200 in 126ms
+ POST /api/telegram/poll 200 in 3319ms
+ GET /api/telegram/simulate 200 in 87ms
+ GET /api/telegram/poll 200 in 1933ms
+ GET /api/telegram/poll 200 in 668ms
+ GET /api/telegram/poll 200 in 725ms
+ GET /api/telegram/poll 200 in 687ms
+ POST /api/telegram/poll 200 in 297ms
+ GET /api/telegram/simulate 200 in 180ms
+ ○ Compiling /dashboard/budgets ...
+ ✓ Compiled /dashboard/budgets in 3.3s (447 modules)
+ GET /api/telegram/poll 200 in 1622ms
+ POST /api/telegram/poll 200 in 347ms
+ GET /api/telegram/simulate 200 in 110ms
+ GET /api/telegram/poll 200 in 762ms
+ POST /api/telegram/poll 200 in 3307ms
+ GET /api/telegram/simulate 200 in 98ms
+ POST /api/telegram/poll 200 in 338ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3335ms
+ GET /api/telegram/simulate 200 in 102ms
+ POST /api/telegram/poll 200 in 296ms
+ GET /api/telegram/simulate 200 in 78ms
+ POST /api/telegram/poll 200 in 3291ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 277ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/simulate 200 in 127ms
+ POST /api/telegram/simulate 200 in 106ms
+ POST /api/telegram/poll 200 in 3318ms
+ GET /api/telegram/simulate 200 in 83ms
+ POST /api/telegram/poll 200 in 338ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 3265ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 341ms
+ GET /api/telegram/simulate 200 in 90ms
+ POST /api/telegram/poll 200 in 3314ms
+ GET /api/telegram/poll 200 in 1118ms
+ GET /api/telegram/poll 200 in 663ms
+ POST /api/telegram/poll 200 in 276ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3275ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 282ms
+ GET /api/telegram/simulate 200 in 77ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.2s (452 modules)
+ POST /api/telegram/poll 200 in 4923ms
+ GET /api/telegram/simulate 200 in 471ms
+ GET /api/telegram/poll 200 in 1620ms
+ GET /api/telegram/poll 200 in 680ms
+ POST /api/telegram/poll 200 in 3274ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 285ms
+ GET /api/telegram/simulate 200 in 83ms
+ POST /api/telegram/poll 200 in 3325ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 275ms
+ GET /api/telegram/simulate 200 in 141ms
+ POST /api/telegram/poll 200 in 3286ms
+ GET /api/telegram/simulate 200 in 167ms
+ POST /api/telegram/poll 200 in 519ms
+ GET /api/telegram/simulate 200 in 245ms
+ POST /api/telegram/poll 200 in 3481ms
+ GET /api/telegram/simulate 200 in 92ms
+ POST /api/telegram/poll 200 in 293ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3328ms
+ GET /api/telegram/simulate 200 in 103ms
+ POST /api/telegram/poll 200 in 670ms
+ GET /api/telegram/simulate 200 in 129ms
+ POST /api/telegram/poll 200 in 3346ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 310ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 3288ms
+ GET /api/telegram/simulate 200 in 94ms
+ POST /api/telegram/poll 200 in 331ms
+ GET /api/telegram/simulate 200 in 100ms
+ POST /api/telegram/poll 200 in 3296ms
+ GET /api/telegram/simulate 200 in 110ms
+ POST /api/telegram/poll 200 in 331ms
+ GET /api/telegram/simulate 200 in 128ms
+ POST /api/telegram/poll 200 in 3298ms
+ GET /api/telegram/simulate 200 in 122ms
+ POST /api/telegram/poll 200 in 320ms
+ GET /api/telegram/simulate 200 in 97ms
+ POST /api/telegram/poll 200 in 3422ms
+ GET /api/telegram/simulate 200 in 147ms
+ POST /api/telegram/poll 200 in 666ms
+ GET /api/telegram/simulate 200 in 99ms
+ POST /api/telegram/poll 200 in 3302ms
+ GET /api/telegram/simulate 200 in 93ms
+ POST /api/telegram/poll 200 in 293ms
+ GET /api/telegram/simulate 200 in 93ms
+ POST /api/telegram/poll 200 in 3321ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 364ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 3343ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 281ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 3353ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 283ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 3279ms
+ GET /api/telegram/simulate 200 in 98ms
+ POST /api/telegram/poll 200 in 273ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 3271ms
+ GET /api/telegram/simulate 200 in 48ms
+ POST /api/telegram/poll 200 in 247ms
+ GET /api/telegram/simulate 200 in 52ms
+ POST /api/telegram/poll 200 in 3277ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 290ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3278ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 252ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 3258ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 288ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 3345ms
+ GET /api/telegram/simulate 200 in 125ms
+ POST /api/telegram/poll 200 in 300ms
+ GET /api/telegram/simulate 200 in 110ms
+ POST /api/telegram/poll 200 in 3307ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 280ms
+ GET /api/telegram/simulate 200 in 139ms
+ POST /api/telegram/poll 200 in 3286ms
+ GET /api/telegram/simulate 200 in 47ms
+ POST /api/telegram/poll 200 in 577ms
+ GET /api/telegram/simulate 200 in 74ms
+ GET / 200 in 468ms
+ POST /api/telegram/poll 200 in 3300ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 285ms
+ GET /api/telegram/simulate 200 in 69ms
+ GET / 200 in 279ms
+ POST /api/telegram/poll 200 in 3307ms
+ GET /api/telegram/simulate 200 in 79ms
+ GET /api/telegram/poll 200 in 1449ms
+ GET /api/telegram/poll 200 in 1807ms
+ POST /api/telegram/poll 200 in 298ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 85ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 3289ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 295ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 59ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 89ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 3321ms
+ GET /api/telegram/simulate 200 in 97ms
+ POST /api/telegram/poll 200 in 261ms
+ GET /api/telegram/simulate 200 in 89ms
+ ○ Compiling /register ...
+ POST /api/telegram/poll 200 in 3356ms
+ ✓ Compiled /register in 2.7s (438 modules)
+ ✓ Compiled in 1ms (438 modules)
+ ✓ Compiled in 1ms (438 modules)
+ ✓ Compiled in 2ms (438 modules)
+ POST /api/telegram/poll 200 in 5003ms
+ ✓ Compiled in 1ms (438 modules)
+ GET /api/telegram/simulate 200 in 3796ms
+ ✓ Compiled in 2ms (438 modules)
+ ✓ Compiled in 1ms (438 modules)
+ GET /api/telegram/simulate 200 in 2159ms
+ POST /api/telegram/poll 200 in 2375ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 843ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 3266ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 261ms
+ GET /api/telegram/simulate 200 in 45ms
+ POST /api/telegram/poll 200 in 378ms
+ GET /api/telegram/simulate 200 in 84ms
+ POST /api/telegram/poll 200 in 3248ms
+ GET /api/telegram/simulate 200 in 48ms
+ POST /api/telegram/poll 200 in 275ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 3258ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 286ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3434ms
+ GET /api/telegram/simulate 200 in 94ms
+ POST /api/telegram/poll 200 in 276ms
+ GET /api/telegram/simulate 200 in 41ms
+ GET / 200 in 498ms
+ POST /api/telegram/poll 200 in 3274ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 299ms
+ GET /api/telegram/simulate 200 in 156ms
+ GET /api/telegram/poll 200 in 1412ms
+ ○ Compiling /verify ...
+ ✓ Compiled /verify in 2.2s (435 modules)
+ ✓ Compiled /login in 1ms (435 modules)
+ ✓ Compiled in 1ms (440 modules)
+ POST /api/telegram/poll 200 in 4963ms
+ GET /api/telegram/simulate 200 in 140ms
+ POST /api/telegram/poll 200 in 5250ms
+ GET /api/telegram/poll 200 in 6572ms
+ POST /api/telegram/poll 200 in 3282ms
+ GET /api/telegram/simulate 200 in 73ms
+ POST /api/telegram/poll 200 in 251ms
+ GET /api/telegram/simulate 200 in 46ms
+ POST /api/telegram/poll 200 in 3283ms
+ GET /api/telegram/simulate 200 in 41ms
+ POST /api/telegram/poll 200 in 268ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 3306ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 259ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 3334ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 325ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 3258ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 285ms
+ GET /api/telegram/simulate 200 in 85ms
+ POST /api/telegram/poll 200 in 3355ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 243ms
+ GET /api/telegram/simulate 200 in 46ms
+ POST /api/telegram/poll 200 in 939ms
+ GET /api/telegram/simulate 200 in 88ms
+ ✓ Compiled in 5.8s (981 modules)
+ ✓ Compiled in 2ms (408 modules)
+ ✓ Compiled in 1ms (408 modules)
+ ✓ Compiled in 1ms (408 modules)
+ POST /api/telegram/poll 200 in 5445ms
+ GET /api/telegram/simulate 200 in 423ms
+ POST /api/telegram/poll 200 in 328ms
+ GET /api/telegram/simulate 200 in 85ms
+ POST /api/telegram/poll 200 in 3263ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 253ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 3260ms
+ GET /api/telegram/simulate 200 in 52ms
+ POST /api/telegram/poll 200 in 298ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 3317ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 259ms
+ GET /api/telegram/simulate 200 in 47ms
+ ✓ Compiled in 4.9s (967 modules)
+ POST /api/telegram/poll 200 in 4790ms
+ GET /api/telegram/simulate 200 in 112ms
+ POST /api/telegram/poll 200 in 3397ms
+ ✓ Compiled in 2.9s (967 modules)
+ GET /api/telegram/simulate 200 in 835ms
+ POST /api/telegram/poll 200 in 300ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 3281ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 256ms
+ GET /api/telegram/simulate 200 in 59ms
+ ✓ Compiled in 3.4s (967 modules)
+ POST /api/telegram/poll 200 in 2612ms
+ GET /api/telegram/simulate 200 in 176ms
+ GET /verify 200 in 476ms
+ POST /api/telegram/poll 200 in 3292ms
+ GET /api/telegram/simulate 200 in 70ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1680ms (442 modules)
+ POST /api/telegram/poll 200 in 2793ms
+ GET /api/telegram/simulate 200 in 86ms
+ GET /api/telegram/poll 200 in 1427ms
+ GET /api/telegram/poll 200 in 1982ms
+ POST /api/telegram/poll 200 in 86ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 3838ms
+ ✓ Compiled in 5.2s (1001 modules)
+ GET /api/telegram/simulate 200 in 819ms
+ POST /api/telegram/poll 200 in 4868ms
+ GET /api/telegram/simulate 200 in 96ms
+ POST /api/telegram/poll 200 in 77ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 63ms
+ GET /api/telegram/simulate 200 in 190ms
+ POST /api/telegram/poll 200 in 3367ms
+ ○ Compiling /dashboard/wallets ...
+ ✓ Compiled /dashboard/wallets in 2.1s (451 modules)
+ GET /api/telegram/simulate 200 in 2649ms
+ POST /api/telegram/poll 200 in 1989ms
+ GET /api/telegram/simulate 200 in 67ms
+ GET /dashboard/wallets 200 in 1167ms
+ ✓ Compiled in 5s (1018 modules)
+ POST /api/telegram/poll 200 in 762ms
+ GET /api/telegram/simulate 200 in 104ms
+ ✓ Compiled in 2.6s (1018 modules)
+ ○ Compiling /dashboard/reports ...
+ ✓ Compiled /dashboard/reports in 6.5s (1036 modules)
+ POST /api/telegram/poll 200 in 7422ms
+ GET /api/telegram/simulate 200 in 162ms
+ POST /api/telegram/poll 200 in 3278ms
+ GET /api/telegram/simulate 200 in 67ms
+ ○ Compiling /dashboard/transactions ...
+ ✓ Compiled /dashboard/transactions in 1224ms (449 modules)
+ ○ Compiling /dashboard/simulator ...
+ ✓ Compiled /dashboard/simulator in 1036ms (455 modules)
+ GET /api/telegram/poll 200 in 1266ms
+ GET /api/telegram/poll 200 in 1677ms
+ POST /api/telegram/poll 200 in 305ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 3269ms
+ GET /api/telegram/simulate 200 in 48ms
+ POST /api/telegram/poll 200 in 255ms
+ GET /api/telegram/simulate 200 in 100ms
+ POST /api/telegram/poll 200 in 3256ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 273ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 89ms
+ POST /api/telegram/poll 200 in 3304ms
+ GET /api/telegram/simulate 200 in 82ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 283ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 1366ms
+ GET /api/telegram/simulate 200 in 59ms
+ POST /api/telegram/poll 200 in 287ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3253ms
+ GET /api/telegram/simulate 200 in 93ms
+ POST /api/telegram/poll 200 in 1043ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 654ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 3267ms
+ GET /api/telegram/simulate 200 in 153ms
+ GET /api/telegram/poll 200 in 1233ms
+ GET /api/telegram/poll 200 in 1515ms
+ POST /api/telegram/poll 200 in 258ms
+ GET /api/telegram/simulate 200 in 83ms
+ POST /api/telegram/poll 200 in 3366ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 288ms
+ GET /api/telegram/simulate 200 in 59ms
+ POST /api/telegram/poll 200 in 3292ms
+ ✓ Compiled in 12s (1026 modules)
+ POST /api/telegram/poll 200 in 9461ms
+ GET /api/telegram/simulate 200 in 115ms
+ ✓ Compiled in 3s (1026 modules)
+ ✓ Compiled in 2.2s (1026 modules)
+ ✓ Compiled in 2ms (446 modules)
+ POST /api/telegram/poll 200 in 6621ms
+ ✓ Compiled in 2ms (446 modules)
+ ✓ Compiled in 2ms (446 modules)
+ ✓ Compiled in 2ms (446 modules)
+ ✓ Compiled in 1ms (446 modules)
+ GET /api/telegram/simulate 200 in 3680ms
+ POST /api/telegram/poll 200 in 2931ms
+ GET /api/telegram/simulate 200 in 111ms
+ ✓ Compiled in 4.9s (1026 modules)
+ POST /api/telegram/poll 200 in 2453ms
+ ✓ Compiled in 17.8s (1012 modules)
+ GET /api/telegram/simulate 200 in 15568ms
+ POST /api/telegram/poll 200 in 794ms
+ GET /api/telegram/simulate 200 in 147ms
+ ✓ Compiled in 7.4s (1010 modules)
+ POST /api/telegram/poll 200 in 3709ms
+ ✓ Compiled in 2.6s (580 modules)
+ GET /api/telegram/simulate 200 in 675ms
+ POST /api/telegram/poll 200 in 329ms
+ GET /api/telegram/simulate 200 in 67ms
+ ✓ Compiled in 2.5s (580 modules)
+ POST /api/telegram/poll 200 in 808ms
+ GET /api/telegram/simulate 200 in 309ms
+ ✓ Compiled in 2.3s (580 modules)
+ POST /api/telegram/poll 200 in 2217ms
+ GET /api/telegram/simulate 200 in 323ms
+ POST /api/telegram/poll 200 in 3287ms
+ GET /api/telegram/simulate 200 in 82ms
+ POST /api/telegram/poll 200 in 749ms
+ GET /api/telegram/simulate 200 in 91ms
+ POST /api/telegram/poll 200 in 777ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 748ms
+ GET /api/telegram/simulate 200 in 87ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1771ms (446 modules)
+ GET /api/telegram/poll 200 in 2489ms
+ POST /api/telegram/poll 200 in 520ms
+ GET /api/telegram/simulate 200 in 161ms
+ GET /api/telegram/poll 200 in 787ms
+ POST /api/telegram/poll 200 in 3276ms
+ GET /api/telegram/poll 200 in 1157ms
+ POST /api/telegram/poll 200 in 306ms
+ GET /api/telegram/poll 200 in 666ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 89ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 5268ms
+ GET /api/telegram/simulate 200 in 48ms
+ POST /api/telegram/poll 200 in 275ms
+ GET /api/telegram/simulate 200 in 90ms
+ POST /api/telegram/poll 200 in 3345ms
+ GET /api/telegram/simulate 200 in 59ms
+ POST /api/telegram/poll 200 in 491ms
+ GET /api/telegram/simulate 200 in 44ms
+ POST /api/telegram/poll 200 in 3274ms
+ GET /api/telegram/simulate 200 in 47ms
+ POST /api/telegram/poll 200 in 300ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 3305ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 321ms
+ GET /api/telegram/simulate 200 in 47ms
+ POST /api/telegram/poll 200 in 3290ms
+ GET /api/telegram/simulate 200 in 82ms
+ POST /api/telegram/poll 200 in 291ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 3487ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 326ms
+ GET /api/telegram/simulate 200 in 90ms
+ POST /api/telegram/poll 200 in 3363ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 272ms
+ GET /api/telegram/simulate 200 in 2888ms
+ ✓ Compiled in 7.3s (1019 modules)
+ ✓ Compiled in 1ms (438 modules)
+ ✓ Compiled in 2ms (438 modules)
+ ✓ Compiled in 3.6s (1020 modules)
+ POST /api/telegram/poll 200 in 9274ms
+ ✓ Compiled in 6.1s (1021 modules)
+ ✓ Compiled in 3.4s (582 modules)
+ GET /api/telegram/simulate 200 in 8175ms
+ POST /api/telegram/poll 200 in 7836ms
+ GET /api/telegram/simulate 200 in 437ms
+ ✓ Compiled in 4.2s (1021 modules)
+ ✓ Compiled in 2ms (439 modules)
+ POST /api/telegram/poll 200 in 3765ms
+ ✓ Compiled in 2ms (439 modules)
+ ✓ Compiled in 1ms (439 modules)
+ POST /api/telegram/poll 200 in 5867ms
+ ✓ Compiled in 1ms (439 modules)
+ GET /api/telegram/simulate 200 in 4609ms
+ GET /api/telegram/simulate 200 in 1982ms
+ POST /api/telegram/poll 200 in 98ms
+ POST /api/telegram/poll 200 in 328ms
+ GET /api/telegram/simulate 200 in 111ms
+ GET /api/telegram/simulate 200 in 83ms
+ ✓ Compiled in 2.7s (582 modules)
+ POST /api/telegram/poll 200 in 3550ms
+ GET /api/telegram/simulate 200 in 293ms
+ POST /api/telegram/poll 200 in 90ms
+ POST /api/telegram/poll 200 in 304ms
+ GET /api/telegram/simulate 200 in 79ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 1057ms
+ POST /api/telegram/poll 200 in 2147ms
+ ✓ Compiled in 14.8s (1021 modules)
+ GET /api/telegram/simulate 200 in 10485ms
+ GET /api/telegram/simulate 200 in 11592ms
+ POST /api/telegram/poll 200 in 196ms
+ GET /api/telegram/simulate 200 in 73ms
+ POST /api/telegram/poll 200 in 821ms
+ GET /api/telegram/simulate 200 in 89ms
+ POST /api/telegram/poll 200 in 3330ms
+ GET /api/telegram/simulate 200 in 597ms
+ ✓ Compiled in 3.5s (582 modules)
+ POST /api/telegram/poll 200 in 141ms
+ POST /api/telegram/poll 200 in 371ms
+ GET /api/telegram/simulate 200 in 126ms
+ GET /api/telegram/simulate 200 in 116ms
+ POST /api/telegram/poll 200 in 89ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 3347ms
+ ✓ Compiled in 1719ms (582 modules)
+ GET /api/telegram/simulate 200 in 459ms
+ POST /api/telegram/poll 200 in 107ms
+ POST /api/telegram/poll 200 in 343ms
+ GET /api/telegram/simulate 200 in 94ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 104ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 62ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 3326ms
+ GET /api/telegram/simulate 200 in 49ms
+ ✓ Compiled in 3.7s (1021 modules)
+ POST /api/telegram/poll 200 in 761ms
+ GET /api/telegram/simulate 200 in 232ms
+ POST /api/telegram/poll 200 in 3462ms
+ GET /api/telegram/simulate 200 in 80ms
+ ✓ Compiled in 3.3s (1021 modules)
+ POST /api/telegram/poll 200 in 1118ms
+ GET /api/telegram/simulate 200 in 110ms
+ POST /api/telegram/poll 200 in 3717ms
+ ✓ Compiled in 3.5s (1021 modules)
+ POST /api/telegram/poll 200 in 4871ms
+ GET /api/telegram/simulate 200 in 88ms
+ GET /api/telegram/simulate 200 in 231ms
+ POST /api/telegram/poll 200 in 96ms
+ GET /api/telegram/simulate 200 in 91ms
+ POST /api/telegram/poll 200 in 71ms
+ GET /api/telegram/simulate 200 in 95ms
+ POST /api/telegram/poll 200 in 3434ms
+ GET /api/telegram/simulate 200 in 75ms
+ ✓ Compiled in 2.5s (1021 modules)
+ ✓ Compiled in 3.3s (1021 modules)
+ POST /api/telegram/poll 200 in 317ms
+ GET /api/telegram/simulate 200 in 118ms
+ POST /api/telegram/poll 200 in 985ms
+ GET /api/telegram/simulate 200 in 90ms
+ POST /api/telegram/poll 200 in 87ms
+ GET /api/telegram/simulate 200 in 95ms
+ POST /api/telegram/poll 200 in 3315ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 58ms
+ POST /api/telegram/poll 200 in 250ms
+ GET /api/telegram/simulate 200 in 87ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 217ms
+ POST /api/telegram/poll 200 in 800ms
+ GET /api/telegram/simulate 200 in 218ms
+ GET /api/telegram/simulate 200 in 94ms
+ ○ Compiling /login ...
+ POST /api/telegram/poll 200 in 3352ms
+ ✓ Compiled /login in 2.8s (445 modules)
+ GET /api/telegram/simulate 200 in 2983ms
+ POST /api/telegram/poll 200 in 911ms
+ GET /api/telegram/simulate 200 in 249ms
+ POST /api/telegram/poll 200 in 763ms
+ GET /api/telegram/simulate 200 in 90ms
+ GET /dashboard 200 in 925ms
+ GET /api/telegram/poll 200 in 1620ms
+ POST /api/telegram/poll 200 in 310ms
+ GET /api/telegram/poll 200 in 700ms
+ GET /api/telegram/simulate 200 in 64ms
+ GET /api/telegram/poll 200 in 1119ms
+ POST /api/telegram/poll 200 in 3272ms
+ GET /api/telegram/poll 200 in 674ms
+ POST /api/telegram/poll 200 in 277ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 3348ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 372ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 3266ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 145ms
+ POST /api/telegram/poll 200 in 3263ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 261ms
+ GET /api/telegram/simulate 200 in 99ms
+ POST /api/telegram/poll 200 in 3262ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 269ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 3255ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 273ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 3282ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 305ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 3251ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 287ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3256ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 263ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 3300ms
+ GET /api/telegram/simulate 200 in 92ms
+ POST /api/telegram/poll 200 in 270ms
+ GET /api/telegram/simulate 200 in 174ms
+ POST /api/telegram/poll 200 in 3289ms
+ GET /api/telegram/simulate 200 in 107ms
+ POST /api/telegram/poll 200 in 325ms
+ GET /api/telegram/simulate 200 in 100ms
+ POST /api/telegram/poll 200 in 3258ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 302ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 3333ms
+ GET /api/telegram/simulate 200 in 109ms
+ POST /api/telegram/poll 200 in 273ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 3273ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 332ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 3281ms
+ GET /api/telegram/simulate 200 in 95ms
+ POST /api/telegram/poll 200 in 259ms
+ GET /api/telegram/simulate 200 in 50ms
+ GET / 200 in 215ms
+ POST /api/telegram/poll 200 in 3352ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 270ms
+ GET /api/telegram/simulate 200 in 49ms
+ GET /api/telegram/poll 200 in 1890ms
+ GET /api/telegram/poll 200 in 679ms
+ POST /api/telegram/poll 200 in 58ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 85ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3308ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 278ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 51ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 80ms
+ POST /api/telegram/poll 200 in 3264ms
+ GET /api/telegram/simulate 200 in 67ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 266ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 62ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 80ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3257ms
+ GET /api/telegram/simulate 200 in 86ms
+ POST /api/telegram/poll 200 in 255ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 62ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 61ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3298ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 79ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 67ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 3294ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 275ms
+ GET /api/telegram/simulate 200 in 124ms
+ POST /api/telegram/poll 200 in 67ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 59ms
+ GET /api/telegram/simulate 200 in 91ms
+ POST /api/telegram/poll 200 in 3282ms
+ GET /api/telegram/simulate 200 in 59ms
+ POST /api/telegram/poll 200 in 250ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 64ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 3259ms
+ GET /api/telegram/simulate 200 in 195ms
+ POST /api/telegram/poll 200 in 396ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 54ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3277ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 265ms
+ GET /api/telegram/simulate 200 in 47ms
+ POST /api/telegram/poll 200 in 3297ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 251ms
+ GET /api/telegram/simulate 200 in 52ms
+ POST /api/telegram/poll 200 in 3277ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 257ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 3284ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 278ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 3276ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 274ms
+ GET /api/telegram/simulate 200 in 107ms
+ POST /api/telegram/poll 200 in 3259ms
+ GET /api/telegram/simulate 200 in 47ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 3254ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 251ms
+ GET /api/telegram/simulate 200 in 111ms
+ POST /api/telegram/poll 200 in 3274ms
+ GET /api/telegram/simulate 200 in 52ms
+ POST /api/telegram/poll 200 in 277ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3274ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 269ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3265ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 253ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 3280ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 254ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 3269ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 3252ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 258ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3253ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 268ms
+ GET /api/telegram/simulate 200 in 96ms
+ POST /api/telegram/poll 200 in 3271ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 291ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 3292ms
+ GET /api/telegram/simulate 200 in 83ms
+ POST /api/telegram/poll 200 in 267ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 48ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 50ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 3345ms
+ ✓ Compiled in 5.1s (1019 modules)
+ ✓ Compiled in 2ms (437 modules)
+ ✓ Compiled in 1ms (437 modules)
+ ✓ Compiled in 2ms (437 modules)
+ GET /api/telegram/simulate 200 in 7595ms
+ POST /api/telegram/poll 200 in 7855ms
+ GET /api/telegram/simulate 200 in 246ms
+ POST /api/telegram/poll 200 in 294ms
+ ○ Compiling /register ...
+ POST /api/telegram/poll 200 in 3426ms
+ ✓ Compiled /register in 5.9s (1026 modules)
+ ✓ Compiled in 2ms (444 modules)
+ GET /api/telegram/simulate 200 in 5177ms
+ ✓ Compiled in 6.4s (1026 modules)
+ GET /api/telegram/simulate 200 in 11180ms
+ POST /api/telegram/poll 200 in 7109ms
+ GET / 200 in 1722ms
+ POST /api/telegram/poll 200 in 2807ms
+ ✓ Compiled in 4.6s (1026 modules)
+ ✓ Compiled in 3ms (444 modules)
+ ✓ Compiled in 1ms (444 modules)
+ ✓ Compiled in 1ms (444 modules)
+ GET /api/telegram/simulate 200 in 4846ms
+ ✓ Compiled in 1ms (444 modules)
+ POST /api/telegram/poll 200 in 972ms
+ GET /api/telegram/simulate 200 in 90ms
+ POST /api/telegram/poll 200 in 3024ms
+ GET /api/telegram/simulate 200 in 104ms
+ POST /api/telegram/poll 200 in 96ms
+ GET /api/telegram/simulate 200 in 97ms
+ GET /api/telegram/poll 200 in 3942ms
+ GET /api/telegram/poll 200 in 718ms
+ POST /api/telegram/poll 200 in 98ms
+ GET /api/telegram/simulate 200 in 71ms
+ POST /api/telegram/poll 200 in 3312ms
+ POST /api/telegram/poll 200 in 314ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 3253ms
+ GET /api/telegram/simulate 200 in 79ms
+ ✓ Compiled in 3.7s (1026 modules)
+ POST /api/telegram/poll 200 in 3974ms
+ GET /api/telegram/simulate 200 in 99ms
+ POST /api/telegram/poll 200 in 3289ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 272ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 3309ms
+ GET /api/telegram/simulate 200 in 82ms
+ POST /api/telegram/poll 200 in 295ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3606ms
+ GET / 200 in 741ms
+ GET /api/telegram/simulate 200 in 159ms
+ POST /api/telegram/poll 200 in 450ms
+ GET /api/telegram/simulate 200 in 131ms
+ GET /api/telegram/poll 200 in 1625ms
+ POST /api/telegram/poll 200 in 3316ms
+ GET /api/telegram/simulate 200 in 117ms
+ GET /api/telegram/poll 200 in 704ms
+ POST /api/telegram/poll 200 in 133ms
+ POST /api/telegram/poll 200 in 382ms
+ GET /api/telegram/simulate 200 in 172ms
+ GET /api/telegram/simulate 200 in 78ms
+ POST /api/telegram/poll 200 in 135ms
+ GET /api/telegram/simulate 200 in 90ms
+ POST /api/telegram/poll 200 in 130ms
+ GET /api/telegram/simulate 200 in 82ms
+ POST /api/telegram/poll 200 in 3329ms
+ GET /api/telegram/simulate 200 in 95ms
+ POST /api/telegram/poll 200 in 148ms
+ POST /api/telegram/poll 200 in 346ms
+ GET /api/telegram/simulate 200 in 58ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 178ms
+ POST /api/telegram/poll 200 in 3339ms
+ ✓ Compiled in 3.2s (1020 modules)
+ ✓ Compiled in 1ms (438 modules)
+ GET /api/telegram/simulate 200 in 2935ms
+ ✓ Compiled in 3ms (438 modules)
+ ✓ Compiled in 1ms (438 modules)
+ GET /api/telegram/simulate 200 in 4058ms
+ ✓ Compiled in 1ms (438 modules)
+ ✓ Compiled in 1ms (438 modules)
+ POST /api/telegram/poll 200 in 4615ms
+ ✓ Compiled in 1ms (438 modules)
+ ✓ Compiled in 1ms (438 modules)
+ ✓ Compiled in 0ms (438 modules)
+ POST /api/telegram/poll 200 in 6827ms
+ GET /api/telegram/simulate 200 in 111ms
+ POST /api/telegram/poll 200 in 284ms
+ GET /api/telegram/simulate 200 in 55ms
+ ✓ Compiled in 2.5s (1020 modules)
+ POST /api/telegram/poll 200 in 3304ms
+ GET /api/telegram/simulate 200 in 237ms
+ POST /api/telegram/poll 200 in 351ms
+ GET /api/telegram/simulate 200 in 86ms
+ GET / 200 in 307ms
+ POST /api/telegram/poll 200 in 3289ms
+ GET /api/telegram/simulate 200 in 53ms
+ GET /api/telegram/poll 200 in 1156ms
+ GET /api/telegram/poll 200 in 1138ms
+ POST /api/telegram/poll 200 in 293ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 3954ms
+ GET /api/telegram/simulate 200 in 347ms
+ ✓ Compiled in 2.4s (582 modules)
+ POST /api/telegram/poll 200 in 305ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 3357ms
+ GET /api/telegram/simulate 200 in 335ms
+ ✓ Compiled in 1964ms (582 modules)
+ POST /api/telegram/poll 200 in 314ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 3280ms
+ GET /api/telegram/simulate 200 in 64ms
+ ✓ Compiled in 1686ms (582 modules)
+ POST /api/telegram/poll 200 in 916ms
+ GET /api/telegram/simulate 200 in 100ms
+ ✓ Compiled in 2s (582 modules)
+ POST /api/telegram/poll 200 in 3881ms
+ GET /api/telegram/simulate 200 in 74ms
+ ✓ Compiled in 1840ms (582 modules)
+ POST /api/telegram/poll 200 in 790ms
+ GET /api/telegram/simulate 200 in 105ms
+ POST /api/telegram/poll 200 in 3300ms
+ GET /api/telegram/simulate 200 in 64ms
+ ○ Compiling /verify ...
+ ✓ Compiled /verify in 6.5s (1026 modules)
+ POST /api/telegram/poll 200 in 2479ms
+ GET /api/telegram/simulate 200 in 115ms
+ GET /api/telegram/poll 200 in 1496ms
+ GET /api/telegram/poll 200 in 1665ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 59ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 3266ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 302ms
+ GET /api/telegram/simulate 200 in 56ms
+ GET /api/telegram/poll 200 in 1182ms
+ GET /api/telegram/poll 200 in 1197ms
+ GET /api/telegram/poll 200 in 780ms
+ GET /api/telegram/poll 200 in 757ms
+ POST /api/telegram/poll 200 in 279ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 962ms
+ ○ Compiling /dashboard/settings ...
+ ✓ Compiled /dashboard/settings in 5.2s (1021 modules)
+ ✓ Compiled in 6.3s (1045 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /dashboard/settings 200 in 1070ms
+ ✓ Compiled in 2ms (453 modules)
+ GET /api/telegram/simulate 200 in 13372ms
+ GET /dashboard 200 in 4014ms
+ GET /dashboard 200 in 769ms
+ GET /dashboard 200 in 562ms
+ POST /api/telegram/poll 200 in 1213ms
+ GET /api/telegram/simulate 200 in 183ms
+ GET /api/telegram/poll 200 in 1239ms
+ GET /api/telegram/poll 200 in 1227ms
+ POST /api/telegram/poll 200 in 104ms
+ GET /api/telegram/simulate 200 in 94ms
+ POST /api/telegram/poll 200 in 3364ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 1982ms (458 modules)
+ GET /api/telegram/simulate 200 in 3614ms
+ GET /login 200 in 3001ms
+ POST /api/telegram/poll 200 in 743ms
+ GET /api/telegram/simulate 200 in 98ms
+ GET /admin 200 in 349ms
+ POST /api/telegram/poll 200 in 1059ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 3315ms
+ GET /api/telegram/simulate 200 in 126ms
+ POST /api/telegram/poll 200 in 282ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 3287ms
+ GET /api/telegram/simulate 200 in 100ms
+ POST /api/telegram/poll 200 in 313ms
+ GET /api/telegram/simulate 200 in 99ms
+ POST /api/telegram/poll 200 in 3290ms
+ GET /api/telegram/simulate 200 in 75ms
+ GET /api/telegram/poll 200 in 1754ms
+ POST /api/telegram/poll 200 in 111ms
+ POST /api/telegram/poll 200 in 380ms
+ GET /api/telegram/simulate 200 in 109ms
+ GET /api/telegram/simulate 200 in 103ms
+ GET /api/telegram/poll 200 in 754ms
+ GET /login 200 in 247ms
+ POST /api/telegram/poll 200 in 3302ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 256ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3402ms
+ GET /api/telegram/simulate 200 in 49ms
+ POST /api/telegram/poll 200 in 331ms
+ GET /api/telegram/simulate 200 in 84ms
+ POST /api/telegram/poll 200 in 3270ms
+ GET /api/telegram/simulate 200 in 50ms
+ POST /api/telegram/poll 200 in 289ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3334ms
+ GET /api/telegram/simulate 200 in 84ms
+ POST /api/telegram/poll 200 in 285ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3317ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 261ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 3255ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3258ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 73ms
+ POST /api/telegram/poll 200 in 3297ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 274ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 3264ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 261ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 3259ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 304ms
+ GET /api/telegram/simulate 200 in 109ms
+ GET /api/telegram/poll 200 in 1150ms
+ POST /api/telegram/poll 200 in 67ms
+ GET /api/telegram/simulate 200 in 73ms
+ GET /api/telegram/poll 200 in 1387ms
+ POST /api/telegram/poll 200 in 3284ms
+ GET /api/telegram/simulate 200 in 111ms
+ POST /api/telegram/poll 200 in 257ms
+ GET /api/telegram/simulate 200 in 90ms
+ POST /api/telegram/poll 200 in 64ms
+ GET /api/telegram/simulate 200 in 85ms
+ POST /api/telegram/poll 200 in 3299ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 285ms
+ GET /api/telegram/simulate 200 in 92ms
+ POST /api/telegram/poll 200 in 60ms
+ POST /api/telegram/poll 200 in 3297ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 266ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 3346ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 261ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 3339ms
+ GET /api/telegram/simulate 200 in 55ms
+ POST /api/telegram/poll 200 in 727ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 756ms
+ GET /api/telegram/simulate 200 in 68ms
+ ○ Compiling /dashboard/settings ...
+ GET /dashboard 200 in 953ms
+ ✓ Compiled /dashboard/settings in 4.5s (453 modules)
+ ✓ Compiled (482 modules)
+ GET /verify 200 in 10448ms
+ GET /admin 200 in 10517ms
+ GET /dashboard/wallets 200 in 11101ms
+ GET /dashboard/transactions 200 in 11133ms
+ GET /dashboard/reports 200 in 11203ms
+ GET /dashboard/settings 200 in 11249ms
+ POST /api/telegram/poll 200 in 761ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 1085ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 703ms
+ GET /api/telegram/simulate 200 in 75ms
+ GET / 200 in 581ms
+ GET /api/telegram/poll 200 in 1437ms
+ POST /api/telegram/poll 200 in 260ms
+ GET /api/telegram/poll 200 in 735ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 3282ms
+ POST /api/telegram/poll 200 in 681ms
+ GET /api/telegram/simulate 200 in 65ms
+ GET /admin 200 in 150ms
+ POST /api/telegram/poll 200 in 989ms
+ GET /api/telegram/simulate 200 in 60ms
+ GET /api/telegram/poll 200 in 1874ms
+ POST /api/telegram/poll 200 in 316ms
+ GET /api/telegram/poll 200 in 654ms
+ GET /api/telegram/simulate 200 in 70ms
+ GET /api/telegram/poll 200 in 1090ms
+ POST /api/telegram/poll 200 in 73ms
+ GET /api/telegram/poll 200 in 662ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 3342ms
+ POST /api/telegram/poll 200 in 270ms
+ GET /api/telegram/simulate 200 in 93ms
+ POST /api/telegram/poll 200 in 61ms
+ GET /api/telegram/simulate 200 in 94ms
+ POST /api/telegram/poll 200 in 56ms
+ POST /api/telegram/poll 200 in 3295ms
+ GET /api/telegram/simulate 200 in 84ms
+ GET /api/telegram/simulate 200 in 78ms
+ POST /api/telegram/poll 200 in 376ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 3285ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 258ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 3254ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 255ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 3260ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 251ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 3300ms
+ GET /api/telegram/simulate 200 in 53ms
+ POST /api/telegram/poll 200 in 272ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 744ms
+ GET /api/telegram/simulate 200 in 81ms
+ GET / 200 in 214ms
+ GET /api/telegram/poll 200 in 1685ms
+ GET /api/telegram/poll 200 in 658ms
+ POST /api/telegram/poll 200 in 717ms
+ GET /api/telegram/simulate 200 in 109ms
+ GET /api/telegram/poll 200 in 1576ms
+ POST /api/telegram/poll 200 in 281ms
+ GET /api/telegram/poll 200 in 651ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 3337ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 259ms
+ GET /api/telegram/simulate 200 in 154ms
+ POST /api/telegram/poll 200 in 3297ms
+ POST /api/telegram/poll 200 in 657ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 1006ms
+ GET /api/telegram/simulate 200 in 78ms
+ ○ Compiling /dashboard/simulator ...
+ ✓ Compiled /dashboard/simulator in 2.8s (447 modules)
+ GET /api/telegram/poll 200 in 1603ms
+ POST /api/telegram/poll 200 in 292ms
+ GET /api/telegram/simulate 200 in 125ms
+ GET /api/telegram/poll 200 in 1102ms
+ POST /api/telegram/poll 200 in 3367ms
+ GET /api/telegram/simulate 200 in 86ms
+ POST /api/telegram/poll 200 in 284ms
+ GET /api/telegram/simulate 200 in 113ms
+ POST /api/telegram/poll 200 in 3271ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 381ms
+ GET /api/telegram/simulate 200 in 130ms
+ POST /api/telegram/poll 200 in 3309ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 262ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 106ms
+ GET /api/telegram/simulate 200 in 93ms
+ POST /api/telegram/poll 200 in 3335ms
+ GET /api/telegram/simulate 200 in 102ms
+ POST /api/telegram/poll 200 in 339ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 3323ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 326ms
+ GET /api/telegram/simulate 200 in 59ms
+ POST /api/telegram/poll 200 in 3276ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 267ms
+ GET /api/telegram/simulate 200 in 54ms
+ POST /api/telegram/poll 200 in 3268ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 257ms
+ GET /api/telegram/simulate 200 in 56ms
+ POST /api/telegram/poll 200 in 3268ms
+ GET /api/telegram/simulate 200 in 58ms
+ POST /api/telegram/poll 200 in 311ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 3316ms
+ GET /api/telegram/simulate 200 in 340ms
+ POST /api/telegram/poll 200 in 318ms
+ GET /api/telegram/simulate 200 in 87ms
+ POST /api/telegram/poll 200 in 3330ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 302ms
+ GET /api/telegram/simulate 200 in 85ms
+ POST /api/telegram/poll 200 in 3286ms
+ GET /api/telegram/simulate 200 in 51ms
+ POST /api/telegram/poll 200 in 258ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 3273ms
+ GET /api/telegram/simulate 200 in 73ms
+ POST /api/telegram/poll 200 in 304ms
+ GET /api/telegram/simulate 200 in 57ms
+ POST /api/telegram/poll 200 in 3301ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 84ms
+ POST /api/telegram/poll 200 in 324ms
+ GET /api/telegram/simulate 200 in 95ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 3277ms
+ GET /api/telegram/simulate 200 in 101ms
+ POST /api/telegram/poll 200 in 306ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 3386ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 264ms
+ GET /api/telegram/simulate 200 in 52ms
+ POST /api/telegram/poll 200 in 1032ms
+ GET /api/telegram/simulate 200 in 113ms
+ POST /api/telegram/poll 200 in 733ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 776ms
+ GET /api/telegram/simulate 200 in 91ms
+ POST /api/telegram/poll 200 in 804ms
+ GET /api/telegram/simulate 200 in 84ms
+ POST /api/telegram/poll 200 in 713ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 755ms
+ GET /api/telegram/simulate 200 in 89ms
+ POST /api/telegram/poll 200 in 756ms
+ GET /api/telegram/simulate 200 in 87ms
+ POST /api/telegram/poll 200 in 737ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 689ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 728ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 782ms
+ GET /api/telegram/simulate 200 in 649ms
+ POST /api/telegram/poll 200 in 816ms
+ GET /api/telegram/simulate 200 in 75ms
+ POST /api/telegram/poll 200 in 783ms
+ GET /api/telegram/simulate 200 in 79ms
+ POST /api/telegram/poll 200 in 810ms
+ GET /api/telegram/simulate 200 in 155ms
+ POST /api/telegram/poll 200 in 683ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 695ms
+ GET /api/telegram/simulate 200 in 78ms
+ POST /api/telegram/poll 200 in 713ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 742ms
+ GET /api/telegram/simulate 200 in 109ms
+ POST /api/telegram/poll 200 in 837ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 703ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 685ms
+ GET /api/telegram/simulate 200 in 82ms
+ POST /api/telegram/poll 200 in 988ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 695ms
+ GET /api/telegram/simulate 200 in 267ms
+ POST /api/telegram/poll 200 in 837ms
+ GET /api/telegram/simulate 200 in 76ms
+ POST /api/telegram/poll 200 in 730ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 789ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 684ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 696ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 706ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 745ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 2211ms
+ GET /api/telegram/simulate 200 in 105ms
+ POST /api/telegram/poll 200 in 896ms
+ GET /api/telegram/simulate 200 in 70ms
+ POST /api/telegram/poll 200 in 729ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 746ms
+ GET /api/telegram/simulate 200 in 163ms
+ POST /api/telegram/poll 200 in 1054ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 688ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 1156ms
+ GET /api/telegram/simulate 200 in 209ms
+ POST /api/telegram/poll 200 in 1487ms
+ GET /api/telegram/simulate 200 in 203ms
+ POST /api/telegram/poll 200 in 727ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 690ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 681ms
+ GET /api/telegram/simulate 200 in 112ms
+ POST /api/telegram/poll 200 in 701ms
+ GET /api/telegram/simulate 200 in 64ms
+ POST /api/telegram/poll 200 in 862ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 682ms
+ GET /api/telegram/simulate 200 in 61ms
+ POST /api/telegram/poll 200 in 674ms
+ GET /api/telegram/simulate 200 in 495ms
+ POST /api/telegram/poll 200 in 818ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 752ms
+ GET /api/telegram/simulate 200 in 60ms
+ POST /api/telegram/poll 200 in 687ms
+ GET /api/telegram/simulate 200 in 66ms
+ POST /api/telegram/poll 200 in 730ms
+ GET /api/telegram/simulate 200 in 68ms
+ POST /api/telegram/poll 200 in 844ms
+ GET /api/telegram/simulate 200 in 74ms
+ POST /api/telegram/poll 200 in 730ms
+ GET /api/telegram/simulate 200 in 72ms
+ POST /api/telegram/poll 200 in 722ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 721ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 741ms
+ GET /api/telegram/simulate 200 in 59ms
+ POST /api/telegram/poll 200 in 714ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 981ms
+ GET /api/telegram/simulate 200 in 391ms
+ POST /api/telegram/poll 200 in 688ms
+ GET /api/telegram/simulate 200 in 103ms
+ POST /api/telegram/poll 200 in 746ms
+ GET /api/telegram/simulate 200 in 80ms
+ POST /api/telegram/poll 200 in 682ms
+ GET /api/telegram/simulate 200 in 69ms
+ POST /api/telegram/poll 200 in 700ms
+ GET /api/telegram/simulate 200 in 104ms
+ POST /api/telegram/poll 200 in 1149ms
+ GET /api/telegram/simulate 200 in 173ms
+ POST /api/telegram/poll 200 in 1008ms
+ GET /api/telegram/simulate 200 in 67ms
+ POST /api/telegram/poll 200 in 702ms
+ GET /api/telegram/simulate 200 in 82ms
+ POST /api/telegram/poll 200 in 731ms
+ GET /api/telegram/simulate 200 in 86ms
+ POST /api/telegram/poll 200 in 684ms
+ GET /api/telegram/simulate 200 in 88ms
+ POST /api/telegram/poll 200 in 687ms
+ GET /api/telegram/simulate 200 in 77ms
+ POST /api/telegram/poll 200 in 731ms
+ GET /api/telegram/simulate 200 in 238ms
+ POST /api/telegram/poll 200 in 2105ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 705ms
+ GET /api/telegram/simulate 200 in 73ms
+ POST /api/telegram/poll 200 in 752ms
+ GET /api/telegram/simulate 200 in 97ms
+ POST /api/telegram/poll 200 in 697ms
+ GET /api/telegram/simulate 200 in 81ms
+ POST /api/telegram/poll 200 in 743ms
+ GET /api/telegram/simulate 200 in 83ms
+ POST /api/telegram/poll 200 in 690ms
+ GET /api/telegram/simulate 200 in 87ms
+ POST /api/telegram/poll 200 in 712ms
+ GET /api/telegram/simulate 200 in 63ms
+ POST /api/telegram/poll 200 in 798ms
+ GET /api/telegram/simulate 200 in 112ms
+ POST /api/telegram/poll 200 in 727ms
+ GET /api/telegram/simulate 200 in 89ms
+ POST /api/telegram/poll 200 in 696ms
+ GET /api/telegram/simulate 200 in 62ms
+ POST /api/telegram/poll 200 in 728ms
+ GET /api/telegram/simulate 200 in 141ms
+ POST /api/telegram/poll 200 in 702ms
+ GET /api/telegram/simulate 200 in 321ms
+ POST /api/telegram/poll 200 in 701ms
+ GET /api/telegram/simulate 200 in 65ms
+ POST /api/telegram/poll 200 in 709ms
+ GET /api/telegram/simulate 200 in 69ms
+ ✓ Compiled in 5.4s (1021 modules)
+ ⨯ Error: Cannot find module './276.js'
+Require stack:
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\app\dashboard\simulator\page.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\load-components.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\build\utils.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require-hook.js:55:36
+    at Module._load (node:internal/modules/cjs/loader:1051:27)
+    at Module.require (node:internal/modules/cjs/loader:1311:19)
+    at mod.require (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:179:18)
+    at __webpack_require__.f.require (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:203:28)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:116:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:115:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:167:22)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\app\admin\page.js:1:44913
+    at Object.<anonymous> (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\app\admin\page.js:1:44964)
+    at Module._compile (node:internal/modules/cjs/loader:1469:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
+    at Module.load (node:internal/modules/cjs/loader:1288:32)
+    at Module._load (node:internal/modules/cjs/loader:1104:12)
+    at Module.require (node:internal/modules/cjs/loader:1311:19)
+    at mod.require (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:179:18)
+    at requirePage (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:1910:24)
+    at async DevServer.renderToResponseImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:1962:32)
+    at async DevServer.pipeImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\next-server.js:272:17)
+    at async DevServer.handleRequestImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\base-server.js:818:17)
+    at async C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js:359:24)
+    at async requestHandlerImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\.next\\server\\app\\dashboard\\simulator\\page.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ],
+  page: '/admin'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_not-found in 5.5s (1012 modules)
+ ⨯ Error: Cannot find module './682.js'
+Require stack:
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\pages\_document.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\load-components.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\build\utils.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\lib\start-server.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require-hook.js:55:36
+    at Module._load (node:internal/modules/cjs/loader:1051:27)
+    at Module.require (node:internal/modules/cjs/loader:1311:19)
+    at mod.require (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:179:18)
+    at __webpack_require__.f.require (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:203:28)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:116:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:115:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\webpack-runtime.js:167:22)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\pages\_document.js:1:335
+    at Object.<anonymous> (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\.next\server\pages\_document.js:1:376)
+    at Module._compile (node:internal/modules/cjs/loader:1469:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
+    at Module.load (node:internal/modules/cjs/loader:1288:32)
+    at Module._load (node:internal/modules/cjs/loader:1104:12)
+    at Module.require (node:internal/modules/cjs/loader:1311:19)
+    at mod.require (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:179:18)
+    at requirePage (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\load-components.js:72:65
+    at async Promise.all (index 0)
+    at async loadComponentsImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (C:\Users\Performance Edition\.gemini\antigravity\scratch\tatadana\node_modules\next\dist\server\next-server.js:714:36) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\.next\\server\\pages\\_document.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Performance Edition\\.gemini\\antigravity\\scratch\\tatadana\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ GET /_next/static/css/app/layout.css?v=1792074307141 404 in 7597ms
+ GET /_next/static/css/app/layout.css?v=1792074307141 404 in 340ms
+ POST /api/telegram/poll 200 in 1067ms
+ ✓ Compiled in 8.1s (1026 modules)
+ GET /api/telegram/simulate 200 in 7801ms
+ GET /_next/static/css/app/layout.css?v=1792074326051 404 in 736ms
+ GET /_next/static/css/app/layout.css?v=1792074326051 404 in 305ms
+ POST /api/telegram/poll 200 in 889ms
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+file:///C:/Users/Performance%20Edition/.gemini/antigravity/scratch/tatadana/next.config.mjs:17
+};
+ ^
+
+SyntaxError: Unexpected token ';'
+    at compileSourceTextModule (node:internal/modules/esm/utils:339:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:168:18)
+    at callTranslator (node:internal/modules/esm/loader:428:14)
+    at ModuleLoader.moduleProvider (node:internal/modules/esm/loader:434:30)
+    at async link (node:internal/modules/esm/module_job:87:21)
+
+Node.js v20.18.0
+[?25h

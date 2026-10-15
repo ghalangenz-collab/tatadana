@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TataDana — Platinum & Silver Chrome Theme Showcase</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Plus Jakarta Sans Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            platinum: {
+              50: '#FFFFFF',
+              100: '#F8FAFC',
+              200: '#E2E8F0',
+              300: '#CBD5E1',
+              400: '#94A3B8',
+              500: '#64748B',
+              600: '#475569',
+              700: '#334155',
+              800: '#1E293B',
+              900: '#0F172A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0B0E14;
+      color: #F1F5F9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .chrome-gradient {
+      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 30%, #94A3B8 60%, #CBD5E1 100%);
+    }
+    .chrome-btn {
+      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #CBD5E1 100%);
+      color: #0F172A;
+      box-shadow: 0 4px 15px -3px rgba(255, 255, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .chrome-btn:hover {
+      background: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 50%, #E2E8F0 100%);
+      box-shadow: 0 6px 20px -2px rgba(255, 255, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 1);
+      transform: translateY(-1px);
+    }
+    .chrome-btn:active {
+      transform: translateY(0);
+    }
+    .chrome-card {
+      background: #12161F;
+      border: 1px solid rgba(203, 213, 225, 0.16);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease;
+    }
+    .chrome-card:hover {
+      border-color: rgba(226, 232, 240, 0.35);
+    }
+    .chrome-active-card {
+      background: linear-gradient(180deg, #18202E 0%, #11151E 100%);
+      border: 1px solid rgba(226, 232, 240, 0.55);
+      box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.6), 0 0 20px -5px rgba(226, 232, 240, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    .chrome-text {
+      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 40%, #94A3B8 75%, #FFFFFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0E14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1E293B;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-slate-300 selection:text-slate-900">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-30 bg-[#0B0E14]/85 backdrop-blur-md border-b border-slate-800/80 px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl chrome-gradient flex items-center justify-center text-slate-950 font-black shadow-md shadow-white/10 text-base">
+        ⚡
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-base font-extrabold text-white tracking-tight">TataDana</span>
+          <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-slate-200/10 text-slate-200 border border-slate-300/30">
+            PLATINUM PRO
+          </span>
+        </div>
+        <p class="text-[10px] text-slate-400">Tema Elegan Silver / Platinum Chrome • Multi-Dompet Live</p>
+      </div>
+    </div>
+
+    <!-- Active Wallet Pill & Action Controls -->
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#141822] border border-slate-700/70 text-xs">
+        <span class="text-slate-400">Dompet Utama:</span>
+        <span id="navActiveWalletName" class="font-bold text-white flex items-center gap-1">
+          <i data-lucide="star" class="w-3 h-3 fill-amber-300 text-amber-300"></i> BCA Prioritas
+        </span>
+        <span class="text-slate-500">|</span>
+        <span id="navActiveWalletBalance" class="font-mono font-bold text-emerald-400">Rp 14.850.000</span>
+      </div>
+
+      <button onclick="openTransferModal()" class="px-3 py-1.5 rounded-xl bg-[#1A202C] hover:bg-[#252D3D] text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all">
+        <i data-lucide="arrow-right-left" class="w-3.5 h-3.5 text-slate-300"></i>
+        <span>Transfer</span>
+      </button>
+
+      <button onclick="openAddTransactionModal()" class="chrome-btn px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5">
+        <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-900"></i>
+        <span>Catat Transaksi</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Notification Banner -->
+  <div id="toastNotification" class="fixed top-16 right-6 z-50 transform transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] bg-slate-900/95 border border-slate-400/50 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 max-w-md">
+    <i data-lucide="sparkles" class="w-4 h-4 text-amber-300 shrink-0"></i>
+    <span id="toastMessage" class="text-xs font-semibold">Notifikasi</span>
+  </div>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-6 space-y-8">
+
+    <!-- Hero Header Strip -->
+    <div class="bg-gradient-to-r from-[#141822] via-[#1A202C] to-[#12161F] p-6 rounded-2xl border border-slate-700/70 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-5 relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-white/5 blur-3xl pointer-events-none"></div>
+      
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200">
+            <i data-lucide="wallet" class="w-5 h-5 text-slate-200"></i>
+          </span>
+          <h2 class="text-xl font-bold text-white tracking-tight">Manajemen Multi-Dompet TataDana</h2>
+        </div>
+        <p class="text-xs text-slate-400 mt-1 max-w-xl">
+          Pilih dompet yang Anda gunakan secara fleksibel (BCA, GoPay, OVO, Mandiri, Dana, Bibit, Tunai). Saldo otomatis tersinkron live ke Bot Telegram dan Dashboard.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-4 flex-wrap">
+        <div class="bg-[#0F1219] p-3 rounded-xl border border-slate-800">
+          <span class="text-[10px] text-slate-400 uppercase font-semibold block">Total Aset Semua Dompet</span>
+          <span id="heroTotalAssets" class="text-xl font-extrabold font-mono text-white">Rp 44.155.000</span>
+        </div>
+
+        <button onclick="openAddWalletModal()" class="chrome-btn px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-slate-900"></i>
+          <span>Tambah Dompet Baru</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Multi-Wallets Grid -->
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
+          <i data-lucide="layers" class="w-4 h-4 text-slate-400"></i>
+          Daftar Dompet Aktif Anda (<span id="walletCountText">4</span>)
+        </h3>
+        <span class="text-xs text-slate-400">Klik "Jadikan Utama" untuk mengganti dompet aktif default bot</span>
+      </div>
+
+      <div id="walletsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Two Columns: Live Telegram Simulator + Transactions / Stat Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- Left Column (7 cols): Telegram Bot Simulator with Live Wallet Dropdown Selector -->
+      <div class="lg:col-span-7 flex flex-col">
+        <div class="chrome-card rounded-2xl overflow-hidden flex flex-col h-[640px] shadow-2xl">
+          
+          <!-- Telegram Header -->
+          <div class="bg-[#151923] px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="relative">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-slate-200 to-slate-400 flex items-center justify-center text-slate-950 font-bold shadow-md shadow-white/10">
+                  <i data-lucide="bot" class="w-5 h-5 text-slate-900"></i>
+                </div>
+                <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#151923]"></span>
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <h4 class="font-bold text-white text-sm">RumahTataDana Bot</h4>
+                  <span class="bg-slate-200/10 text-slate-200 text-[10px] font-semibold px-1.5 py-0.2 rounded border border-slate-300/30">
+                    PLATINUM VERIFIED
+                  </span>
+                </div>
+                <p class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  @rumahtatdanabot • Live Multi-Wallet Sync
+                </p>
+              </div>
+            </div>
+
+            <!-- Header Quick Actions -->
+            <div class="flex items-center gap-2">
+              <button onclick="resetSimulatorChat()" class="px-2.5 py-1 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg text-xs transition-colors flex items-center gap-1" title="Reset percakapan">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">Reset</span>
+              </button>
+              <a href="https://t.me/rumahtatdanabot" target="_blank" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold flex items-center gap-1 border border-slate-700 transition-colors">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                <span>Buka Telegram</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Simulator Header Strip with Live Wallet Selector Dropdown -->
+          <div class="bg-[#12161F] border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-3">
+              <span class="text-slate-400 flex items-center gap-1.5 font-medium">
+                <i data-lucide="wallet" class="w-3.5 h-3.5 text-slate-300"></i>
+                Dompet Aktif:
+              </span>
+              <!-- Interactive Wallet Dropdown -->
+              <div class="relative">
+                <select id="simWalletSelector" onchange="onSimulatorWalletSelect(this.value)" class="bg-[#1A202C] hover:bg-[#222A3A] text-white font-semibold text-xs py-1 px-2.5 pr-6 rounded-lg border border-slate-600 focus:border-slate-300 transition-all cursor-pointer outline-none appearance-none">
+                  <!-- Populated by JS -->
+                </select>
+                <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              </div>
+              <span id="simSelectedWalletBalance" class="font-mono font-bold text-white text-xs">Rp 14.850.000</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span id="simActionPill" class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 flex items-center gap-1 font-medium">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                Sinkronisasi Saldo Real-Time
+              </span>
+            </div>
+          </div>
+
+          <!-- Chat Messages Container -->
+          <div id="simMessagesContainer" class="flex-1 p-4 overflow-y-auto space-y-3 bg-[#0E1118]/60">
+            <!-- Messages populated by JS -->
+          </div>
+
+          <!-- Simulator Quick Buttons -->
+          <div class="bg-[#12161F] px-4 py-2 border-t border-slate-800 flex items-center gap-1.5 overflow-x-auto text-[11px]">
+            <span class="text-slate-400 font-semibold shrink-0">Cepat:</span>
+            <button onclick="sendQuickText('/pilih_dompet')" class="px-2 py-1 rounded bg-[#1A202C] hover:bg-[#252D3D] text-slate-300 hover:text-white border border-slate-700/80 transition-colors shrink-0">👛 /pilih_dompet</button>
+            <button onclick="sendQuickText('/pilih_dompet gopay')" class="px-2 py-1 rounded bg-[#1A202C] hover:bg-[#252D3D] text-slate-300 hover:text-white border border-slate-700/80 transition-colors shrink-0">👛 Pilih GoPay</button>
+            <button onclick="sendQuickText('/pilih_dompet bca')" class="px-2 py-1 rounded bg-[#1A202C] hover:bg-[#252D3D] text-slate-300 hover:text-white border border-slate-700/80 transition-colors shrink-0">👛 Pilih BCA</button>
+            <button onclick="sendQuickText('/saldo')" class="px-2 py-1 rounded bg-[#1A202C] hover:bg-[#252D3D] text-slate-300 hover:text-white border border-slate-700/80 transition-colors shrink-0">👛 /saldo</button>
+            <button onclick="sendQuickText('/makan 25rb')" class="px-2 py-1 rounded bg-[#1A202C] hover:bg-[#252D3D] text-slate-300 hover:text-white border border-slate-700/80 transition-colors shrink-0">🍜 /makan 25rb</button>
+            <button onclick="sendQuickText('beli kopi 25rb pakai gopay')" class="px-2 py-1 rounded bg-[#1A202C] hover:bg-[#252D3D] text-slate-300 hover:text-white border border-slate-700/80 transition-colors shrink-0">☕ Beli Kopi GoPay</button>
+            <button onclick="sendQuickText('/tambah_saldo 500rb')" class="px-2 py-1 rounded bg-[#1A202C] hover:bg-[#252D3D] text-slate-300 hover:text-white border border-slate-700/80 transition-colors shrink-0">💰 /tambah_saldo 500rb</button>
+          </div>
+
+          <!-- Chat Input -->
+          <form onsubmit="handleSimulatorSubmit(event)" class="bg-[#151923] p-3 border-t border-slate-800 flex items-center gap-2">
+            <input
+              id="simInput"
+              type="text"
+              placeholder="Ketik pengeluaran misal: 'beli bakso 15rb' atau '/pilih_dompet gopay'..."
+              class="flex-1 bg-[#0E1118] border border-slate-700 focus:border-slate-300 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 outline-none transition-colors"
+            />
+            <button type="submit" class="chrome-btn px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shrink-0">
+              <i data-lucide="send" class="w-3.5 h-3.5 text-slate-900"></i>
+              <span>Kirim</span>
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+      <!-- Right Column (5 cols): Live Stats & Real-Time Mutasi Table -->
+      <div class="lg:col-span-5 space-y-4 flex flex-col">
+        
+        <!-- Stat Cards -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="chrome-card p-4 rounded-xl">
+            <span class="text-[11px] text-slate-400 font-medium">Total Pemasukan</span>
+            <p id="statIncome" class="text-lg font-bold font-mono text-emerald-400 mt-1">Rp 15.000.000</p>
+            <span class="text-[10px] text-slate-500">Bulan ini</span>
+          </div>
+
+          <div class="chrome-card p-4 rounded-xl">
+            <span class="text-[11px] text-slate-400 font-medium">Total Pengeluaran</span>
+            <p id="statExpense" class="text-lg font-bold font-mono text-rose-400 mt-1">Rp 3.450.000</p>
+            <span class="text-[10px] text-slate-500">Bulan ini</span>
+          </div>
+        </div>
+
+        <!-- Real-Time Transactions Mutasi -->
+        <div class="chrome-card rounded-2xl p-5 flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <i data-lucide="receipt" class="w-4 h-4 text-slate-300"></i>
+              <h4 class="text-sm font-bold text-white">Mutasi Transaksi Real-Time</h4>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-200/10 text-slate-200 border border-slate-400/20 font-medium">
+              Live Updated
+            </span>
+          </div>
+
+          <div id="txList" class="flex-1 overflow-y-auto space-y-2.5 max-h-[460px] pr-1">
+            <!-- Transactions populated by JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL 1: Tambah Dompet Baru -->
+  <div id="addWalletModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+    <div class="bg-[#12161F] border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <div>
+          <h3 class="text-base font-bold text-white">Tambah Dompet Baru</h3>
+          <p class="text-xs text-slate-400">Buat rekening atau e-wallet untuk pisahkan saldo</p>
+        </div>
+        <button onclick="closeModal('addWalletModal')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleAddWalletSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Pilihan Cepat Dompet</label>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" onclick="fillWalletTemplate('Mandiri Tabungan', 'bank', '#003D79')" class="text-[11px] px-2.5 py-1 rounded-lg bg-[#181C24] hover:bg-[#222A3A] border border-slate-700 text-slate-300">+ Mandiri</button>
+            <button type="button" onclick="fillWalletTemplate('GoPay Saldo', 'ewallet', '#00AED6')" class="text-[11px] px-2.5 py-1 rounded-lg bg-[#181C24] hover:bg-[#222A3A] border border-slate-700 text-slate-300">+ GoPay</button>
+            <button type="button" onclick="fillWalletTemplate('OVO Cash', 'ewallet', '#4C3494')" class="text-[11px] px-2.5 py-1 rounded-lg bg-[#181C24] hover:bg-[#222A3A] border border-slate-700 text-slate-300">+ OVO</button>
+            <button type="button" onclick="fillWalletTemplate('Dana Dompet', 'ewallet', '#118EEA')" class="text-[11px] px-2.5 py-1 rounded-lg bg-[#181C24] hover:bg-[#222A3A] border border-slate-700 text-slate-300">+ Dana</button>
+            <button type="button" onclick="fillWalletTemplate('Dompet Tunai', 'cash', '#10B981')" class="text-[11px] px-2.5 py-1 rounded-lg bg-[#181C24] hover:bg-[#222A3A] border border-slate-700 text-slate-300">+ Tunai</button>
+            <button type="button" onclick="fillWalletTemplate('Bibit Reksadana', 'investment', '#6366F1')" class="text-[11px] px-2.5 py-1 rounded-lg bg-[#181C24] hover:bg-[#222A3A] border border-slate-700 text-slate-300">+ Bibit</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nama Dompet</label>
+          <input id="newWalletName" type="text" required placeholder="cth: Mandiri Tabungan, GoPay" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-4 py-2.5 text-white text-xs outline-none" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Tipe</label>
+            <select id="newWalletType" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-3 py-2 text-white text-xs outline-none">
+              <option value="bank">Rekening Bank</option>
+              <option value="ewallet">E-Wallet</option>
+              <option value="cash">Tunai / Cash</option>
+              <option value="investment">Investasi</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Saldo Awal (Rp)</label>
+            <input id="newWalletBalance" type="number" required placeholder="0" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-4 py-2 text-white font-mono text-xs outline-none" />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="newWalletIsDefault" class="rounded bg-slate-800 border-slate-700 text-slate-300 cursor-pointer" />
+          <label for="newWalletIsDefault" class="text-xs text-slate-300 cursor-pointer">Langsung jadikan Dompet Utama bot Telegram</label>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2 border-t border-slate-800">
+          <button type="button" onclick="closeModal('addWalletModal')" class="px-3.5 py-2 text-xs font-medium text-slate-300 hover:text-white rounded-xl">Batal</button>
+          <button type="submit" class="chrome-btn px-4 py-2 rounded-xl text-xs font-bold">Simpan Dompet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Transfer Antar Dompet -->
+  <div id="transferModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+    <div class="bg-[#12161F] border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <div>
+          <h3 class="text-base font-bold text-white">Transfer Antar Dompet</h3>
+          <p class="text-xs text-slate-400">Pindahkan saldo antar rekening atau e-wallet Anda</p>
+        </div>
+        <button onclick="closeModal('transferModal')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleTransferSubmit(event)" class="space-y-4">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Dari Dompet (Asal)</label>
+            <select id="transferFromWallet" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-3 py-2 text-white text-xs outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Ke Dompet (Tujuan)</label>
+            <select id="transferToWallet" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-3 py-2 text-white text-xs outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nominal Transfer (Rp)</label>
+          <input id="transferAmount" type="number" required placeholder="cth: 200000" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-4 py-2.5 text-white font-mono text-sm outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Catatan (Opsional)</label>
+          <input id="transferNote" type="text" placeholder="cth: Top-up GoPay mingguan" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-4 py-2 text-white text-xs outline-none" />
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2 border-t border-slate-800">
+          <button type="button" onclick="closeModal('transferModal')" class="px-3.5 py-2 text-xs font-medium text-slate-300 hover:text-white rounded-xl">Batal</button>
+          <button type="submit" class="chrome-btn px-4 py-2 rounded-xl text-xs font-bold">Kirim Transfer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Catat Transaksi Baru -->
+  <div id="addTxModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+    <div class="bg-[#12161F] border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <div>
+          <h3 class="text-base font-bold text-white">Catat Transaksi Manual</h3>
+          <p class="text-xs text-slate-400">Pilih dompet yang ingin didebit atau ditambah saldonya</p>
+        </div>
+        <button onclick="closeModal('addTxModal')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleAddTxSubmit(event)" class="space-y-4">
+        <div class="grid grid-cols-2 gap-2 bg-[#181C24] p-1 rounded-xl border border-slate-800">
+          <button type="button" id="btnTypeExpense" onclick="setTxType('expense')" class="py-2 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">💸 Pengeluaran</button>
+          <button type="button" id="btnTypeIncome" onclick="setTxType('income')" class="py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white">💰 Pemasukan</button>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nominal (Rp)</label>
+          <input id="txAmount" type="number" required placeholder="50000" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-4 py-2.5 text-white font-mono text-base font-bold outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Keterangan / Catatan</label>
+          <input id="txDesc" type="text" required placeholder="cth: Makan Siang Nasi Padang" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-4 py-2.5 text-white text-xs outline-none" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Kategori</label>
+            <select id="txCategory" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-3 py-2 text-white text-xs outline-none">
+              <option value="🍜 Makanan & Minuman">🍜 Makanan & Minuman</option>
+              <option value="🚗 Transportasi">🚗 Transportasi</option>
+              <option value="🎮 Hiburan & Hobi">🎮 Hiburan & Hobi</option>
+              <option value="🏠 Tagihan & Rumah">🏠 Tagihan & Rumah</option>
+              <option value="💼 Gaji Pokok">💼 Gaji Pokok</option>
+              <option value="💻 Bonus & Side Hustle">💻 Bonus & Side Hustle</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Pilih Dompet</label>
+            <select id="txWallet" class="w-full bg-[#181C24] border border-slate-700 focus:border-slate-300 rounded-xl px-3 py-2 text-white text-xs outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2 border-t border-slate-800">
+          <button type="button" onclick="closeModal('addTxModal')" class="px-3.5 py-2 text-xs font-medium text-slate-300 hover:text-white rounded-xl">Batal</button>
+          <button type="submit" class="chrome-btn px-4 py-2 rounded-xl text-xs font-bold">Simpan Transaksi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Interactive Application Logic Script -->
+  <script>
+    // State Store
+    let state = {
+      wallets: [
+        { id: 'wal_bca', name: 'BCA Prioritas', type: 'bank', balance: 14850000, is_default: true, icon: 'landmark' },
+        { id: 'wal_gopay', name: 'GoPay Saldo', type: 'ewallet', balance: 485000, is_default: false, icon: 'smartphone' },
+        { id: 'wal_cash', name: 'Dompet Tunai', type: 'cash', balance: 320000, is_default: false, icon: 'banknote' },
+        { id: 'wal_bibit', name: 'Bibit Reksadana', type: 'investment', balance: 28500000, is_default: false, icon: 'trending-up' },
+      ],
+      transactions: [
+        { id: 'tx_1', type: 'expense', amount: 15000, description: 'Beli bakso urat', wallet_id: 'wal_bca', wallet_name: 'BCA Prioritas', category: '🍜 Makanan & Minuman', time: '12:01 WIB' },
+        { id: 'tx_2', type: 'expense', amount: 50000, description: 'Bensin Pertamax', wallet_id: 'wal_cash', wallet_name: 'Dompet Tunai', category: '🚗 Transportasi', time: '09:30 WIB' },
+        { id: 'tx_3', type: 'income', amount: 5000000, description: 'Gaji Bonus Kinerja', wallet_id: 'wal_bca', wallet_name: 'BCA Prioritas', category: '💼 Gaji Pokok', time: 'Kemarin' },
+      ],
+      messages: [
+        { sender: 'bot', text: '👋 Halo Budi! Selamat datang di bot TataDana.\n\nKetik langsung pengeluaran atau pemasukan kamu seperti:\n• "beli bakso 15rb"\n• "beli kopi 25rb pakai gopay"\n• "/pilih_dompet gopay" untuk ganti dompet aktif\n• "/saldo" untuk melihat semua dompet', time: '12:00' },
+        { sender: 'user', text: 'beli bakso 15rb', time: '12:01' },
+        { sender: 'bot', text: '📅 Hari ini — 12:01 WIB\n💸 Pengeluaran tercatat!\n├ Nominal : Rp15.000\n├ Kategori : 🍜 Makanan & Minuman\n├ Dompet : 👛 BCA Prioritas\n├ Catatan : Beli bakso urat\n└ Saldo : Rp14.835.000', time: '12:01' },
+      ],
+      currentTxType: 'expense',
+    };
+
+    function getDefaultWallet() {
+      return state.wallets.find(w => w.is_default) || state.wallets[0];
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.innerText = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3500);
+    }
+
+    function render() {
+      const defaultWal = getDefaultWallet();
+      const totalAssets = state.wallets.reduce((acc, w) => acc + w.balance, 0);
+
+      // 1. Navigation & Hero
+      document.getElementById('navActiveWalletName').innerHTML = `<i data-lucide="star" class="w-3 h-3 fill-amber-300 text-amber-300"></i> ${defaultWal.name}`;
+      document.getElementById('navActiveWalletBalance').innerText = `Rp ${defaultWal.balance.toLocaleString('id-ID')}`;
+      document.getElementById('heroTotalAssets').innerText = `Rp ${totalAssets.toLocaleString('id-ID')}`;
+      document.getElementById('walletCountText').innerText = state.wallets.length;
+
+      // 2. Wallets Grid
+      const grid = document.getElementById('walletsGrid');
+      grid.innerHTML = '';
+      state.wallets.forEach(w => {
+        const card = document.createElement('div');
+        card.className = `p-5 rounded-2xl flex flex-col justify-between transition-all ${w.is_default ? 'chrome-active-card' : 'chrome-card'}`;
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-2">
+              <div class="p-2.5 rounded-xl bg-[#1A202C] border border-slate-700 text-slate-200 shadow-sm">
+                <i data-lucide="${w.icon}" class="w-5 h-5 text-slate-200"></i>
+              </div>
+              <div class="flex items-center gap-1.5">
+                ${w.is_default 
+                  ? `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[11px] font-bold chrome-gradient text-slate-950 shadow-sm">
+                       <i data-lucide="star" class="w-3 h-3 fill-amber-500 text-amber-500"></i> Utama
+                     </span>`
+                  : `<button onclick="setDefaultWallet('${w.id}')" class="px-2.5 py-1 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800/90 hover:bg-slate-700 rounded-lg border border-slate-600 transition-all flex items-center gap-1">
+                       <i data-lucide="star" class="w-3 h-3 text-slate-400"></i> Jadikan Utama
+                     </button>`
+                }
+                ${!w.is_default && state.wallets.length > 1
+                  ? `<button onclick="deleteWallet('${w.id}')" class="p-1 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded transition-colors" title="Hapus dompet">
+                       <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                     </button>`
+                  : ''
+                }
+              </div>
+            </div>
+            <div class="mt-4">
+              <h4 class="text-sm font-bold text-white">${w.name}</h4>
+              <p class="text-[11px] text-slate-400 capitalize">${w.type}</p>
+              <p class="text-lg font-bold font-mono text-white mt-2">Rp ${w.balance.toLocaleString('id-ID')}</p>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Status: Aktif</span>
+            ${w.is_default ? '<span class="text-slate-300 font-semibold flex items-center gap-1"><i data-lucide="check-circle" class="w-3 h-3 text-emerald-400"></i> Auto Telegram</span>' : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // 3. Simulator Dropdown
+      const simSelect = document.getElementById('simWalletSelector');
+      simSelect.innerHTML = '';
+      state.wallets.forEach(w => {
+        const opt = document.createElement('option');
+        opt.value = w.id;
+        opt.innerText = `${w.name} ${w.is_default ? '⭐' : ''} (Rp ${w.balance.toLocaleString('id-ID')})`;
+        if (w.is_default) opt.selected = true;
+        simSelect.appendChild(opt);
+      });
+      document.getElementById('simSelectedWalletBalance').innerText = `Rp ${defaultWal.balance.toLocaleString('id-ID')}`;
+
+      // 4. Modals select options
+      const fromSel = document.getElementById('transferFromWallet');
+      const toSel = document.getElementById('transferToWallet');
+      const txWalSel = document.getElementById('txWallet');
+      fromSel.innerHTML = '';
+      toSel.innerHTML = '';
+      txWalSel.innerHTML = '';
+
+      state.wallets.forEach(w => {
+        fromSel.innerHTML += `<option value="${w.id}">${w.name} (Rp ${w.balance.toLocaleString('id-ID')})</option>`;
+        toSel.innerHTML += `<option value="${w.id}">${w.name} (Rp ${w.balance.toLocaleString('id-ID')})</option>`;
+        txWalSel.innerHTML += `<option value="${w.id}" ${w.is_default ? 'selected' : ''}>${w.name} (Rp ${w.balance.toLocaleString('id-ID')})</option>`;
+      });
+      if (state.wallets.length >= 2) {
+        toSel.selectedIndex = 1;
+      }
+
+      // 5. Messages
+      const msgBox = document.getElementById('simMessagesContainer');
+      msgBox.innerHTML = '';
+      state.messages.forEach(m => {
+        const isUser = m.sender === 'user';
+        const div = document.createElement('div');
+        div.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+        div.innerHTML = `
+          <div class="max-w-[85%] rounded-2xl p-3.5 text-xs shadow-md ${
+            isUser 
+              ? 'bg-[#1E293B] text-white border border-slate-600 rounded-br-none' 
+              : 'bg-[#151923] text-slate-200 border border-slate-800 rounded-bl-none'
+          }">
+            <div class="whitespace-pre-line leading-relaxed">${m.text}</div>
+            <div class="mt-1 text-[10px] text-slate-400 text-right">${m.time}</div>
+          </div>
+        `;
+        msgBox.appendChild(div);
+      });
+      msgBox.scrollTop = msgBox.scrollHeight;
+
+      // 6. Transactions List
+      const txList = document.getElementById('txList');
+      txList.innerHTML = '';
+      let totalInc = 0;
+      let totalExp = 0;
+
+      state.transactions.forEach(t => {
+        if (t.type === 'income') totalInc += t.amount;
+        if (t.type === 'expense') totalExp += t.amount;
+
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-xl bg-[#151923] border border-slate-800/80 flex items-center justify-between hover:border-slate-600 transition-colors';
+        const isExp = t.type === 'expense';
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="p-2 rounded-lg ${isExp ? 'bg-rose-500/10 text-rose-400' : 'bg-emerald-500/10 text-emerald-400'}">
+              <i data-lucide="${isExp ? 'arrow-down-left' : 'arrow-up-right'}" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white">${t.description}</p>
+              <div class="flex items-center gap-2 mt-0.5 text-[10px] text-slate-400">
+                <span>👛 ${t.wallet_name}</span>
+                <span>•</span>
+                <span>${t.category}</span>
+                <span>•</span>
+                <span>${t.time}</span>
+              </div>
+            </div>
+          </div>
+          <span class="font-mono text-xs font-bold ${isExp ? 'text-rose-400' : 'text-emerald-400'}">
+            ${isExp ? '-' : '+'}Rp ${t.amount.toLocaleString('id-ID')}
+          </span>
+        `;
+        txList.appendChild(item);
+      });
+
+      document.getElementById('statIncome').innerText = `Rp ${totalInc.toLocaleString('id-ID')}`;
+      document.getElementById('statExpense').innerText = `Rp ${totalExp.toLocaleString('id-ID')}`;
+
+      // Refresh lucide icons
+      lucide.createIcons();
+    }
+
+    // Set Default Wallet
+    function setDefaultWallet(id) {
+      state.wallets = state.wallets.map(w => ({
+        ...w,
+        is_default: w.id === id,
+      }));
+      const chosen = state.wallets.find(w => w.id === id);
+      showToast(`⭐ Dompet "${chosen.name}" sekarang aktif sebagai Dompet Utama!`);
+      render();
+    }
+
+    // Delete Wallet
+    function deleteWallet(id) {
+      const chosen = state.wallets.find(w => w.id === id);
+      if (confirm(`Hapus dompet "${chosen.name}"?`)) {
+        state.wallets = state.wallets.filter(w => w.id !== id);
+        showToast(`Dompet "${chosen.name}" dihapus.`);
+        render();
+      }
+    }
+
+    // Simulator wallet dropdown changed
+    function onSimulatorWalletSelect(id) {
+      setDefaultWallet(id);
+    }
+
+    // Simulator Submit
+    function handleSimulatorSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('simInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      processSimulatorMessage(text);
+    }
+
+    function sendQuickText(text) {
+      processSimulatorMessage(text);
+    }
+
+    function processSimulatorMessage(text) {
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} WIB`;
+
+      state.messages.push({
+        sender: 'user',
+        text,
+        time: timeStr.replace(' WIB', ''),
+      });
+
+      // Command: /pilih_dompet
+      if (text.startsWith('/pilih_dompet') || text.startsWith('/dompet')) {
+        const param = text.replace(/^\/(?:pilih_dompet|dompet)\s*/i, '').trim().toLowerCase();
+        if (!param) {
+          let reply = `👛 *Pilih Dompet Aktif TataDana*\n\nDompet saat ini: *${getDefaultWallet().name}*\n\nDaftar Dompet:\n`;
+          state.wallets.forEach(w => {
+            reply += `• ${w.name}: Rp ${w.balance.toLocaleString('id-ID')}${w.is_default ? ' ⭐ (Aktif)' : ''}\n`;
+          });
+          reply += `\nKetik misal: \`/pilih_dompet gopay\` untuk mengganti dompet.`;
+          state.messages.push({ sender: 'bot', text: reply, time: timeStr.replace(' WIB', '') });
+        } else {
+          const matched = state.wallets.find(w => w.name.toLowerCase().includes(param) || w.type === param);
+          if (matched) {
+            setDefaultWallet(matched.id);
+            state.messages.push({
+              sender: 'bot',
+              text: `👛 *Dompet Utama Berhasil Diubah!*\n\n✅ Dompet aktif sekarang: *${matched.name}*\n💰 Saldo: *Rp${matched.balance.toLocaleString('id-ID')}*\n\nTransaksi berikutnya otomatis memotong dompet ini.`,
+              time: timeStr.replace(' WIB', ''),
+            });
+          } else {
+            state.messages.push({
+              sender: 'bot',
+              text: `⚠️ Dompet "${param}" tidak ditemukan.\nPilihan yang tersedia:\n${state.wallets.map(w => `• ${w.name}`).join('\n')}`,
+              time: timeStr.replace(' WIB', ''),
+            });
+          }
+        }
+        render();
+        return;
+      }
+
+      // Command: /saldo
+      if (text === '/saldo') {
+        let reply = `👛 *Saldo Dompet TataDana*\n\n`;
+        state.wallets.forEach(w => {
+          reply += `├ ${w.name}: Rp${w.balance.toLocaleString('id-ID')}${w.is_default ? ' ⭐ (Utama)' : ''}\n`;
+        });
+        const tot = state.wallets.reduce((a, b) => a + b.balance, 0);
+        reply += `\n💰 *Total Aset:* Rp${tot.toLocaleString('id-ID')}`;
+        state.messages.push({ sender: 'bot', text: reply, time: timeStr.replace(' WIB', '') });
+        render();
+        return;
+      }
+
+      // Check if wallet is specified in text (e.g. "pakai gopay", "bca", "tunai")
+      let activeWallet = getDefaultWallet();
+      for (const w of state.wallets) {
+        const cleanName = w.name.toLowerCase().split(' ')[0];
+        if (text.toLowerCase().includes(cleanName)) {
+          activeWallet = w;
+          break;
+        }
+      }
+
+      // Expense / Income parsing
+      const isIncome = /gaji|bonus|masuk|tambah_saldo/i.test(text);
+      const isExpense = /beli|makan|kopi|bensin|bayar|keluar/i.test(text);
+
+      let amount = 25000;
+      const numMatch = text.match(/\d+/);
+      if (numMatch) {
+        let parsed = parseInt(numMatch[0]);
+        if (text.includes('rb') || text.includes('k')) parsed *= 1000;
+        if (text.includes('jt') || text.includes('juta')) parsed *= 1000000;
+        if (parsed > 0) amount = parsed;
+      }
+
+      if (isIncome) {
+        activeWallet.balance += amount;
+        state.transactions.unshift({
+          id: `tx_${Date.now()}`,
+          type: 'income',
+          amount,
+          description: text.replace(/^\/\w+\s*/, '') || 'Tambah Saldo',
+          wallet_id: activeWallet.id,
+          wallet_name: activeWallet.name,
+          category: '💼 Pemasukan',
+          time: timeStr,
+        });
+
+        state.messages.push({
+          sender: 'bot',
+          text: `📅 Hari ini — ${timeStr}\n💰 Pemasukan tercatat!\n├ Nominal : Rp${amount.toLocaleString('id-ID')}\n├ Dompet : 👛 ${activeWallet.name}\n└ Saldo baru : Rp${activeWallet.balance.toLocaleString('id-ID')}\n\n💪 Semangat terus! Saldo dompetmu sudah berhasil diperbarui.`,
+          time: timeStr.replace(' WIB', ''),
+        });
+        showToast(`💰 Pemasukan Rp ${amount.toLocaleString('id-ID')} masuk ke ${activeWallet.name}`);
+      } else {
+        // Default expense
+        activeWallet.balance -= amount;
+        state.transactions.unshift({
+          id: `tx_${Date.now()}`,
+          type: 'expense',
+          amount,
+          description: text.replace(/^\/\w+\s*/, '') || 'Makan / Jajan',
+          wallet_id: activeWallet.id,
+          wallet_name: activeWallet.name,
+          category: '🍜 Makanan & Minuman',
+          time: timeStr,
+        });
+
+        state.messages.push({
+          sender: 'bot',
+          text: `📅 Hari ini — ${timeStr}\n💸 Pengeluaran tercatat!\n├ Nominal : Rp${amount.toLocaleString('id-ID')}\n├ Kategori : 🍜 Makanan & Minuman\n├ Dompet : 👛 ${activeWallet.name}\n├ Catatan : ${text}\n└ Saldo sisa : Rp${activeWallet.balance.toLocaleString('id-ID')}`,
+          time: timeStr.replace(' WIB', ''),
+        });
+        showToast(`💸 Pengeluaran Rp ${amount.toLocaleString('id-ID')} memotong saldo ${activeWallet.name}`);
+      }
+
+      render();
+    }
+
+    // Modal helpers
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+    function openAddWalletModal() { openModal('addWalletModal'); }
+    function openTransferModal() { openModal('transferModal'); }
+    function openAddTransactionModal() { openModal('addTxModal'); }
+
+    function fillWalletTemplate(name, type, color) {
+      document.getElementById('newWalletName').value = name;
+      document.getElementById('newWalletType').value = type;
+      document.getElementById('newWalletBalance').value = 500000;
+    }
+
+    // Add Wallet Submit
+    function handleAddWalletSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('newWalletName').value.trim();
+      const type = document.getElementById('newWalletType').value;
+      const bal = parseFloat(document.getElementById('newWalletBalance').value) || 0;
+      const isDef = document.getElementById('newWalletIsDefault').checked;
+
+      if (!name) return;
+
+      if (isDef) {
+        state.wallets.forEach(w => w.is_default = false);
+      }
+
+      state.wallets.push({
+        id: `wal_${Date.now()}`,
+        name,
+        type,
+        balance: bal,
+        is_default: isDef || state.wallets.length === 0,
+        icon: type === 'bank' ? 'landmark' : type === 'ewallet' ? 'smartphone' : type === 'cash' ? 'banknote' : 'trending-up',
+      });
+
+      closeModal('addWalletModal');
+      showToast(`✅ Dompet "${name}" berhasil ditambahkan!`);
+      render();
+    }
+
+    // Transfer Submit
+    function handleTransferSubmit(e) {
+      e.preventDefault();
+      const fromId = document.getElementById('transferFromWallet').value;
+      const toId = document.getElementById('transferToWallet').value;
+      const amt = parseFloat(document.getElementById('transferAmount').value);
+      const note = document.getElementById('transferNote').value.trim();
+
+      if (fromId === toId) {
+        alert('Dompet asal dan tujuan tidak boleh sama.');
+        return;
+      }
+      if (!amt || amt <= 0) {
+        alert('Nominal harus lebih dari 0.');
+        return;
+      }
+
+      const fromW = state.wallets.find(w => w.id === fromId);
+      const toW = state.wallets.find(w => w.id === toId);
+
+      if (fromW.balance < amt) {
+        alert(`Saldo ${fromW.name} tidak cukup.`);
+        return;
+      }
+
+      fromW.balance -= amt;
+      toW.balance += amt;
+
+      state.transactions.unshift({
+        id: `tx_${Date.now()}`,
+        type: 'expense',
+        amount: amt,
+        description: note || `Transfer dari ${fromW.name} ke ${toW.name}`,
+        wallet_id: fromW.id,
+        wallet_name: fromW.name,
+        category: '🔄 Transfer Antar Dompet',
+        time: 'Baru saja',
+      });
+
+      closeModal('transferModal');
+      showToast(`✅ Berhasil transfer Rp ${amt.toLocaleString('id-ID')} dari ${fromW.name} ke ${toW.name}!`);
+      render();
+    }
+
+    // Add Transaction Submit
+    function setTxType(type) {
+      state.currentTxType = type;
+      const btnExp = document.getElementById('btnTypeExpense');
+      const btnInc = document.getElementById('btnTypeIncome');
+      if (type === 'expense') {
+        btnExp.className = 'py-2 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40';
+        btnInc.className = 'py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white';
+      } else {
+        btnInc.className = 'py-2 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        btnExp.className = 'py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white';
+      }
+    }
+
+    function handleAddTxSubmit(e) {
+      e.preventDefault();
+      const amt = parseFloat(document.getElementById('txAmount').value);
+      const desc = document.getElementById('txDesc').value.trim();
+      const cat = document.getElementById('txCategory').value;
+      const walId = document.getElementById('txWallet').value;
+
+      if (!amt || amt <= 0 || !desc) {
+        alert('Mohon lengkapi nominal dan keterangan.');
+        return;
+      }
+
+      const wal = state.wallets.find(w => w.id === walId);
+      if (state.currentTxType === 'expense' && wal.balance < amt) {
+        alert(`Saldo dompet ${wal.name} tidak cukup.`);
+        return;
+      }
+
+      if (state.currentTxType === 'expense') {
+        wal.balance -= amt;
+      } else {
+        wal.balance += amt;
+      }
+
+      state.transactions.unshift({
+        id: `tx_${Date.now()}`,
+        type: state.currentTxType,
+        amount: amt,
+        description: desc,
+        wallet_id: wal.id,
+        wallet_name: wal.name,
+        category: cat,
+        time: 'Baru saja',
+      });
+
+      closeModal('addTxModal');
+      showToast(`✅ Transaksi berhasil dicatat di dompet ${wal.name}!`);
+      render();
+    }
+
+    // Initial render
+    window.addEventListener('DOMContentLoaded', () => {
+      render();
+    });
+  </script>
+</body>
+</html>

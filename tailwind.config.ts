@@ -1,0 +1,85 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: "class",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        dark: {
+          bg: "#0D0F12",
+          surface: "#14171D",
+          card: "#181C24",
+          border: "#262C38",
+          hover: "#222733",
+          muted: "#94A3B8",
+        },
+        slate: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#7A8A9E",
+          600: "#475569",
+          700: "#334155",
+          800: "#1E293B",
+          900: "#0F172A",
+        },
+        gray: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#7A8A9E",
+          600: "#4B5563",
+          700: "#374151",
+          800: "#1F2937",
+          900: "#111827",
+        },
+        brand: {
+          50: "#F8FAFC",
+          100: "#F1F5F9",
+          200: "#E2E8F0",
+          300: "#CBD5E1",
+          400: "#94A3B8",
+          500: "#E2E8F0",
+          600: "#CBD5E1",
+          700: "#94A3B8",
+          800: "#64748B",
+          900: "#475569",
+        },
+        chrome: {
+          50: "#FFFFFF",
+          100: "#F8FAFC",
+          200: "#F1F5F9",
+          300: "#E2E8F0",
+          400: "#CBD5E1",
+          500: "#94A3B8",
+          600: "#64748B",
+          700: "#475569",
+          800: "#334155",
+          900: "#1E293B",
+        },
+        platinum: {
+          light: "#F8FAFC",
+          pure: "#E2E8F0",
+          metallic: "#CBD5E1",
+          chrome: "#94A3B8",
+          steel: "#64748B",
+          dark: "#1E293B",
+        },
+      },
+      fontFamily: {
+        sans: ["'Plus Jakarta Sans'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "sans-serif"],
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
