@@ -23,6 +23,15 @@ interface RecentTransactionsProps {
 export const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions }) => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
+  const uniqueTransactions = React.useMemo(() => {
+    const seen = new Set<string>();
+    return (transactions || []).filter((tx) => {
+      if (!tx || !tx.id || seen.has(tx.id)) return false;
+      seen.add(tx.id);
+      return true;
+    });
+  }, [transactions]);
+
   const toggleExpand = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
   };
@@ -65,11 +74,11 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transact
           <p className="text-xs text-gray-400">Sinkronisasi real-time dari bot Telegram & web</p>
         </div>
         <Badge variant="orange" size="sm">
-          {transactions.length} Transaksi
+          {uniqueTransactions.length} Transaksi
         </Badge>
       </div>
 
-      {transactions.length === 0 ? (
+      {uniqueTransactions.length === 0 ? (
         <div className="py-12 text-center space-y-2">
           <div className="w-12 h-12 rounded-2xl bg-[#181C24] border border-[#262C38] flex items-center justify-center mx-auto text-xl">
             🌱
@@ -81,7 +90,7 @@ export const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transact
         </div>
       ) : (
         <div className="divide-y divide-[#262C38]">
-          {transactions.slice(0, 10).map((tx) => {
+          {uniqueTransactions.slice(0, 10).map((tx) => {
             const isExpanded = expandedId === tx.id;
             const hasItems = tx.receipt_items && tx.receipt_items.length > 0;
 

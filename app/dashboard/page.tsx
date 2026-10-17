@@ -30,7 +30,12 @@ export default function DashboardOverviewPage() {
     const refreshData = () => {
       setProfile(demoStore.getProfile());
       setWallets([...demoStore.getWallets()]);
-      setTransactions([...demoStore.getTransactions()]);
+      const raw = demoStore.getTransactions();
+      const map = new Map<string, any>();
+      raw.forEach((t) => {
+        if (t && t.id && !map.has(t.id)) map.set(t.id, t);
+      });
+      setTransactions(Array.from(map.values()));
       setBudgets([...demoStore.getBudgets()]);
     };
 

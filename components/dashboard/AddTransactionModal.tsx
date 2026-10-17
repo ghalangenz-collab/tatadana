@@ -30,6 +30,7 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const isSubmittingRef = React.useRef(false);
 
   useEffect(() => {
     const unsub = demoStore.subscribe(() => {
@@ -89,6 +90,7 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmittingRef.current || isLoading) return;
     
     // Flexible nominal parser: accepts 1jt, 1.5jt, 10 juta, 1.000.000, 10.000.000, 500k, 25rb, etc.
     const numAmount = parseNominalInput(amount);
@@ -109,15 +111,16 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
       selectedWallet = currentWallets[0];
     }
 
+    isSubmittingRef.current = true;
     setIsLoading(true);
     setError('');
 
     try {
       const todayStr = new Date().toISOString().slice(0, 10);
       const txDate = date === todayStr ? new Date().toISOString() : new Date(`${date}T12:00:00.000Z`).toISOString();
+      const idempotencyKey = `tx_manual_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
 
       // 1. Immediately record in client demoStore (updates wallet balance & transaction list in real time)
-      // NOTE: Expenses with Rp 0 balance are allowed! Saldo will become negative or be tracked smoothly.
       demoStore.addTransaction({
         wallet_id: targetWalletId,
         category_id: categoryId,
@@ -126,6 +129,7 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
         description: description.trim(),
         transaction_date: txDate,
         source: 'web_manual',
+        idempotencyKey,
       });
 
       // 2. Synchronize to server API gracefully in background
@@ -140,15 +144,11 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
           category_id: categoryId,
           transaction_date: txDate,
           source: 'web_manual',
+          idempotencyKey,
         }),
       }).catch((e) => {
         console.warn('Background sync warning:', e);
       });
-
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('tatadana_transactions_updated'));
-        window.dispatchEvent(new CustomEvent('tatadana_wallets_updated'));
-      }
 
       // Reset form
       setAmount('');
@@ -158,6 +158,7 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
     } catch (err: any) {
       setError(err.message || 'Gagal menyimpan transaksi.');
     } finally {
+      isSubmittingRef.current = false;
       setIsLoading(false);
     }
   };

@@ -21,6 +21,7 @@ export const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose })
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const isSubmittingRef = React.useRef(false);
 
   useEffect(() => {
     const unsub = demoStore.subscribe(() => {
@@ -61,11 +62,14 @@ export const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose })
       return;
     }
 
+    if (isSubmittingRef.current || isLoading) return;
+
     if (fromWallet && fromWallet.balance < numAmount) {
       setError(`Saldo ${fromWallet.name} tidak cukup (Saldo: Rp ${fromWallet.balance.toLocaleString('id-ID')}).`);
       return;
     }
 
+    isSubmittingRef.current = true;
     setIsLoading(true);
     setError('');
 
@@ -90,17 +94,13 @@ export const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose })
         console.warn('Background sync warning:', err);
       });
 
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('tatadana_transactions_updated'));
-        window.dispatchEvent(new CustomEvent('tatadana_wallets_updated'));
-      }
-
       setAmount('');
       setDescription('');
       onClose();
     } catch (err: any) {
       setError(err.message || 'Gagal memproses transfer.');
     } finally {
+      isSubmittingRef.current = false;
       setIsLoading(false);
     }
   };

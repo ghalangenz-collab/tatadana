@@ -121,7 +121,7 @@ class DemoStore {
   private users: UserAccount[] = [];
   private currentUser: UserAccount | null = null;
   private adminSession: { isAuthenticated: boolean; username: string } | null = null;
-  private adminWhatsApp: string = '+6281234567890';
+  private adminWhatsApp: string = '6285156847921';
 
   // Idempotency cache to prevent duplicate transactions
   private processedTxMap = new Map<string, { transaction: Transaction; budgetAlert?: any }>();
@@ -195,14 +195,14 @@ class DemoStore {
             return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
           });
 
-          this.wallets = mergedWallets.length > 0 ? mergedWallets : this.wallets;
-          this.transactions = mergedTransactions;
+          this.wallets = mergedWallets.length > 0 ? [...mergedWallets] : this.wallets;
+          this.transactions = [...mergedTransactions];
 
           const mergedUser: UserAccount = {
             ...(found || parsed),
             ...parsed,
-            wallets: mergedWallets,
-            transactions: mergedTransactions,
+            wallets: [...mergedWallets],
+            transactions: [...mergedTransactions],
           };
           this.currentUser = mergedUser;
           if (foundIdx !== -1) {
@@ -416,23 +416,38 @@ class DemoStore {
     let cleanPass = (password || '').trim();
 
     // Default fallbacks if empty
-    if (!clean) clean = 'admin';
-    if (!cleanPass && (clean === 'admin' || clean === 'admin@tatadana.id' || clean === 'owner')) {
-      cleanPass = 'admin';
+    if (!clean) clean = 'muhammad ghalan';
+    if (!cleanPass && (clean === 'muhammad ghalan' || clean === 'ghalan' || clean === 'admin' || clean === 'admin@tatadana.id' || clean === 'owner')) {
+      cleanPass = 'ghalan123';
     }
 
-    // Default owner fallback
-    if ((clean === 'admin' || clean === 'admin@tatadana.id' || clean === 'owner') && 
-        (!cleanPass || cleanPass === 'admin' || cleanPass === 'admin123' || cleanPass === 'owner')) {
-      let defaultAdmin = this.users.find((u) => u.role === 'admin');
+    const isGhalanMatch =
+      clean === 'muhammad ghalan' ||
+      clean === 'ghalan' ||
+      clean === 'ghalan123' ||
+      clean === '6285156847921' ||
+      clean === '085156847921';
+
+    const isAdminFallback =
+      clean === 'admin' || clean === 'admin@tatadana.id' || clean === 'owner';
+
+    // Default Muhammad Ghalan owner fallback
+    if ((isGhalanMatch || isAdminFallback) &&
+        (!cleanPass || cleanPass === 'ghalan123' || cleanPass === 'admin' || cleanPass === 'admin123' || cleanPass === 'owner')) {
+      let defaultAdmin = this.users.find(
+        (u) =>
+          u.role === 'admin' &&
+          (u.full_name?.toLowerCase().includes('ghalan') || u.email?.toLowerCase() === 'admin@tatadana.id')
+      );
       if (!defaultAdmin) {
         defaultAdmin = this.registerAdmin({
-          fullName: 'Superadmin TataDana',
+          fullName: 'Muhammad Ghalan',
           email: 'admin@tatadana.id',
-          phone: this.adminWhatsApp || '+6281234567890',
-          password: 'admin',
+          phone: this.adminWhatsApp || '6285156847921',
+          password: 'ghalan123',
         });
       }
+      this.adminWhatsApp = '6285156847921';
       this.adminSession = {
         isAuthenticated: true,
         username: defaultAdmin.full_name,
@@ -447,7 +462,9 @@ class DemoStore {
       (u) =>
         u.role === 'admin' &&
         (u.email.toLowerCase() === clean ||
+          u.full_name.toLowerCase() === clean ||
           (clean === 'admin' && (u.email.toLowerCase() === 'admin@tatadana.id' || u.role === 'admin')) ||
+          (clean === 'ghalan' && u.full_name.toLowerCase().includes('ghalan')) ||
           (u.phone && u.phone.replace(/\D/g, '') === clean.replace(/\D/g, '')))
     );
 
@@ -456,36 +473,38 @@ class DemoStore {
       const anyUser = this.users.find(
         (u) =>
           u.email.toLowerCase() === clean ||
+          u.full_name.toLowerCase() === clean ||
           (u.phone && u.phone.replace(/\D/g, '') === clean.replace(/\D/g, ''))
       );
-      if (anyUser && (!anyUser.password || anyUser.password === cleanPass || cleanPass === 'admin' || !cleanPass)) {
+      if (anyUser && (!anyUser.password || anyUser.password === cleanPass || cleanPass === 'ghalan123' || cleanPass === 'admin' || !cleanPass)) {
         adminUser = anyUser;
-        adminUser.role = 'admin'; // elevate so user can access superadmin menu
+        adminUser.role = 'admin';
       }
     }
 
-    // If still not found and password or identifier is admin, fallback to default admin
-    if (!adminUser && (clean === 'admin' || cleanPass === 'admin' || cleanPass === 'admin123' || !cleanPass)) {
+    // If still not found and password or identifier matches admin/ghalan, fallback to default admin
+    if (!adminUser && (isGhalanMatch || isAdminFallback || cleanPass === 'ghalan123' || cleanPass === 'admin' || !cleanPass)) {
       let defaultAdmin = this.users.find((u) => u.role === 'admin');
       if (!defaultAdmin) {
         defaultAdmin = this.registerAdmin({
-          fullName: 'Superadmin TataDana',
+          fullName: 'Muhammad Ghalan',
           email: 'admin@tatadana.id',
-          phone: this.adminWhatsApp || '+6281234567890',
-          password: 'admin',
+          phone: this.adminWhatsApp || '6285156847921',
+          password: 'ghalan123',
         });
       }
       adminUser = defaultAdmin;
     }
 
     if (!adminUser) {
-      return { success: false, error: 'Akun Admin tidak ditemukan. Silakan gunakan kredensial default admin / admin atau daftar akun admin.' };
+      return { success: false, error: 'Akun Admin tidak ditemukan. Silakan gunakan kredensial Muhammad Ghalan / ghalan123.' };
     }
 
-    if (adminUser.password && cleanPass && adminUser.password !== cleanPass && cleanPass !== 'admin') {
-      return { success: false, error: 'Kata sandi Admin salah! Harap masukkan kata sandi yang benar atau gunakan "admin".' };
+    if (adminUser.password && cleanPass && adminUser.password !== cleanPass && cleanPass !== 'ghalan123' && cleanPass !== 'admin') {
+      return { success: false, error: 'Kata sandi Admin salah! Harap masukkan kata sandi yang benar (ghalan123).' };
     }
 
+    this.adminWhatsApp = '6285156847921';
     this.adminSession = {
       isAuthenticated: true,
       username: adminUser.full_name,
@@ -504,7 +523,7 @@ class DemoStore {
     if (typeof window !== 'undefined' && !this.isClientInitialized) {
       this.initFromClientStorage();
     }
-    return this.adminWhatsApp || '+6281234567890';
+    return this.adminWhatsApp || '6285156847921';
   }
 
   public setAdminWhatsApp(phone: string): void {
@@ -840,10 +859,19 @@ class DemoStore {
     const cats = this.getCategories();
     const wals = this.getWallets();
 
-    const txList =
+    const rawTxList =
       this.currentUser && Array.isArray(this.currentUser.transactions)
         ? this.currentUser.transactions
         : this.transactions;
+
+    // Strict deduplication by transaction id to prevent any double-display in table/UI
+    const txMap = new Map<string, Transaction>();
+    for (const tx of rawTxList) {
+      if (tx && tx.id && !txMap.has(tx.id)) {
+        txMap.set(tx.id, tx);
+      }
+    }
+    const txList = Array.from(txMap.values());
 
     const sorted = [...txList].sort((a, b) => {
       const dateA = new Date(a.transaction_date || a.created_at).getTime();
@@ -1063,7 +1091,9 @@ class DemoStore {
 
     if (this.currentUser) {
       if (!this.currentUser.transactions) this.currentUser.transactions = [];
-      this.currentUser.transactions.unshift(tx);
+      if (!this.currentUser.transactions.some((t) => t.id === tx.id)) {
+        this.currentUser.transactions.unshift(tx);
+      }
       const fIdx = this.currentUser.wallets.findIndex((w) => w.id === from.id);
       if (fIdx !== -1) this.currentUser.wallets[fIdx].balance = from.balance;
       const tIdx = this.currentUser.wallets.findIndex((w) => w.id === to.id);
@@ -1075,7 +1105,11 @@ class DemoStore {
     const gTIdx = this.wallets.findIndex((w) => w.id === to.id);
     if (gTIdx !== -1) this.wallets[gTIdx].balance = to.balance;
 
-    this.transactions.unshift(tx);
+    if (this.transactions !== this.currentUser?.transactions) {
+      if (!this.transactions.some((t) => t.id === tx.id)) {
+        this.transactions.unshift(tx);
+      }
+    }
     this.notify();
     return tx;
   }
@@ -1211,9 +1245,15 @@ class DemoStore {
 
     if (this.currentUser) {
       if (!this.currentUser.transactions) this.currentUser.transactions = [];
-      this.currentUser.transactions.unshift(tx);
+      if (!this.currentUser.transactions.some((t) => t.id === tx.id)) {
+        this.currentUser.transactions.unshift(tx);
+      }
     }
-    this.transactions.unshift(tx);
+    if (this.transactions !== this.currentUser?.transactions) {
+      if (!this.transactions.some((t) => t.id === tx.id)) {
+        this.transactions.unshift(tx);
+      }
+    }
 
     // Update budget if expense
     let budgetAlert: { percent: number; categoryName: string; remaining: number } | undefined;

@@ -45,7 +45,12 @@ export default function TransactionsPage() {
     demoStore.initFromClientStorage(true);
 
     const refreshData = () => {
-      setTransactions([...demoStore.getTransactions()]);
+      const raw = demoStore.getTransactions();
+      const map = new Map<string, any>();
+      raw.forEach((t) => {
+        if (t && t.id && !map.has(t.id)) map.set(t.id, t);
+      });
+      setTransactions(Array.from(map.values()));
       setWallets([...demoStore.getWallets()]);
       setCategories([...demoStore.getCategories()]);
     };

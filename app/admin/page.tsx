@@ -36,11 +36,11 @@ import {
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<'approvals' | 'providers' | 'payments' | 'logs' | 'users'>('approvals');
   const [isAdminAuth, setIsAdminAuth] = useState(false);
-  const [adminPasswordInput, setAdminPasswordInput] = useState('admin');
+  const [adminPasswordInput, setAdminPasswordInput] = useState('ghalan123');
   const [adminAuthError, setAdminAuthError] = useState('');
 
   const [adminAuthMode, setAdminAuthMode] = useState<'login' | 'register'>('login');
-  const [adminIdentifierInput, setAdminIdentifierInput] = useState('admin');
+  const [adminIdentifierInput, setAdminIdentifierInput] = useState('Muhammad Ghalan');
   const [adminFullNameInput, setAdminFullNameInput] = useState('');
   const [adminEmailInput, setAdminEmailInput] = useState('');
   const [adminPhoneInput, setAdminPhoneInput] = useState('');
@@ -69,8 +69,8 @@ export default function AdminDashboardPage() {
     demoStore.initFromClientStorage(true);
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('autologin') === 'true' || params.get('login') === 'admin') {
-        demoStore.loginAdmin('admin', 'admin');
+      if (params.get('autologin') === 'true' || params.get('login') === 'admin' || params.get('login') === 'ghalan') {
+        demoStore.loginAdmin('Muhammad Ghalan', 'ghalan123');
       }
     }
     setIsAdminAuth(demoStore.isAdminAuthenticated());
@@ -81,6 +81,38 @@ export default function AdminDashboardPage() {
     setAiMode(demoStore.getAIExecutionMode());
     setAdminWhatsApp(demoStore.getAdminWhatsApp());
 
+    // Cross-device network sync: fetch registered users from server API
+    const syncServerUsers = async () => {
+      try {
+        const res = await fetch('/api/admin/users');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.users && Array.isArray(data.users)) {
+            data.users.forEach((serverU: UserAccount) => {
+              const localUsers = demoStore.getUsers();
+              const existing = localUsers.find((u) => u.id === serverU.id);
+              if (!existing) {
+                demoStore.getUsers().unshift(serverU);
+              } else {
+                existing.status = serverU.status;
+                existing.is_verified = serverU.is_verified;
+                if (serverU.verification_code) existing.verification_code = serverU.verification_code;
+              }
+            });
+            setUsers([...demoStore.getUsers()]);
+          }
+          if (data.adminWhatsApp) {
+            setAdminWhatsApp(data.adminWhatsApp);
+          }
+        }
+      } catch (err) {
+        // silent fail on network drop
+      }
+    };
+
+    syncServerUsers();
+    const interval = setInterval(syncServerUsers, 2000);
+
     const unsub = demoStore.subscribe(() => {
       setIsAdminAuth(demoStore.isAdminAuthenticated());
       setUsers(demoStore.getUsers());
@@ -90,12 +122,16 @@ export default function AdminDashboardPage() {
       setAiMode(demoStore.getAIExecutionMode());
       setAdminWhatsApp(demoStore.getAdminWhatsApp());
     });
-    return () => unsub();
+    return () => {
+      clearInterval(interval);
+      unsub();
+    };
   }, []);
 
   const handleInstantAdminLogin = () => {
-    const res = demoStore.loginAdmin('admin', 'admin');
+    const res = demoStore.loginAdmin('Muhammad Ghalan', 'ghalan123');
     if (res.success) {
+      demoStore.setAdminWhatsApp('6285156847921');
       setIsAdminAuth(true);
       setAdminAuthError('');
     }
@@ -103,14 +139,15 @@ export default function AdminDashboardPage() {
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const id = adminIdentifierInput.trim() || 'admin';
-    const pass = adminPasswordInput.trim() || 'admin';
+    const id = adminIdentifierInput.trim() || 'Muhammad Ghalan';
+    const pass = adminPasswordInput.trim() || 'ghalan123';
     const res = demoStore.loginAdmin(id, pass);
     if (res.success) {
+      demoStore.setAdminWhatsApp('6285156847921');
       setIsAdminAuth(true);
       setAdminAuthError('');
     } else {
-      setAdminAuthError(res.error || 'Kata sandi admin salah. Masukkan kata sandi admin yang benar.');
+      setAdminAuthError(res.error || 'Kata sandi admin salah. Masukkan kata sandi admin (ghalan123).');
     }
   };
 
@@ -135,21 +172,51 @@ export default function AdminDashboardPage() {
     setIsAdminAuth(false);
   };
 
-  const handleApproveUser = (userId: string) => {
+  const handleApproveUser = async (userId: string) => {
     const targetUser = users.find((u) => u.id === userId);
     const res = demoStore.approveUser(userId);
-    if (res.success) {
-      setGeneratedCodeModal({
-        userName: targetUser?.full_name || 'Pengguna',
-        code: res.verification_code,
+    let approvedCode = res.verification_code;
+
+    try {
+      const apiRes = await fetch('/api/admin/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, action: 'approve' }),
       });
-      setCopySuccess(false);
+      if (apiRes.ok) {
+        const apiData = await apiRes.json();
+        if (apiData.verification_code) {
+          approvedCode = apiData.verification_code;
+          // Sync code into local store
+          const localU = demoStore.getUsers().find((u) => u.id === userId);
+          if (localU) {
+            localU.verification_code = approvedCode;
+            localU.status = 'approved';
+            localU.is_verified = true;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Network approve sync notice:', e);
     }
+
+    setGeneratedCodeModal({
+      userName: targetUser?.full_name || 'Pengguna',
+      code: approvedCode,
+    });
+    setCopySuccess(false);
   };
 
-  const handleRejectUser = (userId: string) => {
+  const handleRejectUser = async (userId: string) => {
     if (confirm('Yakin ingin menolak pendaftaran akun ini?')) {
       demoStore.rejectUser(userId);
+      try {
+        await fetch('/api/admin/approve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, action: 'reject' }),
+        });
+      } catch (e) {}
     }
   };
 
@@ -186,9 +253,17 @@ export default function AdminDashboardPage() {
     demoStore.updateSubscription(id, 'rejected');
   };
 
-  const handleSaveWhatsApp = (e: React.FormEvent) => {
+  const handleSaveWhatsApp = async (e: React.FormEvent) => {
     e.preventDefault();
-    demoStore.setAdminWhatsApp(adminWhatsApp);
+    const cleanPhone = (adminWhatsApp || '6285156847921').replace(/[^\d+]/g, '');
+    demoStore.setAdminWhatsApp(cleanPhone);
+    try {
+      await fetch('/api/admin/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adminWhatsApp: cleanPhone }),
+      });
+    } catch (err) {}
     setWaSavedSuccess(true);
     setTimeout(() => setWaSavedSuccess(false), 3000);
   };
@@ -255,15 +330,15 @@ export default function AdminDashboardPage() {
             {adminAuthMode === 'login' ? (
               <form onSubmit={handleAdminLogin} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1.5">Email / No. WhatsApp / User Admin</label>
+                  <label className="block text-xs font-semibold text-gray-300 mb-1.5">Nama Akun / Email / No. WhatsApp Admin</label>
                   <input
                     type="text"
                     value={adminIdentifierInput}
                     onChange={(e) => setAdminIdentifierInput(e.target.value)}
-                    placeholder="admin atau email admin"
+                    placeholder="Muhammad Ghalan atau admin"
                     className="w-full bg-[#181C24] border border-[#262C38] focus:border-blue-500 rounded-xl px-4 py-2.5 text-white text-xs outline-none"
                   />
-                  <p className="text-[11px] text-gray-500 mt-1">Default pemilik: <code>admin</code></p>
+                  <p className="text-[11px] text-gray-500 mt-1">Nama akun pemilik: <code>Muhammad Ghalan</code></p>
                 </div>
 
                 <div>
@@ -274,11 +349,11 @@ export default function AdminDashboardPage() {
                       type="password"
                       value={adminPasswordInput}
                       onChange={(e) => setAdminPasswordInput(e.target.value)}
-                      placeholder="Masukkan kata sandi admin (cth: admin)"
+                      placeholder="ghalan123"
                       className="w-full bg-[#181C24] border border-[#262C38] focus:border-blue-500 rounded-xl pl-10 pr-4 py-2.5 text-white text-xs outline-none"
                     />
                   </div>
-                  <p className="text-[11px] text-gray-500 mt-1">Sandi default pemilik: <code>admin</code></p>
+                  <p className="text-[11px] text-gray-500 mt-1">Sandi default pemilik: <code>ghalan123</code></p>
                 </div>
 
                 <div className="space-y-2 pt-1">
@@ -291,7 +366,7 @@ export default function AdminDashboardPage() {
                     onClick={handleInstantAdminLogin}
                     className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs transition-all shadow-md shadow-emerald-600/25 flex items-center justify-center gap-1.5"
                   >
-                    ⚡ Masuk Instan Superadmin (1-Klik)
+                    ⚡ Masuk Instan Superadmin (Muhammad Ghalan)
                   </button>
                 </div>
               </form>
