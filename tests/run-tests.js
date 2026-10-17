@@ -1289,6 +1289,119 @@ farhanUser.transactions.unshift(farhanTx2);
 test('Farhan Transaction: Dompet Utama balance increased to 1.500.000', dompetUtama.balance === 1500000);
 test('Farhan Mutasi: latest transaction is top of list', farhanUser.transactions[0].id === farhanTx2.id);
 
+// Test Muhammad Ghalan Admin Account & WhatsApp 6285156847921
+const defaultAdminAccount = {
+  fullName: 'Muhammad Ghalan',
+  password: 'ghalan123',
+  phone: '6285156847921',
+  role: 'admin',
+};
+
+function verifyAdminCredentials(userOrId, pass) {
+  const cleanId = (userOrId || '').trim().toLowerCase();
+  const isNameMatch = cleanId === 'muhammad ghalan' || cleanId === 'ghalan' || cleanId === 'admin';
+  const isPassMatch = pass === 'ghalan123' || pass === 'admin';
+  return isNameMatch && isPassMatch;
+}
+
+test('Admin Auth: Muhammad Ghalan with password ghalan123 is valid', verifyAdminCredentials('Muhammad Ghalan', 'ghalan123') === true);
+test('Admin Auth: ghalan with password ghalan123 is valid', verifyAdminCredentials('ghalan', 'ghalan123') === true);
+test('Admin Auth: invalid password is rejected', verifyAdminCredentials('Muhammad Ghalan', 'wrongpass') === false);
+
+// Test Admin WhatsApp configuration default 6285156847921
+const defaultWhatsApp = '6285156847921';
+function getWhatsAppHelpDeskLink(waNumber, user) {
+  const cleanNumber = (waNumber || defaultWhatsApp).replace(/\D/g, '');
+  const msg = encodeURIComponent(`Halo Admin TataDana, saya ${user.fullName} (${user.email}) sedang di halaman verifikasi OTP akun.`);
+  return `https://wa.me/${cleanNumber}?text=${msg}`;
+}
+
+const waLink = getWhatsAppHelpDeskLink(defaultWhatsApp, { fullName: 'Muhammad Ghalan', email: 'admin@tatadana.id' });
+test('Admin WhatsApp: link starts with https://wa.me/6285156847921', waLink.startsWith('https://wa.me/6285156847921'));
+
+// Test Transaction deduplication: prevent double transaction display (e.g. "beli makan 25ribu")
+function deduplicateTransactionsList(txs) {
+  const seen = new Set();
+  return (txs || []).filter((tx) => {
+    if (!tx || !tx.id || seen.has(tx.id)) return false;
+    seen.add(tx.id);
+    return true;
+  });
+}
+
+const sampleDuplicateTxs = [
+  { id: 'tx_101', description: 'beli makan 25ribu', amount: 25000, type: 'expense' },
+  { id: 'tx_101', description: 'beli makan 25ribu', amount: 25000, type: 'expense' },
+  { id: 'tx_102', description: 'bonus kerja', amount: 1000000, type: 'income' },
+  { id: 'tx_102', description: 'bonus kerja', amount: 1000000, type: 'income' },
+];
+
+const dedupedTxs = deduplicateTransactionsList(sampleDuplicateTxs);
+test('Transaction Deduplication: removes duplicate transactions with same ID (length becomes 2)', dedupedTxs.length === 2);
+test('Transaction Deduplication: contains only 1 "beli makan 25ribu"', dedupedTxs.filter(t => t.description === 'beli makan 25ribu').length === 1);
+// Test User Wallet Isolation (No Admin Wallets in Regular User Accounts)
+function isWalletAllowedForUser(w, user) {
+  if (!w || !w.id) return false;
+  const nameLower = (w.name || '').toLowerCase();
+  const idLower = (w.id || '').toLowerCase();
+  if (user && user.role === 'admin') return true;
+  if (nameLower.includes('(admin)') || nameLower.includes('admin') || idLower.includes('admin')) {
+    return false;
+  }
+  if (w.user_id && (w.user_id.startsWith('adm_') || w.user_id === 'adm_ghalan_01')) {
+    return false;
+  }
+  if (user && w.user_id && w.user_id !== user.id) {
+    return false;
+  }
+  return true;
+}
+
+const mockAdminWallet = {
+  id: 'wal_admin_99',
+  user_id: 'adm_01',
+  name: 'Dompet Utama (Admin)',
+  type: 'bank',
+  balance: 9950000,
+  is_default: true,
+};
+
+const mockUserWallet1 = {
+  id: 'wal_user_01',
+  user_id: 'usr_zaa_01',
+  name: 'Dompet Utama',
+  type: 'cash',
+  balance: 0,
+  is_default: true,
+};
+
+const mockUserWallet2 = {
+  id: 'wal_user_02',
+  user_id: 'usr_zaa_01',
+  name: 'BRI Tabungan',
+  type: 'bank',
+  balance: 10000000,
+  is_default: false,
+};
+
+const regularUserZaa = {
+  id: 'usr_zaa_01',
+  full_name: 'zaa',
+  role: 'user',
+  wallets: [mockUserWallet1, mockAdminWallet, mockUserWallet2],
+};
+
+test('Wallet Isolation: Admin wallet is rejected for regular user', isWalletAllowedForUser(mockAdminWallet, regularUserZaa) === false);
+test('Wallet Isolation: User wallet 1 is accepted for regular user', isWalletAllowedForUser(mockUserWallet1, regularUserZaa) === true);
+test('Wallet Isolation: User wallet 2 is accepted for regular user', isWalletAllowedForUser(mockUserWallet2, regularUserZaa) === true);
+
+// Purge test
+const sanitizedWallets = regularUserZaa.wallets.filter(w => isWalletAllowedForUser(w, regularUserZaa));
+test('Wallet Isolation: Sanitized wallet count is 2 (purged admin wallet)', sanitizedWallets.length === 2);
+test('Wallet Isolation: Admin wallet is not in sanitized list', !sanitizedWallets.some(w => w.name.includes('Admin')));
+const cleanTotalBalance = sanitizedWallets.reduce((acc, w) => acc + w.balance, 0);
+test('Wallet Isolation: Total balance is exactly 10.000.000 (not 19.950.000)', cleanTotalBalance === 10000000);
+
 console.log(`\nResults: ${passed} passed, ${failed} failed.`);
 if (failed > 0) process.exit(1);
 

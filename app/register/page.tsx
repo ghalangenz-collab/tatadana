@@ -45,6 +45,23 @@ export default function RegisterPage() {
         localStorage.setItem('tatadana_pending_verify_user_id', newUser.id);
       }
 
+      // Sync to shared server database network so admin on any device sees this user
+      try {
+        await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fullName: fullName.trim(),
+            email: email.trim(),
+            phone: phone.trim(),
+            password: password || 'password123',
+            telegram_username: cleanTelegram || undefined,
+          }),
+        });
+      } catch (netErr) {
+        console.warn('Network registration sync warning:', netErr);
+      }
+
       // Redirect immediately to real-time verification page
       router.push('/verify');
     } catch (err: any) {
@@ -213,12 +230,12 @@ export default function RegisterPage() {
               </Link>
             </p>
 
-            <div className="pt-4 border-t border-[#262C38]/60">
+            <div className="pt-4 border-t border-[#262C38]/60 space-y-2">
               <Link
-                href="/admin"
-                className="text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
+                href="/admin/login"
+                className="inline-flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 transition-colors font-semibold bg-blue-500/10 hover:bg-blue-500/20 px-3 py-1.5 rounded-xl border border-blue-500/20"
               >
-                Khusus Pemilik: Buka Portal Admin (/admin) →
+                <span>🛡️ Ingin Masuk sebagai Admin? Login Admin (/admin/login) →</span>
               </Link>
             </div>
           </div>

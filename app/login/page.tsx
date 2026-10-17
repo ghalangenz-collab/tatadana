@@ -148,13 +148,13 @@ export default function LoginPage() {
               </Link>
             </p>
 
-            <div className="pt-4 border-t border-[#262C38]/60">
+            <div className="pt-4 border-t border-[#262C38]/60 space-y-2">
               <Link
-                href="/admin"
+                href="/admin/login"
                 className="inline-flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 transition-colors font-semibold bg-blue-500/10 hover:bg-blue-500/20 px-3 py-1.5 rounded-xl border border-blue-500/20"
               >
                 <ShieldAlert className="w-3.5 h-3.5 text-blue-400" />
-                <span>Khusus Pemilik: Masuk Link Admin (/admin)</span>
+                <span>Ingin Masuk sebagai Admin? Login Admin (/admin/login)</span>
               </Link>
             </div>
           </div>

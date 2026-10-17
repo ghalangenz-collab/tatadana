@@ -45,7 +45,18 @@ export default function WalletsPage() {
     // Hydrate store on mount
     demoStore.initFromClientStorage(true);
     const refreshWallets = () => {
-      const freshWallets = demoStore.getWallets();
+      const user = demoStore.getCurrentUser();
+      let freshWallets = demoStore.getWallets();
+      if (user && user.role !== 'admin') {
+        freshWallets = freshWallets.filter(
+          (w) =>
+            w &&
+            !w.name.toLowerCase().includes('(admin)') &&
+            !w.name.toLowerCase().includes('admin') &&
+            !w.id.toLowerCase().includes('admin') &&
+            (!w.user_id || w.user_id === user.id)
+        );
+      }
       setWallets([...freshWallets]);
       if (freshWallets.length > 0 && !topUpWalletId) {
         setTopUpWalletId(demoStore.getDefaultWallet()?.id || freshWallets[0].id);

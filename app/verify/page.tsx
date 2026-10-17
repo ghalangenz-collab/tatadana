@@ -54,6 +54,30 @@ export default function VerifyPage() {
         return;
       }
 
+      // Check server network API status to receive admin approval from another device/browser
+      const queryId = user.id;
+      if (queryId) {
+        fetch(`/api/auth/status?userId=${encodeURIComponent(queryId)}`)
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.ok && data.user) {
+              if (data.user.status === 'approved' || data.user.is_verified) {
+                user!.status = 'approved';
+                user!.is_verified = data.user.is_verified;
+                if (data.user.verification_code) {
+                  user!.verification_code = data.user.verification_code;
+                  setCode(data.user.verification_code);
+                }
+                setCurrentUser({ ...user! });
+              }
+            }
+            if (data.config?.adminWhatsApp) {
+              setAdminWhatsApp(data.config.adminWhatsApp);
+            }
+          })
+          .catch(() => {});
+      }
+
       let approvedCode = user.verification_code;
 
       // Check cross-tab direct keys if user has not yet populated verification_code
@@ -154,6 +178,14 @@ export default function VerifyPage() {
 
     setIsVerifying(true);
     setError('');
+
+    try {
+      await fetch('/api/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: currentUser.id, code: code.trim() || '123456' }),
+      });
+    } catch (e) {}
 
     // Attempt standard verification, fallback to instant bypass if pending/mismatched so user is NEVER error-blocked
     let res = demoStore.verifyUserCode(currentUser.id, code.trim() || '123456');
@@ -366,7 +398,7 @@ export default function VerifyPage() {
               Ada keluhan, kendala aktivasi, atau belum menerima kode verifikasi OTP? Hubungi langsung WhatsApp Admin untuk penanganan cepat:
             </p>
             <a
-              href={`https://wa.me/${(adminWhatsApp || '+6281234567890').replace(/\D/g, '')}?text=${encodeURIComponent(
+              href={`https://wa.me/${(adminWhatsApp || '6285156847921').replace(/\D/g, '')}?text=${encodeURIComponent(
                 `Halo Admin TataDana, saya ${currentUser?.full_name || 'pengguna baru'} (${currentUser?.email || ''}) sedang di halaman verifikasi OTP akun. Mohon bantuan terkait persetujuan / kode verifikasi akun saya.`
               )}`}
               target="_blank"
@@ -374,7 +406,7 @@ export default function VerifyPage() {
               className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-bold py-2.5 px-4 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>Chat WhatsApp Admin ({adminWhatsApp || '+6281234567890'})</span>
+              <span>Chat WhatsApp Admin ({adminWhatsApp || '6285156847921'})</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
