@@ -48,7 +48,7 @@ export default function ReportsPage() {
       if (list.length === 0) {
         list = [{
           id: `wal_${user?.id || 'main'}_clean`,
-          user_id: user?.id,
+          user_id: user?.id || 'usr_main',
           name: 'Dompet Utama',
           type: 'cash',
           balance: 0,

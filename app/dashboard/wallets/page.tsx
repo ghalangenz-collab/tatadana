@@ -44,7 +44,7 @@ export default function WalletsPage() {
       if (list.length === 0) {
         list = [{
           id: `wal_${user?.id || 'main'}_clean`,
-          user_id: user?.id,
+          user_id: user?.id || 'usr_main',
           name: 'Dompet Utama',
           type: 'cash',
           balance: 0,
@@ -128,7 +128,7 @@ export default function WalletsPage() {
   }, []);
 
   const handleOpenTopUp = (walletId?: string) => {
-    const freshWallets = demoStore.getWallets();
+    const freshWallets = getCleanWallets();
     const targetId = walletId || demoStore.getDefaultWallet()?.id || freshWallets[0]?.id || '';
     setTopUpWalletId(targetId);
     setTopUpAmount('');
@@ -149,7 +149,7 @@ export default function WalletsPage() {
 
     try {
       const res = demoStore.topUpWallet(targetWallet.id, num, topUpNote.trim() || 'Top Up Saldo');
-      setWallets([...demoStore.getWallets()]);
+      setWallets([...getCleanWallets()]);
       setIsTopUpOpen(false);
       setTopUpAmount('');
       showNotification(`✅ Berhasil top up Rp ${num.toLocaleString('id-ID')} ke "${res.wallet.name}"! Saldo sekarang: Rp ${res.wallet.balance.toLocaleString('id-ID')}`);
@@ -165,7 +165,7 @@ export default function WalletsPage() {
 
   const handleSetDefault = (id: string, walletName: string) => {
     demoStore.setDefaultWallet(id);
-    setWallets([...demoStore.getWallets()]);
+    setWallets([...getCleanWallets()]);
     showNotification(`⭐ "${walletName}" sekarang aktif sebagai Dompet Utama bot & transaksi!`);
   };
 
@@ -177,7 +177,7 @@ export default function WalletsPage() {
     if (confirm(`Yakin ingin menghapus dompet "${walletName}"?`)) {
       try {
         demoStore.deleteWallet(id);
-        setWallets([...demoStore.getWallets()]);
+        setWallets([...getCleanWallets()]);
         showNotification(`Dompet "${walletName}" berhasil dihapus.`);
       } catch (err: any) {
         alert(err.message || 'Gagal menghapus dompet.');
@@ -194,7 +194,7 @@ export default function WalletsPage() {
     const numBalance = parseNominalInput(balance);
 
     const created = demoStore.addWallet(name.trim(), type, numBalance, color, isDefaultWallet);
-    const latest = demoStore.getWallets();
+    const latest = getCleanWallets();
     setWallets([...latest]);
     if (!topUpWalletId && latest.length > 0) {
       setTopUpWalletId(latest[0].id);
@@ -219,7 +219,23 @@ export default function WalletsPage() {
     }
   };
 
-  const totalBalance = wallets.reduce((acc, w) => acc + w.balance, 0);
+  const cleanRenderedWallets = wallets.filter((w) => {
+    const user = demoStore.getCurrentUser();
+    const isRealAdmin = Boolean(
+      user &&
+      user.role === 'admin' &&
+      (user.email?.toLowerCase() === 'admin@tatadana.id' || user.full_name?.toLowerCase().includes('ghalan'))
+    );
+    if (isRealAdmin) return true;
+    const nameLower = (w.name || '').toLowerCase();
+    const idLower = (w.id || '').toLowerCase();
+    if (nameLower.includes('admin') || idLower.includes('admin')) return false;
+    if (w.user_id && w.user_id.toLowerCase().includes('adm')) return false;
+    if (user && w.user_id && w.user_id !== user.id) return false;
+    return true;
+  });
+
+  const totalBalance = cleanRenderedWallets.reduce((acc, w) => acc + w.balance, 0);
 
   const quickTemplates = [
     { name: 'BCA Tabungan', type: 'bank', color: '#005EAA' },
@@ -305,23 +321,7 @@ export default function WalletsPage() {
 
           {/* Wallets Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {wallets
-              .filter((w) => {
-                const user = demoStore.getCurrentUser();
-                const isRealAdmin = Boolean(
-                  user &&
-                  user.role === 'admin' &&
-                  (user.email?.toLowerCase() === 'admin@tatadana.id' || user.full_name?.toLowerCase().includes('ghalan'))
-                );
-                if (isRealAdmin) return true;
-                const nameLower = (w.name || '').toLowerCase();
-                const idLower = (w.id || '').toLowerCase();
-                if (nameLower.includes('admin') || idLower.includes('admin')) return false;
-                if (w.user_id && w.user_id.toLowerCase().includes('adm')) return false;
-                if (user && w.user_id && w.user_id !== user.id) return false;
-                return true;
-              })
-              .map((w) => (
+            {cleanRenderedWallets.map((w) => (
               <Card
                 key={w.id}
                 className={`p-6 relative overflow-hidden transition-all flex flex-col justify-between ${

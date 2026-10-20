@@ -169,7 +169,7 @@ export default function VerifyPage() {
     }
   };
 
-  const handleVerify = (e: React.FormEvent) => {
+  const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) {
       setError('Tidak ada sesi pendaftaran aktif. Silakan daftar atau masuk terlebih dahulu.');

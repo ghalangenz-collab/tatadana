@@ -249,7 +249,7 @@ class DemoStore {
 
           // Also check this.wallets: ONLY add if matching parsed user ID
           (this.wallets || []).forEach((w) => {
-            if (w && w.id && (!w.user_id || w.user_id === parsed.id) && this.isWalletAllowedForUser(w, parsed)) {
+            if (w && w.id && (isRealAdmin ? (!w.user_id || w.user_id === parsed.id) : (w.user_id === parsed.id)) && this.isWalletAllowedForUser(w, parsed)) {
               walletMap.set(w.id, w);
             }
           });
@@ -980,8 +980,13 @@ class DemoStore {
 
   public loginUser(identifier: string, password?: string): { success: boolean; user?: UserAccount; error?: string } {
     const clean = identifier.trim().toLowerCase();
+    const cleanTg = clean.replace(/^@/, '');
     const user = this.users.find(
-      (u) => u.email.toLowerCase() === clean || (u.phone && u.phone.replace(/\D/g, '') === clean.replace(/\D/g, ''))
+      (u) =>
+        u.email?.toLowerCase() === clean ||
+        (u.phone && u.phone.replace(/\D/g, '') === clean.replace(/\D/g, '')) ||
+        u.full_name?.toLowerCase() === clean ||
+        (u.telegram_username && u.telegram_username.toLowerCase().replace(/^@/, '') === cleanTg)
     );
 
     if (!user) {
@@ -1009,6 +1014,21 @@ class DemoStore {
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }];
+      }
+      // Deduplicate wallets by ID and ensure strictly 1 default wallet
+      const wMap = new Map<string, Wallet>();
+      user.wallets.forEach((w) => { if (w && w.id) wMap.set(w.id, w); });
+      let deduped = Array.from(wMap.values());
+      let defFound = false;
+      user.wallets = deduped.map((w) => {
+        if (w.is_default && !defFound) {
+          defFound = true;
+          return { ...w, is_default: true };
+        }
+        return { ...w, is_default: false };
+      });
+      if (!defFound && user.wallets.length > 0) {
+        user.wallets[0].is_default = true;
       }
       this.adminSession = null;
     }
@@ -1130,6 +1150,7 @@ class DemoStore {
     if (safeWallets.length === 0) {
       safeWallets = [{
         id: 'wal_default_main',
+        user_id: (this.currentUser as any)?.id || (this.profile as any)?.id || 'usr_default',
         name: 'Dompet Utama',
         type: 'cash',
         balance: 0,

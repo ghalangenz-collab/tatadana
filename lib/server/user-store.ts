@@ -180,7 +180,7 @@ export function registerServerUser(params: {
   db.users = db.users.filter(
     (u) =>
       u.email.toLowerCase() !== params.email.toLowerCase() &&
-      u.phone.replace(/\D/g, '') !== params.phone.replace(/\D/g, '')
+      (u.phone ? u.phone.replace(/\D/g, '') : '') !== (params.phone ? params.phone.replace(/\D/g, '') : '')
   );
   db.users.unshift(newUser);
   saveDatabase(db);
@@ -254,7 +254,7 @@ export function getServerUserByIdOrQuery(query: string): UserAccount | null {
       (u) =>
         u.id === query ||
         u.email.toLowerCase() === clean ||
-        (cleanDigits && u.phone.replace(/\D/g, '') === cleanDigits) ||
+        (cleanDigits && u.phone && u.phone.replace(/\D/g, '') === cleanDigits) ||
         u.full_name.toLowerCase() === clean
     ) || null
   );

@@ -260,7 +260,7 @@ export async function runTataDanaVerificationSuite(): Promise<{
   assert(
     naturalPromptResult.action?.type === 'select_wallet_pay' &&
       naturalPromptResult.action.amount === 25000 &&
-      naturalPromptResult.action.options.length > 0,
+      Boolean(naturalPromptResult.action.options && naturalPromptResult.action.options.length > 0),
     'Natural text "bayar kopi 25rb" prompts interactive wallet selection with amount 25000'
   );
 
