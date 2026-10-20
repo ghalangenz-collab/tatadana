@@ -321,12 +321,30 @@ class DemoStore {
           this.wallets = [...mergedWallets];
           this.transactions = [...mergedTransactions];
 
+          // Merge user budgets deduplicated by category_id
+          const budgetMap = new Map<string, Budget>();
+          (found?.budgets || []).forEach((b) => { if (b && b.category_id) budgetMap.set(b.category_id, b); });
+          (parsed?.budgets || []).forEach((b) => { if (b && b.category_id) budgetMap.set(b.category_id, b); });
+          if (this.currentUser && this.currentUser.id === parsed.id && Array.isArray(this.currentUser.budgets)) {
+            this.currentUser.budgets.forEach((b) => { if (b && b.category_id) budgetMap.set(b.category_id, b); });
+          }
+          if (Array.isArray(this.budgets) && !isRealAdmin) {
+            this.budgets.forEach((b) => {
+              if (b && b.category_id && (!b.user_id || b.user_id === parsed.id)) {
+                budgetMap.set(b.category_id, { ...b, user_id: parsed.id });
+              }
+            });
+          }
+          const mergedBudgets = Array.from(budgetMap.values());
+          this.budgets = [...mergedBudgets];
+
           const mergedUser: UserAccount = {
             ...(found || parsed),
             ...parsed,
             role: isRealAdmin ? 'admin' : 'user',
             wallets: [...mergedWallets],
             transactions: [...mergedTransactions],
+            budgets: [...mergedBudgets],
           };
           this.currentUser = mergedUser;
           if (foundIdx !== -1) {
@@ -1763,6 +1781,24 @@ class DemoStore {
   }
 
   // Budget actions
+  public deleteBudget(budgetIdOrCategoryId: string) {
+    if (!budgetIdOrCategoryId) return;
+    if (this.currentUser && Array.isArray(this.currentUser.budgets)) {
+      this.currentUser.budgets = this.currentUser.budgets.filter(
+        (b) => b.id !== budgetIdOrCategoryId && b.category_id !== budgetIdOrCategoryId
+      );
+    }
+    this.budgets = this.budgets.filter(
+      (b) => b.id !== budgetIdOrCategoryId && b.category_id !== budgetIdOrCategoryId
+    );
+    this.notify();
+    if (typeof window !== "undefined") {
+      try {
+        window.dispatchEvent(new CustomEvent("tatadana_store_updated"));
+      } catch (e) {}
+    }
+  }
+
   public setBudget(categoryId: string, monthlyLimit: number) {
     const currentSpent = this.getTransactions()
       .filter((t) => t.type === 'expense' && t.category_id === categoryId)
