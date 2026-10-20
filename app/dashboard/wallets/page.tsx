@@ -236,11 +236,11 @@ export default function WalletsPage() {
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <Button
-                variant="primary"
+                variant="emerald"
                 size="md"
                 onClick={() => handleOpenTopUp()}
                 icon={<Plus className="w-4 h-4 text-white" />}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white border-none shadow-md shadow-emerald-600/30 text-xs sm:text-sm py-2 px-3 sm:px-4"
+                className="text-xs sm:text-sm py-2 px-3 sm:px-4"
               >
                 <span className="hidden sm:inline">Top Up / Tambah Saldo</span>
                 <span className="sm:hidden">Top Up</span>
@@ -325,11 +325,11 @@ export default function WalletsPage() {
                     <button
                       type="button"
                       onClick={() => handleOpenTopUp(w.id)}
-                      className="w-full py-2 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 hover:border-emerald-400/50 text-emerald-400 hover:text-emerald-300 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm"
+                      className="w-full py-2 px-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/35 border border-emerald-400/50 hover:border-emerald-300 text-emerald-300 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-[0.98]"
                       title={`Top Up / Tambah Saldo ke ${w.name}`}
                     >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Top Up / Tambah Saldo</span>
+                      <Plus className="w-3.5 h-3.5 text-emerald-300" />
+                      <span className="font-bold">Top Up / Tambah Saldo</span>
                     </button>
                   </div>
                 </div>

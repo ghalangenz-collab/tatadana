@@ -8,7 +8,7 @@ import {
   setMyCommands,
   answerCallbackQuery,
 } from '@/lib/telegram/api';
-import { handleTelegramMessage, handleTelegramMessageAdvanced } from '@/lib/telegram/bot-service';
+import { handleTelegramMessage, handleTelegramMessageAdvanced, resolveTelegramUserName } from '@/lib/telegram/bot-service';
 import { demoStore } from '@/lib/store/demo-store';
 
 export const dynamic = 'force-dynamic';
@@ -232,6 +232,8 @@ export async function POST(req: NextRequest) {
           photoUrl,
           voiceUrl,
           chatId,
+          from: msg.from,
+          userName: resolveTelegramUserName(msg.from),
           idempotencyKey: `tg_upd_${update.update_id}`,
         });
 

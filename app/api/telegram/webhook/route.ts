@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { handleTelegramMessage, handleTelegramMessageAdvanced } from '@/lib/telegram/bot-service';
+import { handleTelegramMessage, handleTelegramMessageAdvanced, resolveTelegramUserName } from '@/lib/telegram/bot-service';
 import { sendTelegramMessage, getTelegramFileUrl, answerCallbackQuery } from '@/lib/telegram/api';
 import { demoStore } from '@/lib/store/demo-store';
 
@@ -55,6 +55,8 @@ export async function POST(req: NextRequest) {
     const text = message.text;
     const photo = message.photo;
     const voice = message.voice;
+    const from = message.from;
+    const userName = resolveTelegramUserName(from);
 
     let photoUrl: string | undefined;
     if (photo && photo.length > 0) {
@@ -76,6 +78,8 @@ export async function POST(req: NextRequest) {
       photoUrl,
       voiceUrl,
       chatId,
+      from,
+      userName,
       idempotencyKey: updateId ? `tg_wh_${updateId}` : undefined,
     });
 

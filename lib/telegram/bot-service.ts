@@ -34,6 +34,40 @@ export interface TelegramBotReplyResult {
   action?: TelegramSimAction;
 }
 
+export function resolveTelegramUserName(
+  from?: { first_name?: string; last_name?: string; username?: string } | string | null,
+  fallback: string = 'Sobat TataDana'
+): string {
+  if (!from) return fallback;
+  if (typeof from === 'string') {
+    const trimmed = from.trim().replace(/^@/, '');
+    return trimmed || fallback;
+  }
+  const firstName = (from.first_name || '').trim();
+  const lastName = (from.last_name || '').trim();
+  const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
+  if (fullName) return fullName;
+  if (from.username) {
+    const cleanUser = from.username.replace(/^@/, '').trim();
+    if (cleanUser) return cleanUser;
+  }
+  return fallback;
+}
+
+export function formatTelegramWelcomeMessage(userName: string = 'Sobat TataDana'): string {
+  const cleanName = (userName || '').trim() || 'Sobat TataDana';
+  return (
+    `👋 Selamat datang di TataDana, ${cleanName}! 🌟\n\n` +
+    `Catat keuangan pribadi semudah chatting! 💬✨\n\n` +
+    `Kamu bisa langsung ketik pengeluaran atau pemasukan harianmu, misalnya:\n` +
+    `• *beli makan 25rb*\n` +
+    `• *bensin 30rb*\n` +
+    `• *gajian 5jt*\n` +
+    `• *top up 100rb ke dana*\n\n` +
+    `Ketik */menu* atau gunakan tombol di bawah untuk melihat pilihan lengkap.`
+  );
+}
+
 export function getWalletSlug(wallet: Wallet): string {
   if (!wallet || !wallet.name) return 'wallet';
   const STOP_WORDS = new Set([
@@ -154,35 +188,39 @@ const botReplyCache = new Map<string, CachedBotReply>();
 const inFlightRequests = new Map<string, Promise<TelegramBotReplyResult>>();
 const BOT_REPLY_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes cache
 
-export async function handleTelegramMessage(input: {
+export interface TelegramUserInput {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+}
+
+export interface TelegramBotInput {
   text?: string;
   photoUrl?: string;
   voiceUrl?: string;
   chatId?: number;
   userId?: string;
+  userName?: string;
+  from?: TelegramUserInput | string;
   idempotencyKey?: string;
-}): Promise<string> {
+}
+
+export async function handleTelegramMessage(input: TelegramBotInput): Promise<string> {
   const result = await handleTelegramMessageAdvanced(input);
   return result.text;
 }
 
-export async function handleTelegramMessageAdvanced(input: {
-  text?: string;
-  photoUrl?: string;
-  voiceUrl?: string;
-  chatId?: number;
-  userId?: string;
-  idempotencyKey?: string;
-}): Promise<TelegramBotReplyResult> {
+export async function handleTelegramMessageAdvanced(input: TelegramBotInput): Promise<TelegramBotReplyResult> {
   // Compute unique key for deduplication and coalescing
   let cacheKey = input.idempotencyKey;
   if (!cacheKey) {
     const raw = (input.text || '').trim().toLowerCase();
+    const userPart = input.userName ? input.userName.trim().toLowerCase() : '';
     const media = input.photoUrl || input.voiceUrl || '';
     const chatPart = input.chatId ? String(input.chatId) : 'sim';
     // 2.5s anti-bounce window to merge rapid duplicate clicks/sends
     const timeWindow = Math.floor(Date.now() / 2500);
-    cacheKey = `${chatPart}_${raw}_${media}_${timeWindow}`;
+    cacheKey = `${chatPart}_${raw}_${userPart}_${media}_${timeWindow}`;
   }
 
   // 1. Check response cache
@@ -221,14 +259,7 @@ export async function handleTelegramMessageAdvanced(input: {
 }
 
 async function internalHandleTelegramMessage(
-  input: {
-    text?: string;
-    photoUrl?: string;
-    voiceUrl?: string;
-    chatId?: number;
-    userId?: string;
-    idempotencyKey?: string;
-  },
+  input: TelegramBotInput,
   cacheKey: string
 ): Promise<TelegramBotReplyResult> {
   const asReply = (text: string, action?: TelegramSimAction, replyMarkup?: any): TelegramBotReplyResult => ({
@@ -272,7 +303,51 @@ async function internalHandleTelegramMessage(
       }
     }
 
-    if (cmd === '/start' || cmd === '/bantuan' || cmd === '/menu') {
+    // /start command: Personal & friendly onboarding welcome message
+    if (cmd === '/start' || cmd.startsWith('/start')) {
+      const fromName = input.from ? resolveTelegramUserName(input.from, '') : '';
+      const customName = input.userName ? resolveTelegramUserName(input.userName, '') : '';
+      const profileName = profile.full_name?.trim() || '';
+      const resolvedName = fromName || customName || profileName || 'Sobat TataDana';
+      const welcomeText = formatTelegramWelcomeMessage(resolvedName);
+
+      const replyMarkup = {
+        inline_keyboard: [
+          [
+            { text: '📋 Menu Lengkap', callback_data: '/menu' },
+            { text: '👛 Cek Saldo', callback_data: '/saldo' },
+          ],
+          [
+            { text: '🍜 Beli Makan 25rb', callback_data: 'beli makan 25rb' },
+            { text: '⛽ Bensin 30rb', callback_data: 'bensin 30rb' },
+          ],
+          [
+            { text: '💰 Top Up 100rb Dana', callback_data: 'top up 100rb ke dana' },
+            { text: '💼 Gajian 5jt', callback_data: 'gajian 5jt' },
+          ],
+          [
+            { text: '💳 Bayar Rekening', callback_data: '/bayar' },
+          ],
+        ],
+      };
+
+      const action: TelegramSimAction = {
+        type: 'welcome',
+        buttons: [
+          { label: '📋 Menu Lengkap', text: '/menu' },
+          { label: '👛 Cek Saldo', text: '/saldo' },
+          { label: '🍜 Beli Makan 25rb', text: 'beli makan 25rb' },
+          { label: '⛽ Bensin 30rb', text: 'bensin 30rb' },
+          { label: '💰 Top Up 100rb Dana', text: 'top up 100rb ke dana' },
+          { label: '💼 Gajian 5jt', text: 'gajian 5jt' },
+          { label: '💳 Bayar Rekening', text: '/bayar' },
+        ],
+      };
+
+      return asReply(welcomeText, action, replyMarkup);
+    }
+
+    if (cmd === '/bantuan' || cmd === '/menu') {
       return asReply(`🤖 *Menu & Panduan Bot TataDana*\n\nCatat keuangan semudah chatting! Ketik pesan langsung atau pilih menu perintah berikut:\n\n*📌 Perintah Menu Utama:*\n• /saldo — Cek sisa saldo semua dompet\n• /bayar — Pilih rekening & bayar pengeluaran (cth: \`/bayar bca 25rb makan\`)\n• /topup — Pilih rekening & isi saldo (cth: \`/topup dana 50rb\`)\n• /pilih_dompet <nama> — Ganti dompet aktif (cth: \`/pilih_dompet gopay\`)\n• /makan <nominal> — Catat biaya makan (cth: \`/makan 25rb\`)\n• /tambah_saldo <nominal> — Tambah saldo/pemasukan (cth: \`/tambah_saldo 500rb\`)\n• /budget — Status sisa alokasi budget bulanan\n• /hari_ini — Rekap transaksi hari ini\n• /bulan_ini — Rekap transaksi & breakdown bulan ini\n• /sheet — Ringkasan & unduh laporan\n• /bantuan — Menampilkan menu ini\n\n*💬 Atau ketik bahasa santai:*\n• \`5 ribu makan\` atau \`beli bakso 15rb\`\n• \`bayar baso 5 ribu pakai BCA\`\n• \`beli kopi 25rb pakai gopay\`\n• \`top up dana 50rb\` atau \`tambah saldo 500rb\`\n• \`bensin 50k tunai\`\n• \`gajian 10jt bca\`\n• 📸 Kirim foto struk belanja (scan otomatis)\n• 🎙️ Kirim voice note suara`);
     }
 
@@ -417,6 +492,9 @@ async function internalHandleTelegramMessage(
         if (/makan|bakso|baso|kopi|mie|nasi|ayam|soto/i.test(cleanNote)) {
           const foodCat = categories.find((c) => c.name.toLowerCase().includes('makan'));
           if (foodCat) expenseCat = foodCat;
+        } else if (/bensin|pertamax|pertalite|transport|bbm|solar|parkir|tol|gojek|grab/i.test(cleanNote)) {
+          const transCat = categories.find((c) => c.name.toLowerCase().includes('transport') || c.name.toLowerCase().includes('bensin'));
+          if (transCat) expenseCat = transCat;
         } else {
           const matched = categories.find(
             (c) => c.type === 'expense' && (cleanNote.toLowerCase().includes(c.name.toLowerCase()) || c.name.toLowerCase().includes(cleanNote.toLowerCase()))
@@ -1138,6 +1216,14 @@ async function internalHandleTelegramMessage(
         .replace(/\b(?:bayar|beli|makan|bensin|isi\s+bensin)\b/gi, '')
         .replace(/\s{2,}/g, ' ')
         .trim();
+
+      if (!cleanNote) {
+        if (lowerRaw.includes('bensin')) {
+          cleanNote = 'bensin';
+        } else if (lowerRaw.includes('makan')) {
+          cleanNote = 'makan';
+        }
+      }
 
       const amountStr = parsedAmount ? (parsedAmount >= 1000 ? `${parsedAmount / 1000}rb` : `${parsedAmount}`) : '25rb';
       const noteStr = cleanNote ? ` ${cleanNote}` : '';

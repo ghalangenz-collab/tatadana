@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { getMe, deleteWebhook, setMyCommands } from '@/lib/telegram/api';
+import { getMe, setWebhook, setMyCommands } from '@/lib/telegram/api';
 import { demoStore } from '@/lib/store/demo-store';
 
 export const dynamic = 'force-dynamic';
@@ -29,9 +29,11 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    // 2. Delete any conflicting webhook to enable long polling getUpdates
-    await deleteWebhook(rawToken, false).catch((err) => {
-      console.warn('Auto delete webhook warning:', err);
+    // 2. Set webhook to live deployment so bot answers 24/7 on Vercel without local polling
+    const baseUrl = process.env.WEBHOOK_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://tatadana-steel.vercel.app');
+    const webhookUrl = `${baseUrl}/api/telegram/webhook`;
+    await setWebhook(rawToken, webhookUrl).catch((err) => {
+      console.warn('Auto set webhook warning:', err);
     });
 
     // 3. Register menu commands (/makan, /tambah_saldo, /saldo, etc) with Telegram

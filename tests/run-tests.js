@@ -1400,7 +1400,163 @@ const sanitizedWallets = regularUserZaa.wallets.filter(w => isWalletAllowedForUs
 test('Wallet Isolation: Sanitized wallet count is 2 (purged admin wallet)', sanitizedWallets.length === 2);
 test('Wallet Isolation: Admin wallet is not in sanitized list', !sanitizedWallets.some(w => w.name.includes('Admin')));
 const cleanTotalBalance = sanitizedWallets.reduce((acc, w) => acc + w.balance, 0);
-test('Wallet Isolation: Total balance is exactly 10.000.000 (not 19.950.000)', cleanTotalBalance === 10000000);
+test('Wallet Isolation: Sanitized total balance is 10000000', cleanTotalBalance === 10000000);
+
+// --- TELEGRAM BOT WELCOME GREETING & ONBOARDING TESTS ---
+function resolveTelegramUserName(from, fallback = 'Sobat TataDana') {
+  if (!from) return fallback;
+  if (typeof from === 'string') {
+    const trimmed = from.trim().replace(/^@/, '');
+    return trimmed || fallback;
+  }
+  const firstName = (from.first_name || '').trim();
+  const lastName = (from.last_name || '').trim();
+  const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
+  if (fullName) return fullName;
+  if (from.username) {
+    const cleanUser = from.username.replace(/^@/, '').trim();
+    if (cleanUser) return cleanUser;
+  }
+  return fallback;
+}
+
+function formatTelegramWelcomeMessage(userName = 'Sobat TataDana') {
+  const cleanName = (userName || '').trim() || 'Sobat TataDana';
+  return (
+    `👋 Selamat datang di TataDana, ${cleanName}! 🌟\n\n` +
+    `Catat keuangan pribadi semudah chatting! 💬✨\n\n` +
+    `Kamu bisa langsung ketik pengeluaran atau pemasukan harianmu, misalnya:\n` +
+    `• *beli makan 25rb*\n` +
+    `• *bensin 30rb*\n` +
+    `• *gajian 5jt*\n` +
+    `• *top up 100rb ke dana*\n\n` +
+    `Ketik */menu* atau gunakan tombol di bawah untuk melihat pilihan lengkap.`
+  );
+}
+
+// 1. Username resolution tests
+test('Telegram Welcome: Full name from first_name + last_name', resolveTelegramUserName({ first_name: 'Muhammad', last_name: 'Ghalan' }) === 'Muhammad Ghalan');
+test('Telegram Welcome: First name only', resolveTelegramUserName({ first_name: 'Ghalan' }) === 'Ghalan');
+test('Telegram Welcome: Last name only', resolveTelegramUserName({ last_name: 'Dahlan' }) === 'Dahlan');
+test('Telegram Welcome: Username fallback without @', resolveTelegramUserName({ username: 'ghalan_tg' }) === 'ghalan_tg');
+test('Telegram Welcome: Username fallback with @ stripped', resolveTelegramUserName({ username: '@rumahtatdana' }) === 'rumahtatdana');
+test('Telegram Welcome: Empty object falls back to "Sobat TataDana"', resolveTelegramUserName({}) === 'Sobat TataDana');
+test('Telegram Welcome: null falls back to "Sobat TataDana"', resolveTelegramUserName(null) === 'Sobat TataDana');
+test('Telegram Welcome: undefined falls back to "Sobat TataDana"', resolveTelegramUserName(undefined) === 'Sobat TataDana');
+test('Telegram Welcome: string name passed directly', resolveTelegramUserName('Zaa') === 'Zaa');
+test('Telegram Welcome: empty string falls back to "Sobat TataDana"', resolveTelegramUserName('   ') === 'Sobat TataDana');
+test('Telegram Welcome: custom fallback used when provided', resolveTelegramUserName(null, 'Tamu') === 'Tamu');
+
+// 2. Welcome message formatting tests
+const sampleWelcome = formatTelegramWelcomeMessage('Muhammad Ghalan');
+test('Welcome Message: Starts with personalized greeting', sampleWelcome.startsWith('👋 Selamat datang di TataDana, Muhammad Ghalan! 🌟'));
+test('Welcome Message: Contains friendly subtitle', sampleWelcome.includes('Catat keuangan pribadi semudah chatting! 💬✨'));
+test('Welcome Message: Contains example "beli makan 25rb"', sampleWelcome.includes('• *beli makan 25rb*'));
+test('Welcome Message: Contains example "bensin 30rb"', sampleWelcome.includes('• *bensin 30rb*'));
+test('Welcome Message: Contains example "gajian 5jt"', sampleWelcome.includes('• *gajian 5jt*'));
+test('Welcome Message: Contains example "top up 100rb ke dana"', sampleWelcome.includes('• *top up 100rb ke dana*'));
+test('Welcome Message: Contains menu instruction and button hint', sampleWelcome.includes('Ketik */menu* atau gunakan tombol di bawah untuk melihat pilihan lengkap.'));
+
+// 3. Fallback welcome message formatting test
+const fallbackWelcome = formatTelegramWelcomeMessage('');
+test('Welcome Message Fallback: Uses "Sobat TataDana" when name is empty', fallbackWelcome.startsWith('👋 Selamat datang di TataDana, Sobat TataDana! 🌟'));
+
+// 4. Amount parsing for all examples mentioned in welcome message
+test('Welcome Example Amount: "beli makan 25rb" parsed as 25000', parseIndonesianAmount('beli makan 25rb') === 25000);
+test('Welcome Example Amount: "bensin 30rb" parsed as 30000', parseIndonesianAmount('bensin 30rb') === 30000);
+test('Welcome Example Amount: "gajian 5jt" parsed as 5000000', parseIndonesianAmount('gajian 5jt') === 5000000);
+test('Welcome Example Amount: "top up 100rb ke dana" parsed as 100000', parseIndonesianAmount('top up 100rb ke dana') === 100000);
+
+// 5. /start command routing vs /menu command routing
+function simulateBotCommandHandler(cmd, userFrom) {
+  const cleanCmd = (cmd || '').trim().toLowerCase().replace(/@\w+/, '');
+  if (cleanCmd === '/start' || cleanCmd.startsWith('/start')) {
+    const name = resolveTelegramUserName(userFrom);
+    return {
+      type: 'welcome',
+      text: formatTelegramWelcomeMessage(name),
+      hasButtons: true,
+      buttons: [
+        { label: '📋 Menu Lengkap', text: '/menu' },
+        { label: '👛 Cek Saldo', text: '/saldo' },
+        { label: '🍜 Beli Makan 25rb', text: 'beli makan 25rb' },
+        { label: '⛽ Bensin 30rb', text: 'bensin 30rb' },
+        { label: '💰 Top Up 100rb Dana', text: 'top up 100rb ke dana' },
+        { label: '💼 Gajian 5jt', text: 'gajian 5jt' },
+        { label: '💳 Bayar Rekening', text: '/bayar' },
+      ],
+    };
+  }
+  if (cleanCmd === '/menu' || cleanCmd === '/bantuan') {
+    return {
+      type: 'menu_guide',
+      text: '🤖 *Menu & Panduan Bot TataDana*',
+      hasButtons: false,
+    };
+  }
+  return { type: 'unknown', text: '' };
+}
+
+const startRes = simulateBotCommandHandler('/start', { first_name: 'Zaa' });
+test('Bot Router: /start returns welcome type', startRes.type === 'welcome');
+test('Bot Router: /start addresses user personally', startRes.text.includes('👋 Selamat datang di TataDana, Zaa! 🌟'));
+test('Bot Router: /start provides interactive quick action buttons', startRes.hasButtons === true);
+test('Bot Router: /start buttons include all 4 welcome examples', startRes.buttons.some(b => b.text === 'beli makan 25rb') && startRes.buttons.some(b => b.text === 'bensin 30rb') && startRes.buttons.some(b => b.text === 'gajian 5jt') && startRes.buttons.some(b => b.text === 'top up 100rb ke dana'));
+
+const startWithBotName = simulateBotCommandHandler('/start@rumahtatdanabot', { first_name: 'Zaa' });
+test('Bot Router: /start@rumahtatdanabot recognized as welcome', startWithBotName.type === 'welcome');
+
+const menuRes = simulateBotCommandHandler('/menu', { first_name: 'Zaa' });
+test('Bot Router: /menu returns menu_guide type', menuRes.type === 'menu_guide');
+test('Bot Router: /menu provides full guide text', menuRes.text.startsWith('🤖 *Menu & Panduan Bot TataDana*'));
+
+const menuWithBotName = simulateBotCommandHandler('/menu@rumahtatdanabot', { first_name: 'Zaa' });
+test('Bot Router: /menu@rumahtatdanabot recognized as menu_guide', menuWithBotName.type === 'menu_guide');
+
+// 6. Natural Language bensin category and note retention
+function extractNaturalPaymentNote(rawText) {
+  const lowerRaw = rawText.toLowerCase().trim();
+  let cleanNote = rawText
+    .replace(/(?:rp\.?\s*)?[\d]+(?:[.,]\d+)?\s*(?:jt|juta|rb|ribu|k)\b/gi, '')
+    .replace(/(?:rp\.?\s*)?\b\d{1,3}(?:\.\d{3})+\b/gi, '')
+    .replace(/(?:rp\.?\s*)?\b\d{4,}\b/gi, '')
+    .replace(/\b(?:bayar|beli|makan|bensin|isi\s+bensin)\b/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
+  if (!cleanNote) {
+    if (lowerRaw.includes('bensin')) {
+      cleanNote = 'bensin';
+    } else if (lowerRaw.includes('makan')) {
+      cleanNote = 'makan';
+    }
+  }
+  return cleanNote;
+}
+
+function resolveExpenseCategory(note, categoriesList) {
+  let expenseCat = categoriesList.find((c) => c.type === 'expense') || categoriesList[0];
+  if (note) {
+    if (/makan|bakso|baso|kopi|mie|nasi|ayam|soto/i.test(note)) {
+      const foodCat = categoriesList.find((c) => c.name.toLowerCase().includes('makan'));
+      if (foodCat) expenseCat = foodCat;
+    } else if (/bensin|pertamax|pertalite|transport|bbm|solar|parkir|tol|gojek|grab/i.test(note)) {
+      const transCat = categoriesList.find((c) => c.name.toLowerCase().includes('transport') || c.name.toLowerCase().includes('bensin'));
+      if (transCat) expenseCat = transCat;
+    }
+  }
+  return expenseCat;
+}
+
+const mockCategories = [
+  { id: 'cat_food', name: 'Makanan & Minuman', type: 'expense' },
+  { id: 'cat_trans', name: 'Transportasi', type: 'expense' },
+];
+
+test('Natural Note: "bensin 30rb" preserves note "bensin"', extractNaturalPaymentNote('bensin 30rb') === 'bensin');
+test('Natural Note: "beli makan 25rb" preserves note "makan"', extractNaturalPaymentNote('beli makan 25rb') === 'makan');
+test('Category Matcher: note "bensin" correctly resolves to Transportasi category', resolveExpenseCategory('bensin', mockCategories).id === 'cat_trans');
+test('Category Matcher: note "beli makan" correctly resolves to Makanan category', resolveExpenseCategory('makan', mockCategories).id === 'cat_food');
 
 console.log(`\nResults: ${passed} passed, ${failed} failed.`);
 if (failed > 0) process.exit(1);

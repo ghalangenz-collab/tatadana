@@ -5,7 +5,7 @@ import { demoStore, TelegramSimMessage } from '@/lib/store/demo-store';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { text, photoUrl, voiceUrl, messageId, wallets, budgets, transactions, simMessages } = body;
+    const { text, photoUrl, voiceUrl, messageId, wallets, budgets, transactions, simMessages, userName } = body;
 
     // Sync state if provided from client to ensure server is aligned with client state
     if (wallets || budgets || transactions || simMessages) {
@@ -68,10 +68,12 @@ export async function POST(req: NextRequest) {
 
     // Handle with bot service (with idempotencyKey to prevent duplicate transactions)
     const idempotencyKey = messageId ? `sim_${messageId}` : `sim_${expectedUserText}_${Math.floor(Date.now() / 2500)}`;
+    const resolvedUserName = userName || demoStore.getProfile()?.full_name || 'Muhammad Ghalan';
     const botResult = await handleTelegramMessageAdvanced({
       text,
       photoUrl,
       voiceUrl,
+      userName: resolvedUserName,
       idempotencyKey,
     });
 

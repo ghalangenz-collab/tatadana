@@ -67,11 +67,11 @@ export const Header: React.FC<HeaderProps> = ({
 
         {onOpenTopUpModal && (
           <Button
-            variant="primary"
+            variant="emerald"
             size="sm"
             onClick={onOpenTopUpModal}
             icon={<Plus className="w-3.5 h-3.5 text-white" />}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white border-none shadow-md shadow-emerald-600/30 text-xs py-1.5 px-2.5 sm:px-3"
+            className="text-xs py-1.5 px-2.5 sm:px-3"
           >
             <span className="hidden sm:inline">Tambah Saldo</span>
             <span className="sm:hidden">Top Up</span>

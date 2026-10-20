@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 import { demoStore, TelegramSimMessage, TelegramSimAction } from '@/lib/store/demo-store';
 import { heuristicParseIndonesianText, parseIndonesianAmount } from '@/lib/ai/parser';
-import { matchWalletFromText, getWalletSlug } from '@/lib/telegram/bot-service';
+import { matchWalletFromText, getWalletSlug, formatTelegramWelcomeMessage, resolveTelegramUserName } from '@/lib/telegram/bot-service';
 
 interface TelegramSimulatorProps {
   compact?: boolean;
@@ -246,6 +246,7 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({ compact = 
           budgets: demoStore.getBudgets(),
           transactions: demoStore.getTransactions(),
           simMessages: demoStore.getSimMessages(),
+          userName: demoStore.getProfile()?.full_name || 'Muhammad Ghalan',
         }),
       });
 
@@ -625,6 +626,47 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({ compact = 
               });
             }
           }
+        } else if (
+          textToSend &&
+          (() => {
+            const c = textToSend.toLowerCase().replace(/@\w+/, '').trim();
+            return c === '/start' || c.startsWith('/start ');
+          })()
+        ) {
+          const profile = demoStore.getProfile();
+          const userName = profile?.full_name || 'Muhammad Ghalan';
+          const welcomeText = formatTelegramWelcomeMessage(userName);
+          demoStore.addSimMessage({
+            id: `msg_b_${userMsg.id}`,
+            sender: 'bot',
+            text: welcomeText,
+            timestamp: timeStr,
+            action: {
+              type: 'welcome',
+              buttons: [
+                { label: '📋 Menu Lengkap', text: '/menu' },
+                { label: '👛 Cek Saldo', text: '/saldo' },
+                { label: '🍜 Beli Makan 25rb', text: 'beli makan 25rb' },
+                { label: '⛽ Bensin 30rb', text: 'bensin 30rb' },
+                { label: '💰 Top Up 100rb Dana', text: 'top up 100rb ke dana' },
+                { label: '💼 Gajian 5jt', text: 'gajian 5jt' },
+                { label: '💳 Bayar Rekening', text: '/bayar' },
+              ],
+            },
+          });
+        } else if (
+          textToSend &&
+          (() => {
+            const c = textToSend.toLowerCase().replace(/@\w+/, '').trim();
+            return c === '/menu' || c === '/bantuan';
+          })()
+        ) {
+          demoStore.addSimMessage({
+            id: `msg_b_${userMsg.id}`,
+            sender: 'bot',
+            text: `🤖 *Menu & Panduan Bot TataDana*\n\nCatat keuangan semudah chatting! Ketik pesan langsung atau pilih menu perintah berikut:\n\n*📌 Perintah Menu Utama:*\n• /saldo — Cek sisa saldo semua dompet\n• /bayar — Pilih rekening & bayar pengeluaran (cth: \`/bayar bca 25rb makan\`)\n• /topup — Pilih rekening & isi saldo (cth: \`/topup dana 50rb\`)\n• /pilih_dompet <nama> — Ganti dompet aktif (cth: \`/pilih_dompet gopay\`)\n• /makan <nominal> — Catat biaya makan (cth: \`/makan 25rb\`)\n• /tambah_saldo <nominal> — Tambah saldo/pemasukan (cth: \`/tambah_saldo 500rb\`)\n• /budget — Status sisa alokasi budget bulanan\n• /hari_ini — Rekap transaksi hari ini\n• /bulan_ini — Rekap transaksi & breakdown bulan ini\n• /sheet — Ringkasan & unduh laporan\n• /bantuan — Menampilkan menu ini\n\n*💬 Atau ketik bahasa santai:*\n• \`5 ribu makan\` atau \`beli bakso 15rb\`\n• \`bayar baso 5 ribu pakai BCA\`\n• \`beli kopi 25rb pakai gopay\`\n• \`top up dana 50rb\` atau \`tambah saldo 500rb\`\n• \`bensin 50k tunai\`\n• \`gajian 10jt bca\`\n• 📸 Kirim foto struk belanja (scan otomatis)\n• 🎙️ Kirim voice note suara`,
+            timestamp: timeStr,
+          });
         } else {
           demoStore.addSimMessage({
             id: `msg_b_${Date.now()}`,
@@ -648,6 +690,50 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({ compact = 
   };
 
   const renderInteractiveWalletWidget = (msg: TelegramSimMessage) => {
+    // 0. Welcome action buttons prompt
+    const isWelcomePrompt =
+      msg.action?.type === 'welcome' ||
+      (msg.action?.buttons && msg.action.buttons.length > 0) ||
+      (msg.sender === 'bot' && msg.text && msg.text.includes('Selamat datang di TataDana'));
+
+    if (isWelcomePrompt) {
+      const buttons = msg.action?.buttons || [
+        { label: '📋 Menu Lengkap', text: '/menu' },
+        { label: '👛 Cek Saldo', text: '/saldo' },
+        { label: '🍜 Beli Makan 25rb', text: 'beli makan 25rb' },
+        { label: '⛽ Bensin 30rb', text: 'bensin 30rb' },
+        { label: '💰 Top Up 100rb Dana', text: 'top up 100rb ke dana' },
+        { label: '💼 Gajian 5jt', text: 'gajian 5jt' },
+        { label: '💳 Bayar Rekening', text: '/bayar' },
+      ];
+
+      return (
+        <div className="mt-3 pt-2.5 border-t border-white/10 space-y-2 font-sans">
+          <div className="flex items-center gap-1.5 text-[11px] font-bold text-blue-300">
+            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+            <span>Pilihan Cepat & Contoh Perintah:</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-0.5">
+            {buttons.map((btn, idx) => (
+              <button
+                key={idx}
+                type="button"
+                disabled={isLoading}
+                onClick={() => handleSend(btn.text)}
+                className="text-left px-3 py-2 rounded-xl bg-[#141822] hover:bg-[#1E2536] border border-[#2A3446] hover:border-blue-500/50 text-xs font-semibold text-gray-200 transition-all flex items-center justify-between group cursor-pointer shadow-sm"
+              >
+                <span className="truncate">{btn.label}</span>
+                <ArrowRight className="w-3 h-3 text-gray-400 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-transform shrink-0 ml-1.5" />
+              </button>
+            ))}
+          </div>
+          <div className="text-[10px] text-gray-400 italic pt-0.5">
+            💡 Klik tombol di atas untuk coba otomatis, atau ketik langsung di kolom pesan.
+          </div>
+        </div>
+      );
+    }
+
     const isPaymentPrompt =
       msg.action?.type === 'select_wallet_pay' ||
       (msg.text && msg.text.includes('Pilih Rekening / Dompet Pembayaran'));
@@ -822,12 +908,14 @@ export const TelegramSimulator: React.FC<TelegramSimulatorProps> = ({ compact = 
   };
 
   const sampleQuickActions = [
-    { label: '🍜 /makan (Pilih Rekening)', text: '/makan' },
-    { label: '⛽ /bensin (Pilih Rekening)', text: '/bensin' },
+    { label: '👋 /start (Sambutan)', text: '/start' },
+    { label: '🍜 Beli Makan 25rb', text: 'beli makan 25rb' },
+    { label: '⛽ Bensin 30rb', text: 'bensin 30rb' },
+    { label: '💰 Top Up 100rb Dana', text: 'top up 100rb ke dana' },
+    { label: '💼 Gajian 5jt', text: 'gajian 5jt' },
+    { label: '📋 /menu (Panduan)', text: '/menu' },
     { label: '💳 /bayar (Pilih Rekening)', text: '/bayar' },
     { label: '⚡ /topup (Pilih Rekening)', text: '/topup' },
-    { label: '🍲 bayar baso 5 ribu pakai BCA', text: 'bayar baso 5 ribu pakai BCA' },
-    { label: '📱 top up dana 50rb', text: '/topup_dana 50rb' },
     { label: '👛 /saldo', text: '/saldo' },
     { label: '📊 /budget', text: '/budget' },
     { label: '📅 /hari_ini', text: '/hari_ini' },

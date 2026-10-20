@@ -35,11 +35,12 @@ export interface TelegramSimActionOption {
 }
 
 export interface TelegramSimAction {
-  type: 'select_wallet_pay' | 'select_wallet_topup';
+  type: 'select_wallet_pay' | 'select_wallet_topup' | 'welcome';
   amount?: number;
   description?: string;
-  options: TelegramSimActionOption[];
+  options?: TelegramSimActionOption[];
   executedWalletId?: string;
+  buttons?: Array<{ label: string; text: string }>;
 }
 
 export interface TelegramSimMessage {
@@ -85,6 +86,28 @@ export function deduplicateSimMessages(messages: TelegramSimMessage[]): Telegram
   return result;
 }
 
+export function createDefaultWelcomeSimMessage(userName: string = 'Muhammad Ghalan'): TelegramSimMessage {
+  const cleanName = (userName || '').trim() || 'Sobat TataDana';
+  return {
+    id: 'msg_welcome_start',
+    sender: 'bot',
+    text: `👋 Selamat datang di TataDana, ${cleanName}! 🌟\n\nCatat keuangan pribadi semudah chatting! 💬✨\n\nKamu bisa langsung ketik pengeluaran atau pemasukan harianmu, misalnya:\n• *beli makan 25rb*\n• *bensin 30rb*\n• *gajian 5jt*\n• *top up 100rb ke dana*\n\nKetik */menu* atau gunakan tombol di bawah untuk melihat pilihan lengkap.`,
+    timestamp: '12:00',
+    action: {
+      type: 'welcome',
+      buttons: [
+        { label: '📋 Menu Lengkap', text: '/menu' },
+        { label: '👛 Cek Saldo', text: '/saldo' },
+        { label: '🍜 Beli Makan 25rb', text: 'beli makan 25rb' },
+        { label: '⛽ Bensin 30rb', text: 'bensin 30rb' },
+        { label: '💰 Top Up 100rb Dana', text: 'top up 100rb ke dana' },
+        { label: '💼 Gajian 5jt', text: 'gajian 5jt' },
+        { label: '💳 Bayar Rekening', text: '/bayar' },
+      ],
+    },
+  };
+}
+
 class DemoStore {
   private profile: Profile = { ...INITIAL_PROFILE };
   private wallets: Wallet[] = [...INITIAL_WALLETS];
@@ -96,26 +119,7 @@ class DemoStore {
   private aiLogs: AILog[] = [...INITIAL_AI_LOGS];
   private subscriptions: Subscription[] = [...INITIAL_SUBSCRIPTIONS];
   private reportExports: ReportExport[] = [...INITIAL_EXPORTS];
-  private simMessages: TelegramSimMessage[] = [
-    {
-      id: 'msg_welcome_1',
-      sender: 'bot',
-      text: `👋 Halo! Selamat datang di bot TataDana. Catat keuangan pribadi semudah chatting!`,
-      timestamp: '12:00',
-    },
-    {
-      id: 'msg_welcome_2',
-      sender: 'bot',
-      text: `Ketik langsung pengeluaran atau pemasukan kamu seperti:\n• "membeli baso 5 ribu"\n• "beli bakso 15rb"\n• "gajian 5jt"\n• "tambah saldo 500rb"\n• Kirim foto struk belanja (Pro)\n• Kirim Voice Note`,
-      timestamp: '12:00',
-    },
-    {
-      id: 'msg_welcome_3',
-      sender: 'bot',
-      text: `Ketik /bantuan atau /menu untuk melihat daftar perintah lengkap.`,
-      timestamp: '12:00',
-    },
-  ];
+  private simMessages: TelegramSimMessage[] = [createDefaultWelcomeSimMessage('Muhammad Ghalan')];
 
   // User Accounts & Admin Session State
   private users: UserAccount[] = [];
@@ -183,6 +187,10 @@ class DemoStore {
         if (parsed.transactions && Array.isArray(parsed.transactions)) this.transactions = parsed.transactions;
         if (parsed.simMessages && Array.isArray(parsed.simMessages)) {
           this.simMessages = deduplicateSimMessages(parsed.simMessages);
+          if (this.simMessages.length === 0) {
+            const userName = this.currentUser?.full_name || this.profile?.full_name || 'Muhammad Ghalan';
+            this.simMessages = [createDefaultWelcomeSimMessage(userName)];
+          }
         }
         if (parsed.profile) this.profile = { ...this.profile, ...parsed.profile };
       }
@@ -447,6 +455,53 @@ class DemoStore {
       this.initFromClientStorage();
     }
     return this.users.filter((u) => u.status === 'pending_approval');
+  }
+
+  public syncServerUsers(serverUsers: UserAccount[]) {
+    if (!Array.isArray(serverUsers)) return;
+    let changed = false;
+
+    serverUsers.forEach((serverU) => {
+      if (!serverU || !serverU.id) return;
+      const existing = this.users.find((u) => u.id === serverU.id);
+      if (!existing) {
+        if (serverU.role !== 'admin' && Array.isArray(serverU.wallets)) {
+          serverU.wallets = serverU.wallets.filter((w) => this.isWalletAllowedForUser(w, serverU));
+          if (serverU.wallets.length === 0) {
+            serverU.wallets = [{
+              id: `wal_${serverU.id}_main`,
+              user_id: serverU.id,
+              name: 'Dompet Utama',
+              type: 'cash',
+              balance: 0,
+              is_default: true,
+              color: '#10B981',
+              icon: 'banknote',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            }];
+          }
+        }
+        this.users.unshift(serverU);
+        changed = true;
+      } else {
+        if (existing.status !== serverU.status || existing.is_verified !== serverU.is_verified || existing.verification_code !== serverU.verification_code) {
+          existing.status = serverU.status;
+          existing.is_verified = serverU.is_verified;
+          if (serverU.verification_code) existing.verification_code = serverU.verification_code;
+          changed = true;
+        }
+      }
+    });
+
+    if (changed) {
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('tatadana_users_v2', JSON.stringify(this.users));
+        } catch (e) {}
+      }
+      this.notifyListenersOnly();
+    }
   }
 
   public isAdminAuthenticated(): boolean {
@@ -1089,6 +1144,10 @@ class DemoStore {
   }
 
   public getSimMessages(): TelegramSimMessage[] {
+    if (!this.simMessages || this.simMessages.length === 0) {
+      const userName = this.currentUser?.full_name || this.profile?.full_name || 'Muhammad Ghalan';
+      this.simMessages = [createDefaultWelcomeSimMessage(userName)];
+    }
     return [...this.simMessages];
   }
 
@@ -1754,26 +1813,8 @@ class DemoStore {
   }
 
   public resetSimMessages(): void {
-    this.simMessages = [
-      {
-        id: 'msg_welcome_1',
-        sender: 'bot',
-        text: `👋 Halo! Selamat datang di bot TataDana. Catat keuangan pribadi semudah chatting!`,
-        timestamp: '12:00',
-      },
-      {
-        id: 'msg_welcome_2',
-        sender: 'bot',
-        text: `Ketik langsung pengeluaran atau pemasukan kamu seperti:\n• "membeli baso 5 ribu"\n• "beli bakso 15rb"\n• "gajian 5jt"\n• "tambah saldo 500rb"\n• Kirim foto struk belanja (Pro)\n• Kirim Voice Note`,
-        timestamp: '12:00',
-      },
-      {
-        id: 'msg_welcome_3',
-        sender: 'bot',
-        text: `Ketik /bantuan atau /menu untuk melihat daftar perintah lengkap.`,
-        timestamp: '12:00',
-      },
-    ];
+    const userName = this.currentUser?.full_name || this.profile?.full_name || 'Muhammad Ghalan';
+    this.simMessages = [createDefaultWelcomeSimMessage(userName)];
     this.notify();
   }
 

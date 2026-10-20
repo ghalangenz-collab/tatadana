@@ -88,18 +88,8 @@ export default function AdminDashboardPage() {
         if (res.ok) {
           const data = await res.json();
           if (data.users && Array.isArray(data.users)) {
-            data.users.forEach((serverU: UserAccount) => {
-              const localUsers = demoStore.getUsers();
-              const existing = localUsers.find((u) => u.id === serverU.id);
-              if (!existing) {
-                demoStore.getUsers().unshift(serverU);
-              } else {
-                existing.status = serverU.status;
-                existing.is_verified = serverU.is_verified;
-                if (serverU.verification_code) existing.verification_code = serverU.verification_code;
-              }
-            });
-            setUsers([...demoStore.getUsers()]);
+            demoStore.syncServerUsers(data.users);
+            setUsers(demoStore.getUsers());
           }
           if (data.adminWhatsApp) {
             setAdminWhatsApp(data.adminWhatsApp);
