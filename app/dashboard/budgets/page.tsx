@@ -59,7 +59,7 @@ export default function BudgetsPage() {
   const overallPercent = totalLimit > 0 ? Math.round((totalSpent / totalLimit) * 100) : 0;
 
   return (
-    <div className="flex min-h-screen bg-[#0D0F12]">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
 
       <main className="flex-1 md:ml-64 ml-0 min-w-0">
@@ -71,22 +71,22 @@ export default function BudgetsPage() {
         <div className="p-4 sm:p-8 space-y-6">
           {/* Notification Toast Banner */}
           {notification && (
-            <div className="bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-400/40 text-slate-100 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5 animate-fadeIn">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="bg-[#14120C] border border-amber-500/40 text-amber-200 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5 animate-fadeIn">
+              <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
               <span className="text-xs font-semibold">{notification}</span>
             </div>
           )}
 
           {/* Overview Banner */}
-          <div className="bg-gradient-to-r from-[#181C24] to-[#14171D] p-6 rounded-2xl border border-[#262C38] flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-gradient-to-r from-[#12141C] via-[#161820] to-[#0E1015] p-6 rounded-2xl border border-amber-500/30 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <Target className="w-5 h-5 text-[#FF8533]" />
+                <Target className="w-5 h-5 text-amber-400" />
                 <h3 className="text-base font-bold text-white">Alokasi Total Budget Bulan Ini</h3>
               </div>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-slate-300 mt-1">
                 Terpakai: <strong className="text-white font-mono">Rp {totalSpent.toLocaleString('id-ID')}</strong> dari{' '}
-                <strong className="text-gray-300 font-mono">Rp {totalLimit.toLocaleString('id-ID')}</strong> ({overallPercent}%)
+                <strong className="text-amber-300 font-mono">Rp {totalLimit.toLocaleString('id-ID')}</strong> ({overallPercent}%)
               </p>
             </div>
 
@@ -94,7 +94,8 @@ export default function BudgetsPage() {
               variant="primary"
               size="md"
               onClick={() => setIsModalOpen(true)}
-              icon={<Plus className="w-4 h-4" />}
+              icon={<Plus className="w-4 h-4 text-slate-950 font-extrabold" />}
+              className="text-slate-950 font-extrabold"
             >
               Atur / Tambah Budget
             </Button>
@@ -102,17 +103,18 @@ export default function BudgetsPage() {
 
           {/* Empty State if no budgets set */}
           {budgets.length === 0 && (
-            <div className="p-10 border border-dashed border-[#262C38] rounded-2xl text-center space-y-3 bg-[#14171D]/40">
-              <Target className="w-10 h-10 text-gray-500 mx-auto" />
+            <div className="p-10 border border-dashed border-[#262C38] rounded-2xl text-center space-y-3 bg-[#0E1015]">
+              <Target className="w-10 h-10 text-amber-400/50 mx-auto" />
               <h4 className="text-sm font-bold text-white">Belum Ada Budget Bulanan</h4>
-              <p className="text-xs text-gray-400 max-w-md mx-auto">
+              <p className="text-xs text-slate-300 max-w-md mx-auto">
                 Tentukan batas pengeluaran per kategori agar bot Telegram dapat memberikan peringatan dini saat pengeluaran mencapai 80% & 100%.
               </p>
               <Button
                 variant="primary"
                 size="sm"
                 onClick={() => setIsModalOpen(true)}
-                icon={<Plus className="w-4 h-4" />}
+                icon={<Plus className="w-4 h-4 text-slate-950 font-extrabold" />}
+                className="text-slate-950 font-extrabold"
               >
                 Mulai Atur Budget Sekarang
               </Button>

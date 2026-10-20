@@ -211,24 +211,24 @@ export default function VerifyPage() {
   const isApproved = currentUser?.status === 'approved';
 
   return (
-    <div className="min-h-screen bg-[#0D0F12] text-white flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-[#000000] text-white flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden">
       {/* Background glow circles */}
-      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#FF6B00]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Brand Header */}
       <div className="flex items-center gap-2.5 mb-8 z-10">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF6B00] to-[#FFA370] flex items-center justify-center text-white font-extrabold shadow-lg shadow-[#FF6B00]/30 text-lg">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold shadow-lg shadow-amber-500/30 text-lg">
           ⚡
         </div>
         <span className="text-xl font-extrabold tracking-tight">TataDana</span>
-        <span className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-semibold">
+        <span className="text-xs px-2 py-0.5 rounded-full bg-slate-900 text-amber-300 border border-amber-500/30 font-semibold">
           Portal Verifikasi
         </span>
       </div>
 
       <div className="w-full max-w-md z-10 space-y-6">
-        <Card className="p-6 sm:p-8 space-y-6 border-[#262C38] bg-[#14171D]">
+        <Card className="p-6 sm:p-8 space-y-6 border-amber-500/30 bg-[#0A0A0A]">
           {/* Header Status */}
           <div className="text-center space-y-2">
             <div className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300">
@@ -325,10 +325,10 @@ export default function VerifyPage() {
               type="button"
               onClick={handleInstantVerify}
               disabled={isVerifying || success}
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99] disabled:opacity-50"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 text-black font-extrabold text-xs sm:text-sm shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99] disabled:opacity-50"
             >
               <span>⚡ Verifikasi Otomatis & Buka Dashboard (1-Klik)</span>
-              <ArrowRight className="w-4 h-4 text-slate-950" />
+              <ArrowRight className="w-4 h-4 text-black font-extrabold" />
             </button>
           </div>
 

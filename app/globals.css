@@ -6,9 +6,9 @@
 
 @layer base {
   :root {
-    --background: #0D0F12;
-    --foreground: #F1F5F9;
-    --foreground-muted: #94A3B8;
+    --background: #000000;
+    --foreground: #FFFFFF;
+    --foreground-muted: #E2E8F0;
   }
 
   * {
@@ -19,8 +19,8 @@
 
   html,
   body {
-    color: #F1F5F9;
-    background-color: #0D0F12;
+    color: #FFFFFF;
+    background-color: #000000;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -94,6 +94,30 @@
 
 .glow-platinum-subtle {
   box-shadow: 0 0 15px -2px rgba(226, 232, 240, 0.15);
+}
+
+.glow-gold {
+  box-shadow: 0 0 25px -4px rgba(245, 158, 11, 0.35);
+}
+
+.glow-gold-subtle {
+  box-shadow: 0 0 15px -2px rgba(245, 158, 11, 0.2);
+}
+
+/* Luxury Black & Gold Elements */
+.gold-gradient {
+  background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #D97706 100%);
+}
+
+.gold-text {
+  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border {
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: inset 0 1px 0 rgba(254, 240, 138, 0.2), 0 0 12px rgba(245, 158, 11, 0.1);
 }
 
 /* Elegant Platinum / Silver Chrome Elements */

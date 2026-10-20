@@ -100,10 +100,10 @@ export const StatCards: React.FC<StatCardsProps> = ({
                 <button
                   type="button"
                   onClick={onOpenTopUp}
-                  className="w-full py-2 px-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 active:scale-[0.98] border border-emerald-500/40 text-emerald-400 hover:text-emerald-300 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm"
+                  className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 active:scale-[0.98] border border-amber-300 text-black font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-amber-500/25"
                   title="Tambah Saldo Dompet"
                 >
-                  <span>+ Tambah Saldo (Top Up)</span>
+                  <span className="text-black font-extrabold">+ Tambah Saldo (Top Up)</span>
                 </button>
               </div>
             )}

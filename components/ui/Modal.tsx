@@ -54,12 +54,12 @@ export const Modal: React.FC<ModalProps> = ({
 
       {/* Modal Dialog */}
       <div
-        className={`relative w-full ${maxWidths[maxWidth]} bg-[#14171D] border border-[#262C38] rounded-2xl p-4 sm:p-6 shadow-2xl z-10 overflow-hidden text-left animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col`}
+        className={`relative w-full ${maxWidths[maxWidth]} bg-[#0A0A0A] border border-amber-500/30 rounded-2xl p-4 sm:p-6 shadow-2xl z-10 overflow-hidden text-left animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col`}
       >
         <div className="flex items-start justify-between pb-3 sm:pb-4 border-b border-[#262C38] shrink-0">
           <div className="pr-2">
             <h3 className="text-base sm:text-lg font-bold text-white leading-snug">{title}</h3>
-            {subtitle && <p className="text-xs text-[#9CA3AF] mt-0.5">{subtitle}</p>}
+            {subtitle && <p className="text-xs text-slate-300 mt-0.5">{subtitle}</p>}
           </div>
           <button
             onClick={onClose}

@@ -1402,6 +1402,59 @@ test('Wallet Isolation: Admin wallet is not in sanitized list', !sanitizedWallet
 const cleanTotalBalance = sanitizedWallets.reduce((acc, w) => acc + w.balance, 0);
 test('Wallet Isolation: Sanitized total balance is 10000000', cleanTotalBalance === 10000000);
 
+// Specific test for Azril ngawi account isolation
+const mockAdminWallet10M = {
+  id: 'wal_admin_ghalan_01',
+  user_id: 'adm_ghalan_01',
+  name: 'Dompet Utama (Admin)',
+  type: 'bank',
+  balance: 10000000,
+  is_default: true,
+};
+const mockAzrilMainWallet = {
+  id: 'wal_azril_main',
+  user_id: 'usr_azril_13',
+  name: 'Dompet Utama',
+  type: 'cash',
+  balance: 0,
+  is_default: true,
+};
+const mockAzrilDanaWallet = {
+  id: 'wal_azril_dana',
+  user_id: 'usr_azril_13',
+  name: 'Dana Dompet',
+  type: 'ewallet',
+  balance: 5000000,
+  is_default: false,
+};
+const userAzrilNgawi = {
+  id: 'usr_azril_13',
+  full_name: 'Azril ngawi',
+  telegram_username: 'azril13',
+  role: 'user',
+  wallets: [mockAdminWallet10M, mockAzrilMainWallet, mockAzrilDanaWallet],
+};
+
+test('Azril ngawi: Admin wallet 10M is strictly rejected', isWalletAllowedForUser(mockAdminWallet10M, userAzrilNgawi) === false);
+test('Azril ngawi: Dompet Utama Rp 0 is accepted', isWalletAllowedForUser(mockAzrilMainWallet, userAzrilNgawi) === true);
+test('Azril ngawi: Dana Dompet Rp 5M is accepted', isWalletAllowedForUser(mockAzrilDanaWallet, userAzrilNgawi) === true);
+
+const azrilSanitizedWallets = userAzrilNgawi.wallets.filter(w => isWalletAllowedForUser(w, userAzrilNgawi));
+test('Azril ngawi: Sanitized wallet count is 2 (Dompet Utama & Dana Dompet)', azrilSanitizedWallets.length === 2);
+test('Azril ngawi: Sanitized wallets contain NO admin wallet', !azrilSanitizedWallets.some(w => w.name.toLowerCase().includes('admin') || w.id.includes('admin')));
+const azrilTotalBalance = azrilSanitizedWallets.reduce((acc, w) => acc + w.balance, 0);
+test('Azril ngawi: Total balance is strictly Rp 5.000.000 (not 15.000.000)', azrilTotalBalance === 5000000);
+
+let azrilDefaultCount = 0;
+const azrilDedupedWallets = azrilSanitizedWallets.map(w => {
+  if (w.is_default && azrilDefaultCount === 0) {
+    azrilDefaultCount++;
+    return { ...w, is_default: true };
+  }
+  return { ...w, is_default: false };
+});
+test('Azril ngawi: Exactly 1 default wallet exists', azrilDedupedWallets.filter(w => w.is_default).length === 1);
+
 // --- TELEGRAM BOT WELCOME GREETING & ONBOARDING TESTS ---
 function resolveTelegramUserName(from, fallback = 'Sobat TataDana') {
   if (!from) return fallback;

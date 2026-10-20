@@ -90,24 +90,24 @@ export const Sidebar: React.FC = () => {
 
       {/* Responsive Sidebar Drawer */}
       <aside
-        className={`w-64 bg-[#11141A] border-r border-[#262C38] flex flex-col h-[100dvh] h-screen shrink-0 fixed left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+        className={`w-64 bg-[#0A0A0A] border-r border-[#1F2430] flex flex-col h-[100dvh] h-screen shrink-0 fixed left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${
           isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="p-5 border-b border-[#1E2433] flex items-center justify-between">
+        <div className="p-5 border-b border-[#1C2028] flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5" onClick={close}>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-100 via-slate-300 to-slate-400 flex items-center justify-center text-slate-900 font-extrabold shadow-lg shadow-slate-900/50">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold shadow-lg shadow-amber-500/25">
               ⚡
             </div>
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-base font-extrabold text-white tracking-tight">TataDana</span>
-                <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">
+                <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30">
                   {profile.plan}
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 font-medium">Finance Bot SaaS</p>
+              <p className="text-[10px] text-amber-200/60 font-medium">Finance Bot SaaS</p>
             </div>
           </Link>
 
@@ -137,17 +137,17 @@ export const Sidebar: React.FC = () => {
                 onClick={close}
                 className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-all group ${
                   isActive
-                    ? 'bg-gradient-to-r from-slate-200 via-slate-100 to-slate-300 text-slate-900 shadow-lg shadow-slate-900/50 font-bold'
-                    : 'text-slate-300 hover:text-white hover:bg-[#181C24]'
+                    ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black shadow-lg shadow-amber-500/25 font-extrabold'
+                    : 'text-slate-200 hover:text-amber-300 hover:bg-amber-400/10'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-200'}`} />
-                  <span>{item.label}</span>
+                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-black' : 'text-slate-400 group-hover:text-amber-300'}`} />
+                  <span className={isActive ? 'text-black font-extrabold' : ''}>{item.label}</span>
                 </div>
                 {item.badge && (
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${
-                    isActive ? 'bg-slate-900/20 text-slate-900 border border-slate-900/30' : 'bg-slate-800 text-slate-300 border border-slate-700'
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded font-extrabold ${
+                    isActive ? 'bg-black/20 text-black border border-black/30' : 'bg-[#181C24] text-amber-300 border border-amber-500/20'
                   }`}>
                     {item.badge}
                   </span>
@@ -181,18 +181,18 @@ export const Sidebar: React.FC = () => {
         </nav>
 
         {/* Bottom Profile Section */}
-        <div className="p-3 border-t border-[#262C38] bg-[#14171D]">
-          <div className="p-2.5 rounded-xl bg-[#181C24] border border-[#262C38] flex items-center justify-between">
+        <div className="p-3 border-t border-[#1C2028] bg-[#0B0C0F]">
+          <div className="p-2.5 rounded-xl bg-[#12141A] border border-[#1F2430] flex items-center justify-between">
             <div className="flex items-center gap-2.5 min-w-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={profile.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
                 alt={profile.full_name}
-                className="w-8 h-8 rounded-full object-cover border border-blue-500/40 shrink-0"
+                className="w-8 h-8 rounded-full object-cover border border-amber-400/60 shrink-0"
               />
               <div className="min-w-0">
                 <p className="text-xs font-semibold text-white truncate">{profile.full_name}</p>
-                <p className="text-[10px] text-gray-400 truncate">@{profile.telegram_username || 'telegram'}</p>
+                <p className="text-[10px] text-amber-200/50 truncate">@{profile.telegram_username || 'telegram'}</p>
               </div>
             </div>
             <button
@@ -202,7 +202,7 @@ export const Sidebar: React.FC = () => {
                 window.location.href = '/login';
               }}
               title="Keluar"
-              className="p-1.5 rounded-lg text-gray-400 hover:text-rose-400 hover:bg-white/5 transition-colors"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-amber-400 hover:bg-white/5 transition-colors"
             >
               <LogOut className="w-4 h-4" />
             </button>

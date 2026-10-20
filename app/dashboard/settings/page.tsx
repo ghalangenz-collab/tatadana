@@ -397,7 +397,7 @@ export default function SettingsPage() {
   const botUsername = profile.telegram_username || 'tatadana_bot';
 
   return (
-    <div className="flex min-h-screen bg-[#0D0F12] text-[#F8FAFC]">
+    <div className="flex min-h-screen bg-black text-[#F8FAFC]">
       <Sidebar />
 
       <main className="flex-1 md:ml-64 ml-0 min-w-0">
@@ -412,39 +412,39 @@ export default function SettingsPage() {
             <button
               onClick={() => setActiveTab('bot')}
               className={`pb-3 font-semibold transition-all relative flex items-center gap-2 shrink-0 whitespace-nowrap ${
-                activeTab === 'bot' ? 'text-[#FF8533]' : 'text-slate-400 hover:text-white'
+                activeTab === 'bot' ? 'text-amber-400 font-bold' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Bot className="w-4 h-4" />
               <span>Telegram Bot (Live Localhost)</span>
               {activeTab === 'bot' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6B00]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-400" />
               )}
             </button>
 
             <button
               onClick={() => setActiveTab('profile')}
               className={`pb-3 font-semibold transition-all relative flex items-center gap-2 shrink-0 whitespace-nowrap ${
-                activeTab === 'profile' ? 'text-[#FF8533]' : 'text-slate-400 hover:text-white'
+                activeTab === 'profile' ? 'text-amber-400 font-bold' : 'text-slate-400 hover:text-white'
               }`}
             >
               <User className="w-4 h-4" />
               <span>Profil Pengguna</span>
               {activeTab === 'profile' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6B00]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-400" />
               )}
             </button>
 
             <button
               onClick={() => setActiveTab('reminder')}
               className={`pb-3 font-semibold transition-all relative flex items-center gap-2 shrink-0 whitespace-nowrap ${
-                activeTab === 'reminder' ? 'text-[#FF8533]' : 'text-slate-400 hover:text-white'
+                activeTab === 'reminder' ? 'text-amber-400 font-bold' : 'text-slate-400 hover:text-white'
               }`}
             >
               <Bell className="w-4 h-4" />
               <span>Reminder Harian</span>
               {activeTab === 'reminder' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6B00]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-400" />
               )}
             </button>
 

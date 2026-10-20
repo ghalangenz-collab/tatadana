@@ -29,9 +29,43 @@ import {
 } from '@/lib/export/export-helper';
 
 export default function ReportsPage() {
+  const getCleanWallets = () => {
+    const user = demoStore.getCurrentUser();
+    const isRealAdmin = Boolean(
+      user &&
+      user.role === 'admin' &&
+      (user.email?.toLowerCase() === 'admin@tatadana.id' || user.full_name?.toLowerCase().includes('ghalan'))
+    );
+    let list = demoStore.getWallets();
+    if (!isRealAdmin) {
+      list = list.filter(
+        (w) =>
+          w &&
+          !w.name.toLowerCase().includes('admin') &&
+          !w.id.toLowerCase().includes('admin') &&
+          (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && (!user || w.user_id === user.id)))
+      );
+      if (list.length === 0) {
+        list = [{
+          id: `wal_${user?.id || 'main'}_clean`,
+          user_id: user?.id,
+          name: 'Dompet Utama',
+          type: 'cash',
+          balance: 0,
+          is_default: true,
+          color: '#10B981',
+          icon: 'banknote',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }];
+      }
+    }
+    return list;
+  };
+
   const [transactions, setTransactions] = useState(demoStore.getTransactions());
   const [categories] = useState(demoStore.getCategories());
-  const [wallets] = useState(demoStore.getWallets());
+  const [wallets, setWallets] = useState<any[]>(getCleanWallets());
   const [exports, setExports] = useState(demoStore.getReportExports());
 
   const [startDate, setStartDate] = useState('2026-10-01');
@@ -168,7 +202,7 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#0D0F12]">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
 
       <main className="flex-1 md:ml-64 ml-0 min-w-0">

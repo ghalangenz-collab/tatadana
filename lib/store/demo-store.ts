@@ -151,24 +151,29 @@ class DemoStore {
     if (!w || !w.id) return false;
     const nameLower = (w.name || '').toLowerCase();
     const idLower = (w.id || '').toLowerCase();
+    const userIdLower = (w.user_id || '').toLowerCase();
 
-    // If user is admin, allow admin wallets
-    if (user && user.role === 'admin') {
-      return true;
-    }
+    const isUserAdmin = Boolean(
+      user &&
+      user.role === 'admin' &&
+      (!user.email || user.email.toLowerCase() === 'admin@tatadana.id' || (user.full_name && user.full_name.toLowerCase().includes('ghalan')))
+    );
 
-    // For any non-admin (regular user): strictly reject any admin wallet
-    if (nameLower.includes('(admin)') || nameLower.includes('admin') || idLower.includes('admin')) {
-      return false;
-    }
+    const isAdminWallet =
+      nameLower.includes('(admin)') ||
+      nameLower.includes('admin') ||
+      idLower.includes('admin') ||
+      userIdLower.startsWith('adm_') ||
+      userIdLower.includes('admin') ||
+      userIdLower === 'adm_ghalan_01';
 
-    // If wallet has a user_id from an admin account, reject
-    if (w.user_id && (w.user_id.startsWith('adm_') || w.user_id === 'adm_ghalan_01')) {
-      return false;
+    // Admin wallets are STRICTLY forbidden for regular users and guests
+    if (isAdminWallet) {
+      return isUserAdmin;
     }
 
     // If user is specified, and wallet has a user_id that doesn't match, reject
-    if (user && w.user_id && w.user_id !== user.id) {
+    if (user && w.user_id && w.user_id !== user.id && !isUserAdmin) {
       return false;
     }
 
@@ -182,7 +187,9 @@ class DemoStore {
       const saved = localStorage.getItem('tatadana_store_state_v1');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.wallets && Array.isArray(parsed.wallets)) this.wallets = parsed.wallets;
+        if (parsed.wallets && Array.isArray(parsed.wallets)) {
+          this.wallets = parsed.wallets.filter((w: Wallet) => this.isWalletAllowedForUser(w, this.currentUser));
+        }
         if (parsed.budgets && Array.isArray(parsed.budgets)) this.budgets = parsed.budgets;
         if (parsed.transactions && Array.isArray(parsed.transactions)) this.transactions = parsed.transactions;
         if (parsed.simMessages && Array.isArray(parsed.simMessages)) {
@@ -206,6 +213,15 @@ class DemoStore {
       if (savedCurrUser) {
         try {
           const parsed: UserAccount = JSON.parse(savedCurrUser);
+          const isRealAdmin = Boolean(
+            parsed.role === 'admin' &&
+            (parsed.email?.toLowerCase() === 'admin@tatadana.id' || parsed.full_name?.toLowerCase().includes('ghalan'))
+          );
+
+          if (!isRealAdmin) {
+            parsed.role = 'user';
+          }
+
           const foundIdx = this.users.findIndex((u) => u.id === parsed.id);
           const found = foundIdx !== -1 ? this.users[foundIdx] : null;
 
@@ -233,15 +249,26 @@ class DemoStore {
 
           // Also check this.wallets: ONLY add if matching parsed user ID
           (this.wallets || []).forEach((w) => {
-            if (w && w.id && w.user_id === parsed.id && this.isWalletAllowedForUser(w, parsed)) {
+            if (w && w.id && (!w.user_id || w.user_id === parsed.id) && this.isWalletAllowedForUser(w, parsed)) {
               walletMap.set(w.id, w);
             }
           });
 
           let mergedWallets = Array.from(walletMap.values());
 
+          // For any non-admin (e.g. Azril ngawi), strictly reject any wallet with "admin" in name or id or user_id starting with adm_
+          if (!isRealAdmin) {
+            mergedWallets = mergedWallets.filter(
+              (w) =>
+                w &&
+                !w.name.toLowerCase().includes('admin') &&
+                !w.id.toLowerCase().includes('admin') &&
+                (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && w.user_id === parsed.id))
+            );
+          }
+
           // If regular user has 0 wallets after filtering, give them a clean Dompet Utama Rp 0
-          if (parsed.role !== 'admin' && mergedWallets.length === 0) {
+          if (!isRealAdmin && mergedWallets.length === 0) {
             mergedWallets = [{
               id: `wal_${parsed.id}_main`,
               user_id: parsed.id,
@@ -269,12 +296,20 @@ class DemoStore {
             mergedWallets[0].is_default = true;
           }
 
-          // Merge user transactions deduplicated by ID
+          // Merge user transactions deduplicated by ID, filtering out transactions linked to purged admin wallets
           const txMap = new Map<string, Transaction>();
-          (found?.transactions || []).forEach((t) => { if (t && t.id) txMap.set(t.id, t); });
-          (parsed?.transactions || []).forEach((t) => { if (t && t.id) txMap.set(t.id, t); });
+          const allowedWalletIds = new Set(mergedWallets.map((w) => w.id));
+
+          const isTxValid = (t: Transaction) => {
+            if (!t || !t.id) return false;
+            if (t.wallet_id && !allowedWalletIds.has(t.wallet_id) && !isRealAdmin) return false;
+            return true;
+          };
+
+          (found?.transactions || []).filter(isTxValid).forEach((t) => { if (t && t.id) txMap.set(t.id, t); });
+          (parsed?.transactions || []).filter(isTxValid).forEach((t) => { if (t && t.id) txMap.set(t.id, t); });
           if (this.currentUser && this.currentUser.id === parsed.id && Array.isArray(this.currentUser.transactions)) {
-            this.currentUser.transactions.forEach((t) => { if (t && t.id) txMap.set(t.id, t); });
+            this.currentUser.transactions.filter(isTxValid).forEach((t) => { if (t && t.id) txMap.set(t.id, t); });
           }
           const mergedTransactions = Array.from(txMap.values()).sort((a, b) => {
             const dateA = new Date(a.transaction_date || a.created_at).getTime();
@@ -289,6 +324,7 @@ class DemoStore {
           const mergedUser: UserAccount = {
             ...(found || parsed),
             ...parsed,
+            role: isRealAdmin ? 'admin' : 'user',
             wallets: [...mergedWallets],
             transactions: [...mergedTransactions],
           };
@@ -301,10 +337,30 @@ class DemoStore {
 
           // Clean all users in this.users so non-admin users don't hold any admin wallets
           this.users = this.users.map((u) => {
-            if (u.role !== 'admin' && Array.isArray(u.wallets)) {
-              const cleaned = u.wallets.filter((w) => this.isWalletAllowedForUser(w, u));
+            const uIsAdmin = Boolean(
+              u.role === 'admin' &&
+              (u.email?.toLowerCase() === 'admin@tatadana.id' || u.full_name?.toLowerCase().includes('ghalan'))
+            );
+            if (!uIsAdmin && Array.isArray(u.wallets)) {
+              let cleaned = u.wallets
+                .filter((w) => this.isWalletAllowedForUser(w, u))
+                .filter((w) => w && !w.name.toLowerCase().includes('admin') && !w.id.toLowerCase().includes('admin') && (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && w.user_id === u.id)));
+
+              let defFound = false;
+              cleaned = cleaned.map((w) => {
+                if (w.is_default && !defFound) {
+                  defFound = true;
+                  return { ...w, is_default: true };
+                }
+                return { ...w, is_default: false };
+              });
+              if (!defFound && cleaned.length > 0) {
+                cleaned[0].is_default = true;
+              }
+
               return {
                 ...u,
+                role: 'user',
                 wallets: cleaned.length > 0 ? cleaned : [{
                   id: `wal_${u.id}_main`,
                   user_id: u.id,
@@ -325,6 +381,18 @@ class DemoStore {
           // Resave sanitized current user and users to localStorage to purge contaminated data immediately
           localStorage.setItem('tatadana_current_user_v2', JSON.stringify(mergedUser));
           localStorage.setItem('tatadana_users_v2', JSON.stringify(this.users));
+          if (!isRealAdmin) {
+            localStorage.setItem(
+              'tatadana_store_state_v1',
+              JSON.stringify({
+                wallets: this.wallets,
+                budgets: this.budgets,
+                transactions: this.transactions,
+                simMessages: this.simMessages,
+                profile: this.profile,
+              })
+            );
+          }
         } catch (e) {
           const found = this.users.find((u) => u.id === savedCurrUser);
           if (found) {
@@ -466,7 +534,9 @@ class DemoStore {
       const existing = this.users.find((u) => u.id === serverU.id);
       if (!existing) {
         if (serverU.role !== 'admin' && Array.isArray(serverU.wallets)) {
-          serverU.wallets = serverU.wallets.filter((w) => this.isWalletAllowedForUser(w, serverU));
+          serverU.wallets = serverU.wallets
+            .filter((w) => this.isWalletAllowedForUser(w, serverU))
+            .filter((w) => w && !w.name.toLowerCase().includes('admin') && !w.id.toLowerCase().includes('admin') && (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && w.user_id === serverU.id)));
           if (serverU.wallets.length === 0) {
             serverU.wallets = [{
               id: `wal_${serverU.id}_main`,
@@ -485,6 +555,26 @@ class DemoStore {
         this.users.unshift(serverU);
         changed = true;
       } else {
+        if (existing.role !== 'admin' && Array.isArray(existing.wallets)) {
+          const cleaned = existing.wallets
+            .filter((w) => this.isWalletAllowedForUser(w, existing))
+            .filter((w) => w && !w.name.toLowerCase().includes('admin') && !w.id.toLowerCase().includes('admin') && (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && w.user_id === existing.id)));
+          if (cleaned.length !== existing.wallets.length) {
+            existing.wallets = cleaned.length > 0 ? cleaned : [{
+              id: `wal_${existing.id}_main`,
+              user_id: existing.id,
+              name: 'Dompet Utama',
+              type: 'cash',
+              balance: 0,
+              is_default: true,
+              color: '#10B981',
+              icon: 'banknote',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            }];
+            changed = true;
+          }
+        }
         if (existing.status !== serverU.status || existing.is_verified !== serverU.is_verified || existing.verification_code !== serverU.verification_code) {
           existing.status = serverU.status;
           existing.is_verified = serverU.is_verified;
@@ -632,16 +722,15 @@ class DemoStore {
           (u.phone && u.phone.replace(/\D/g, '') === clean.replace(/\D/g, '')))
     );
 
-    // If not found in admin users, check if a registered user with this email/phone exists
+    // Only Muhammad Ghalan or registered admin accounts can authenticate as admin
     if (!adminUser) {
-      const anyUser = this.users.find(
+      const ghalanAccount = this.users.find(
         (u) =>
-          u.email.toLowerCase() === clean ||
-          u.full_name.toLowerCase() === clean ||
-          (u.phone && u.phone.replace(/\D/g, '') === clean.replace(/\D/g, ''))
+          u.email?.toLowerCase() === 'admin@tatadana.id' ||
+          u.full_name?.toLowerCase().includes('ghalan')
       );
-      if (anyUser && (!anyUser.password || anyUser.password === cleanPass || cleanPass === 'ghalan123' || cleanPass === 'admin' || !cleanPass)) {
-        adminUser = anyUser;
+      if (ghalanAccount && (cleanPass === 'ghalan123' || !cleanPass)) {
+        adminUser = ghalanAccount;
         adminUser.role = 'admin';
       }
     }
@@ -904,7 +993,9 @@ class DemoStore {
     }
 
     if (user.role !== 'admin') {
-      user.wallets = (user.wallets || []).filter((w) => this.isWalletAllowedForUser(w, user));
+      user.wallets = (user.wallets || [])
+        .filter((w) => this.isWalletAllowedForUser(w, user))
+        .filter((w) => w && !w.name.toLowerCase().includes('admin') && !w.id.toLowerCase().includes('admin') && (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && w.user_id === user.id)));
       if (user.wallets.length === 0) {
         user.wallets = [{
           id: `wal_${user.id}_main`,
@@ -971,10 +1062,24 @@ class DemoStore {
     if (typeof window !== 'undefined' && !this.isClientInitialized) {
       this.initFromClientStorage();
     }
+
+    const isRealAdmin = Boolean(
+      this.currentUser &&
+      this.currentUser.role === 'admin' &&
+      (!this.currentUser.email || this.currentUser.email.toLowerCase() === 'admin@tatadana.id' || (this.currentUser.full_name && this.currentUser.full_name.toLowerCase().includes('ghalan')))
+    );
+
     if (this.currentUser) {
       let userWallets = Array.isArray(this.currentUser.wallets) ? this.currentUser.wallets : [];
-      if (this.currentUser.role !== 'admin') {
+      if (!isRealAdmin) {
         userWallets = userWallets.filter((w) => this.isWalletAllowedForUser(w, this.currentUser));
+        userWallets = userWallets.filter(
+          (w) =>
+            w &&
+            !w.name.toLowerCase().includes('admin') &&
+            !w.id.toLowerCase().includes('admin') &&
+            (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && w.user_id === this.currentUser!.id))
+        );
         if (userWallets.length === 0) {
           userWallets = [{
             id: `wal_${this.currentUser.id}_main`,
@@ -989,7 +1094,8 @@ class DemoStore {
             updated_at: new Date().toISOString(),
           }];
         }
-        this.currentUser.wallets = userWallets;
+        this.currentUser.wallets = [...userWallets];
+        this.wallets = [...userWallets];
       }
 
       // Deduplicate by ID
@@ -1014,8 +1120,25 @@ class DemoStore {
     }
 
     let safeWallets = this.wallets.filter((w) => this.isWalletAllowedForUser(w, null));
+    safeWallets = safeWallets.filter(
+      (w) =>
+        w &&
+        !w.name.toLowerCase().includes('admin') &&
+        !w.id.toLowerCase().includes('admin') &&
+        (!w.user_id || !w.user_id.toLowerCase().includes('adm'))
+    );
     if (safeWallets.length === 0) {
-      safeWallets = [...this.wallets];
+      safeWallets = [{
+        id: 'wal_default_main',
+        name: 'Dompet Utama',
+        type: 'cash',
+        balance: 0,
+        is_default: true,
+        color: '#10B981',
+        icon: 'banknote',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }];
     }
     let defaultFound = false;
     safeWallets = safeWallets.map((w) => {

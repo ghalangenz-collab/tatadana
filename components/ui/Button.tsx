@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'emerald';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'emerald' | 'gold';
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   isLoading?: boolean;
@@ -17,7 +17,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props
 }) => {
-  const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-300/40 disabled:opacity-50 disabled:cursor-not-allowed';
+  const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400/50 disabled:opacity-50 disabled:cursor-not-allowed';
 
   const sizes = {
     sm: 'px-3 py-1.5 text-xs gap-1.5',
@@ -26,12 +26,13 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variants = {
-    primary: 'bg-gradient-to-r from-[#FFFFFF] via-[#E2E8F0] to-[#CBD5E1] hover:from-[#F8FAFC] hover:via-[#F1F5F9] hover:to-[#E2E8F0] text-[#0F172A] font-bold shadow-lg shadow-white/10 border border-white/60 active:scale-[0.98]',
-    secondary: 'bg-[#1E232D] hover:bg-[#2A313E] text-white border border-[#2D3545] active:scale-[0.98]',
-    outline: 'border border-slate-400/60 text-slate-200 hover:bg-slate-200/10 active:scale-[0.98]',
-    ghost: 'text-[#9CA3AF] hover:text-white hover:bg-white/5 active:scale-[0.98]',
-    danger: 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 active:scale-[0.98]',
-    emerald: 'bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-lg shadow-emerald-600/30 border border-emerald-400/50 active:scale-[0.98]',
+    primary: 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 text-black font-extrabold shadow-lg shadow-amber-500/25 border border-amber-300 active:scale-[0.98] [&_svg]:text-black',
+    gold: 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 text-black font-extrabold shadow-lg shadow-amber-500/25 border border-amber-300 active:scale-[0.98] [&_svg]:text-black',
+    emerald: 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 text-black font-extrabold shadow-lg shadow-amber-500/25 border border-amber-300 active:scale-[0.98] [&_svg]:text-black',
+    secondary: 'bg-[#0E1015] hover:bg-[#181B22] text-amber-300 font-bold border border-amber-500/40 hover:border-amber-400 shadow-sm active:scale-[0.98] [&_svg]:text-amber-300',
+    outline: 'border border-amber-400/60 text-amber-300 hover:bg-amber-400/10 hover:border-amber-300 font-bold active:scale-[0.98] [&_svg]:text-amber-300',
+    ghost: 'text-slate-200 hover:text-amber-300 hover:bg-amber-400/10 active:scale-[0.98]',
+    danger: 'bg-red-500/20 text-red-300 hover:bg-red-500/30 border border-red-500/30 active:scale-[0.98]',
   };
 
   return (

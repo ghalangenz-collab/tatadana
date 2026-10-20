@@ -21,12 +21,46 @@ import {
 } from 'lucide-react';
 
 export default function SimulatorPage() {
-  const [wallets, setWallets] = useState<WalletType[]>(demoStore.getWallets());
+  const getCleanWallets = () => {
+    const user = demoStore.getCurrentUser();
+    const isRealAdmin = Boolean(
+      user &&
+      user.role === 'admin' &&
+      (user.email?.toLowerCase() === 'admin@tatadana.id' || user.full_name?.toLowerCase().includes('ghalan'))
+    );
+    let list = demoStore.getWallets();
+    if (!isRealAdmin) {
+      list = list.filter(
+        (w) =>
+          w &&
+          !w.name.toLowerCase().includes('admin') &&
+          !w.id.toLowerCase().includes('admin') &&
+          (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && (!user || w.user_id === user.id)))
+      );
+      if (list.length === 0) {
+        list = [{
+          id: `wal_${user?.id || 'main'}_clean`,
+          user_id: user?.id,
+          name: 'Dompet Utama',
+          type: 'cash',
+          balance: 0,
+          is_default: true,
+          color: '#10B981',
+          icon: 'banknote',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }];
+      }
+    }
+    return list;
+  };
+
+  const [wallets, setWallets] = useState<WalletType[]>(getCleanWallets());
   const profile = demoStore.getProfile();
 
   useEffect(() => {
     const unsub = demoStore.subscribe(() => {
-      setWallets(demoStore.getWallets());
+      setWallets(getCleanWallets());
     });
     return () => unsub();
   }, []);
@@ -34,7 +68,7 @@ export default function SimulatorPage() {
   const totalBalance = wallets.reduce((sum, w) => sum + w.balance, 0);
 
   return (
-    <div className="flex min-h-screen bg-[#0D0F12]">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
 
       <main className="flex-1 md:ml-64 ml-0 min-w-0">
@@ -53,13 +87,13 @@ export default function SimulatorPage() {
             {/* Right: Live Wallet Balances & Telegram Bot Fallback */}
             <div className="lg:col-span-4 space-y-5">
               {/* LIVE WALLETS MONITOR */}
-              <Card className="p-5 border-blue-500/30 ring-1 ring-blue-500/20">
+              <Card className="p-5 border-amber-500/30 ring-1 ring-amber-500/20">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Wallet className="w-4 h-4 text-blue-400" />
+                    <Wallet className="w-4 h-4 text-amber-400" />
                     <h4 className="text-sm font-bold text-white">Mutasi Saldo Real-Time</h4>
                   </div>
-                  <span className="text-[10px] bg-blue-500/15 text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-500/30">
+                  <span className="text-[10px] bg-amber-500/15 text-amber-300 font-semibold px-2 py-0.5 rounded-full border border-amber-500/30">
                     Live Reactive
                   </span>
                 </div>

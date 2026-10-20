@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
   const { toggle } = useMobileSidebar();
 
   return (
-    <header className="sticky top-0 z-20 bg-[#0D0F12]/90 backdrop-blur-md border-b border-[#262C38] px-4 sm:px-8 py-3 sm:py-4 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+    <header className="sticky top-0 z-20 bg-[#000000]/95 backdrop-blur-md border-b border-amber-500/20 px-4 sm:px-8 py-3 sm:py-4 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
       {/* Title & Hamburger Menu for Mobile */}
       <div className="flex items-center gap-3 min-w-0">
         <button
@@ -67,11 +67,11 @@ export const Header: React.FC<HeaderProps> = ({
 
         {onOpenTopUpModal && (
           <Button
-            variant="emerald"
+            variant="gold"
             size="sm"
             onClick={onOpenTopUpModal}
-            icon={<Plus className="w-3.5 h-3.5 text-white" />}
-            className="text-xs py-1.5 px-2.5 sm:px-3"
+            icon={<Plus className="w-3.5 h-3.5 text-black font-extrabold" />}
+            className="text-xs py-1.5 px-2.5 sm:px-3 text-black font-extrabold"
           >
             <span className="hidden sm:inline">Tambah Saldo</span>
             <span className="sm:hidden">Top Up</span>
@@ -80,11 +80,11 @@ export const Header: React.FC<HeaderProps> = ({
 
         {onOpenTransferModal && (
           <Button
-            variant="secondary"
+            variant="gold"
             size="sm"
             onClick={onOpenTransferModal}
-            icon={<ArrowLeftRight className="w-3.5 h-3.5 text-slate-300" />}
-            className="text-xs py-1.5 px-2.5 sm:px-3"
+            icon={<ArrowLeftRight className="w-3.5 h-3.5 text-black font-extrabold" />}
+            className="text-xs py-1.5 px-2.5 sm:px-3 text-black font-extrabold"
           >
             Transfer
           </Button>
@@ -92,11 +92,11 @@ export const Header: React.FC<HeaderProps> = ({
 
         {onOpenAddModal && (
           <Button
-            variant="primary"
+            variant="gold"
             size="sm"
             onClick={onOpenAddModal}
-            icon={<Plus className="w-3.5 h-3.5" />}
-            className="text-xs py-1.5 px-2.5 sm:px-3"
+            icon={<Plus className="w-3.5 h-3.5 text-black font-extrabold" />}
+            className="text-xs py-1.5 px-2.5 sm:px-3 text-black font-extrabold"
           >
             <span className="hidden sm:inline">Catat Transaksi</span>
             <span className="sm:hidden">Catat</span>

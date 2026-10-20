@@ -25,7 +25,52 @@ import {
 } from 'lucide-react';
 
 export default function WalletsPage() {
-  const [wallets, setWallets] = useState(demoStore.getWallets());
+  const getCleanWallets = () => {
+    const user = demoStore.getCurrentUser();
+    const isRealAdmin = Boolean(
+      user &&
+      user.role === 'admin' &&
+      (user.email?.toLowerCase() === 'admin@tatadana.id' || user.full_name?.toLowerCase().includes('ghalan'))
+    );
+    let list = demoStore.getWallets();
+    if (!isRealAdmin) {
+      list = list.filter(
+        (w) =>
+          w &&
+          !w.name.toLowerCase().includes('admin') &&
+          !w.id.toLowerCase().includes('admin') &&
+          (!w.user_id || (!w.user_id.toLowerCase().includes('adm') && (!user || w.user_id === user.id)))
+      );
+      if (list.length === 0) {
+        list = [{
+          id: `wal_${user?.id || 'main'}_clean`,
+          user_id: user?.id,
+          name: 'Dompet Utama',
+          type: 'cash',
+          balance: 0,
+          is_default: true,
+          color: '#10B981',
+          icon: 'banknote',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }];
+      }
+    }
+    let defaultFound = false;
+    list = list.map((w) => {
+      if (w.is_default && !defaultFound) {
+        defaultFound = true;
+        return { ...w, is_default: true };
+      }
+      return { ...w, is_default: false };
+    });
+    if (!defaultFound && list.length > 0) {
+      list[0].is_default = true;
+    }
+    return list;
+  };
+
+  const [wallets, setWallets] = useState<any[]>(getCleanWallets());
   const [isTransferOpen, setIsTransferOpen] = useState(false);
   const [isAddWalletOpen, setIsAddWalletOpen] = useState(false);
   const [isTopUpOpen, setIsTopUpOpen] = useState(false);
@@ -44,22 +89,12 @@ export default function WalletsPage() {
   useEffect(() => {
     // Hydrate store on mount
     demoStore.initFromClientStorage(true);
+
     const refreshWallets = () => {
-      const user = demoStore.getCurrentUser();
-      let freshWallets = demoStore.getWallets();
-      if (user && user.role !== 'admin') {
-        freshWallets = freshWallets.filter(
-          (w) =>
-            w &&
-            !w.name.toLowerCase().includes('(admin)') &&
-            !w.name.toLowerCase().includes('admin') &&
-            !w.id.toLowerCase().includes('admin') &&
-            (!w.user_id || w.user_id === user.id)
-        );
-      }
-      setWallets([...freshWallets]);
-      if (freshWallets.length > 0 && !topUpWalletId) {
-        setTopUpWalletId(demoStore.getDefaultWallet()?.id || freshWallets[0].id);
+      const cleanList = getCleanWallets();
+      setWallets([...cleanList]);
+      if (cleanList.length > 0) {
+        setTopUpWalletId((prev) => (cleanList.some((w) => w.id === prev) ? prev : (demoStore.getDefaultWallet()?.id || cleanList[0].id)));
       }
     };
 
@@ -90,7 +125,7 @@ export default function WalletsPage() {
       window.removeEventListener('tatadana_store_updated', handleCustomWalletUpdate);
       window.removeEventListener('storage', handleStorage);
     };
-  }, [topUpWalletId]);
+  }, []);
 
   const handleOpenTopUp = (walletId?: string) => {
     const freshWallets = demoStore.getWallets();
@@ -199,7 +234,7 @@ export default function WalletsPage() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-[#0D0F12]">
+    <div className="flex min-h-screen bg-black">
       <Sidebar />
 
       <main className="flex-1 md:ml-64 ml-0 min-w-0">
@@ -213,90 +248,106 @@ export default function WalletsPage() {
         <div className="p-4 sm:p-8 space-y-6">
           {/* Notification Toast Banner */}
           {notification && (
-            <div className="bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-400/40 text-slate-100 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5 animate-fadeIn">
-              <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+            <div className="bg-[#14120C] border border-amber-500/40 text-amber-200 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5 animate-fadeIn">
+              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
               <span className="text-xs font-semibold">{notification}</span>
             </div>
           )}
 
           {/* Top Banner */}
-          <div className="bg-gradient-to-r from-[#181C24] via-[#1A202C] to-[#14171D] p-4 sm:p-6 rounded-2xl border border-slate-700/60 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-gradient-to-r from-[#000000] via-[#0A0A0A] to-[#0D0F12] p-4 sm:p-6 rounded-2xl border border-amber-500/30 shadow-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
-                <WalletIcon className="w-5 h-5 text-slate-300" />
+                <WalletIcon className="w-5 h-5 text-amber-400" />
                 <h3 className="text-base font-bold text-white tracking-tight">Total Saldo di Semua Dompet</h3>
               </div>
               <p className="text-xl sm:text-2xl font-extrabold font-mono text-white mt-1.5 sm:mt-2 break-words">
                 Rp {totalBalance.toLocaleString('id-ID')}
               </p>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-300 mt-1">
                 {wallets.length} dompet aktif terdaftar
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <Button
-                variant="emerald"
+                variant="gold"
                 size="md"
                 onClick={() => handleOpenTopUp()}
-                icon={<Plus className="w-4 h-4 text-white" />}
-                className="text-xs sm:text-sm py-2 px-3 sm:px-4"
+                icon={<Plus className="w-4 h-4 text-black font-extrabold" />}
+                className="text-xs sm:text-sm py-2 px-3 sm:px-4 text-black font-extrabold"
               >
-                <span className="hidden sm:inline">Top Up / Tambah Saldo</span>
-                <span className="sm:hidden">Top Up</span>
+                <span className="hidden sm:inline text-black font-extrabold">Top Up / Tambah Saldo</span>
+                <span className="sm:hidden text-black font-extrabold">Top Up</span>
               </Button>
               <Button
-                variant="secondary"
+                variant="gold"
                 size="md"
                 onClick={() => setIsTransferOpen(true)}
-                icon={<ArrowRightLeft className="w-4 h-4 text-slate-300" />}
-                className="text-xs sm:text-sm py-2 px-3 sm:px-4"
+                icon={<ArrowRightLeft className="w-4 h-4 text-black font-extrabold" />}
+                className="text-xs sm:text-sm py-2 px-3 sm:px-4 text-black font-extrabold"
               >
-                <span className="hidden sm:inline">Transfer Antar Dompet</span>
-                <span className="sm:hidden">Transfer</span>
+                <span className="hidden sm:inline text-black font-extrabold">Transfer Antar Dompet</span>
+                <span className="sm:hidden text-black font-extrabold">Transfer</span>
               </Button>
               <Button
-                variant="secondary"
+                variant="gold"
                 size="md"
                 onClick={() => setIsAddWalletOpen(true)}
-                icon={<Plus className="w-4 h-4" />}
-                className="text-xs sm:text-sm py-2 px-3 sm:px-4"
+                icon={<Plus className="w-4 h-4 text-black font-extrabold" />}
+                className="text-xs sm:text-sm py-2 px-3 sm:px-4 text-black font-extrabold"
               >
-                <span className="hidden sm:inline">Tambah Dompet Baru</span>
-                <span className="sm:hidden">Tambah Dompet</span>
+                <span className="hidden sm:inline text-black font-extrabold">Tambah Dompet Baru</span>
+                <span className="sm:hidden text-black font-extrabold">Tambah Dompet</span>
               </Button>
             </div>
           </div>
 
           {/* Wallets Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {wallets.map((w) => (
+            {wallets
+              .filter((w) => {
+                const user = demoStore.getCurrentUser();
+                const isRealAdmin = Boolean(
+                  user &&
+                  user.role === 'admin' &&
+                  (user.email?.toLowerCase() === 'admin@tatadana.id' || user.full_name?.toLowerCase().includes('ghalan'))
+                );
+                if (isRealAdmin) return true;
+                const nameLower = (w.name || '').toLowerCase();
+                const idLower = (w.id || '').toLowerCase();
+                if (nameLower.includes('admin') || idLower.includes('admin')) return false;
+                if (w.user_id && w.user_id.toLowerCase().includes('adm')) return false;
+                if (user && w.user_id && w.user_id !== user.id) return false;
+                return true;
+              })
+              .map((w) => (
               <Card
                 key={w.id}
                 className={`p-6 relative overflow-hidden transition-all flex flex-col justify-between ${
                   w.is_default
-                    ? 'border-slate-400/70 ring-1 ring-slate-400/40 bg-gradient-to-b from-[#1E2430] to-[#14171D] shadow-lg shadow-slate-900/50'
-                    : 'border-[#262C38] hover:border-slate-600/60 bg-[#14171D]'
+                    ? 'border-amber-400/90 ring-1 ring-amber-400/50 bg-gradient-to-b from-[#0D0F12] via-[#0A0A0A] to-[#000000] shadow-xl shadow-amber-500/15'
+                    : 'border-[#1F2430] hover:border-amber-500/40 bg-[#0A0A0A]'
                 }`}
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
-                    <div className="p-3 rounded-2xl bg-[#181C24] border border-[#2D3545] shadow-sm">
+                    <div className="p-3 rounded-2xl bg-[#14171E] border border-amber-500/30 shadow-sm">
                       {getWalletIcon(w.type)}
                     </div>
                     
                     <div className="flex items-center gap-1.5">
                       {w.is_default ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-gradient-to-r from-slate-200 to-slate-300 text-slate-900 shadow-sm">
-                          <Star className="w-3 h-3 fill-current text-amber-600" /> Utama / Default
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-extrabold bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black shadow-sm">
+                          <Star className="w-3 h-3 fill-current text-black" /> Utama / Default
                         </span>
                       ) : (
                         <button
                           onClick={() => handleSetDefault(w.id, w.name)}
-                          className="px-2.5 py-1 text-xs font-semibold text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-700/90 rounded-lg border border-slate-600 hover:border-slate-400 transition-all flex items-center gap-1 shadow-sm"
+                          className="px-2.5 py-1 text-xs font-extrabold text-black hover:text-black bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 rounded-lg border border-amber-300 transition-all flex items-center gap-1 shadow-sm active:scale-[0.98]"
                           title="Jadikan dompet ini sebagai dompet utama yang aktif"
                         >
-                          <Star className="w-3 h-3 text-slate-400" /> Jadikan Utama
+                          <Star className="w-3 h-3 text-black fill-current" /> Jadikan Utama
                         </button>
                       )}
 
@@ -314,8 +365,8 @@ export default function WalletsPage() {
 
                   <div className="mt-4">
                     <h4 className="text-base font-bold text-white">{w.name}</h4>
-                    <p className="text-xs text-slate-400 capitalize">{w.type}</p>
-                    <p className="text-xl font-bold font-mono text-white mt-3">
+                    <p className="text-xs text-amber-300 capitalize font-medium">{w.type}</p>
+                    <p className="text-xl font-extrabold font-mono text-white mt-3">
                       Rp {w.balance.toLocaleString('id-ID')}
                     </p>
                   </div>
@@ -325,20 +376,20 @@ export default function WalletsPage() {
                     <button
                       type="button"
                       onClick={() => handleOpenTopUp(w.id)}
-                      className="w-full py-2 px-3 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/35 border border-emerald-400/50 hover:border-emerald-300 text-emerald-300 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-[0.98]"
+                      className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 border border-amber-300 text-black font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-amber-500/20 active:scale-[0.98]"
                       title={`Top Up / Tambah Saldo ke ${w.name}`}
                     >
-                      <Plus className="w-3.5 h-3.5 text-emerald-300" />
-                      <span className="font-bold">Top Up / Tambah Saldo</span>
+                      <Plus className="w-3.5 h-3.5 text-black font-extrabold" />
+                      <span className="font-extrabold text-black">Top Up / Tambah Saldo</span>
                     </button>
                   </div>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#262C38] flex items-center justify-between text-xs text-gray-400">
+                <div className="mt-6 pt-4 border-t border-[#1F2430] flex items-center justify-between text-xs text-slate-300">
                   <span>Status: Aktif</span>
                   {w.is_default && (
-                    <span className="text-slate-300 text-[11px] font-semibold flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full border border-white/20">
-                      <CheckCircle className="w-3 h-3 text-emerald-400" /> Auto Bot Telegram
+                    <span className="text-amber-300 text-[11px] font-semibold flex items-center gap-1 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
+                      <CheckCircle className="w-3 h-3 text-amber-400" /> Auto Bot Telegram
                     </span>
                   )}
                 </div>
@@ -576,7 +627,7 @@ export default function WalletsPage() {
             </Button>
             <Button
               type="submit"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white border-none shadow-md shadow-emerald-600/30"
+              variant="primary"
             >
               Konfirmasi Tambah Saldo
             </Button>

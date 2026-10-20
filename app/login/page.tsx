@@ -45,13 +45,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0F12] flex flex-col md:flex-row">
+    <div className="min-h-screen bg-[#000000] flex flex-col md:flex-row">
       {/* Left Column: Branding Showcase */}
-      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#14171D] via-[#0D0F12] to-[#181C24] p-12 flex-col justify-between border-r border-[#262C38] relative overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#FF6B00]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#0D0F12] via-[#0A0A0A] to-[#000000] p-12 flex-col justify-between border-r border-[#262C38] relative overflow-hidden">
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex items-center gap-2.5 z-10">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF6B00] to-[#FFA370] flex items-center justify-center text-white font-bold shadow-lg shadow-[#FF6B00]/30 text-lg">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold shadow-lg shadow-amber-500/30 text-lg">
             ⚡
           </div>
           <span className="text-xl font-extrabold text-white tracking-tight">TataDana</span>
