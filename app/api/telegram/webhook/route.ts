@@ -45,7 +45,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
-    const botToken = process.env.TELEGRAM_BOT_TOKEN || 'demo-token';
+    const botToken =
+      process.env.TELEGRAM_BOT_TOKEN && !process.env.TELEGRAM_BOT_TOKEN.includes('demo')
+        ? process.env.TELEGRAM_BOT_TOKEN
+        : '8403698657:AAE-MVaYbEsEex1QPyXF1c88Yp48TifyO2I';
 
     if (callbackQueryId) {
       await answerCallbackQuery(botToken, callbackQueryId).catch(() => {});

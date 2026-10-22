@@ -21,7 +21,11 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const tokenParam = searchParams.get('token');
     const urlParam = searchParams.get('url') || searchParams.get('webhookUrl');
-    const botToken = tokenParam || process.env.TELEGRAM_BOT_TOKEN;
+    const botToken =
+      tokenParam ||
+      (process.env.TELEGRAM_BOT_TOKEN && !process.env.TELEGRAM_BOT_TOKEN.includes('demo')
+        ? process.env.TELEGRAM_BOT_TOKEN
+        : '8403698657:AAE-MVaYbEsEex1QPyXF1c88Yp48TifyO2I');
 
     if (!botToken || typeof botToken !== 'string') {
       return NextResponse.json({
@@ -62,7 +66,12 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const botToken = body.botToken || body.token || process.env.TELEGRAM_BOT_TOKEN;
+    const botToken =
+      body.botToken ||
+      body.token ||
+      (process.env.TELEGRAM_BOT_TOKEN && !process.env.TELEGRAM_BOT_TOKEN.includes('demo')
+        ? process.env.TELEGRAM_BOT_TOKEN
+        : '8403698657:AAE-MVaYbEsEex1QPyXF1c88Yp48TifyO2I');
     const urlParam = body.url || body.webhookUrl;
 
     if (!botToken || typeof botToken !== 'string') {
