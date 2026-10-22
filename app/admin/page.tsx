@@ -84,12 +84,12 @@ export default function AdminDashboardPage() {
     // Cross-device network sync: fetch registered users from server API
     const syncServerUsers = async () => {
       try {
-        const res = await fetch('/api/admin/users');
+        const res = await fetch('/api/admin/users?t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           if (data.users && Array.isArray(data.users)) {
             demoStore.syncServerUsers(data.users);
-            setUsers(demoStore.getUsers());
+            setUsers([...demoStore.getUsers()]);
           }
           if (data.adminWhatsApp) {
             setAdminWhatsApp(data.adminWhatsApp);
@@ -258,8 +258,8 @@ export default function AdminDashboardPage() {
     setTimeout(() => setWaSavedSuccess(false), 3000);
   };
 
-  const pendingUsers = users.filter((u) => u.status === 'pending_approval');
-  const approvedUsers = users.filter((u) => u.status === 'approved');
+  const pendingUsers = users.filter((u) => u.role !== 'admin' && (u.status === 'pending_approval' || (!u.is_verified && u.status !== 'rejected')));
+  const approvedUsers = users.filter((u) => u.role !== 'admin' && u.status === 'approved' && u.is_verified);
 
   // If Admin is not yet authenticated, show Admin Login Gate
   if (!isAdminAuth) {

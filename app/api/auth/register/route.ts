@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { registerServerUser } from '@/lib/server/user-store';
+import { registerServerUserAsync } from '@/lib/server/user-store';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,7 +14,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const user = registerServerUser({
+    const user = await registerServerUserAsync({
       fullName: body.fullName.trim(),
       email: body.email.trim(),
       phone: body.phone.trim(),
@@ -19,7 +22,14 @@ export async function POST(req: NextRequest) {
       telegram_username: body.telegram_username ? body.telegram_username.replace(/^@/, '').trim() : undefined,
     });
 
-    return NextResponse.json({ ok: true, user });
+    return NextResponse.json(
+      { ok: true, user },
+      {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate',
+        },
+      }
+    );
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message || 'Gagal mendaftar' }, { status: 500 });
   }

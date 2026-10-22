@@ -47,7 +47,7 @@ export default function RegisterPage() {
 
       // Sync to shared server database network so admin on any device sees this user
       try {
-        await fetch('/api/auth/register', {
+        const netRes = await fetch('/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -58,6 +58,16 @@ export default function RegisterPage() {
             telegram_username: cleanTelegram || undefined,
           }),
         });
+        if (netRes.ok) {
+          const netData = await netRes.json();
+          if (netData.user && netData.user.id) {
+            newUser.id = netData.user.id;
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('tatadana_pending_verify_user_id', netData.user.id);
+            }
+            demoStore.syncServerUsers([netData.user]);
+          }
+        }
       } catch (netErr) {
         console.warn('Network registration sync warning:', netErr);
       }

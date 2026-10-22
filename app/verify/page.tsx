@@ -57,7 +57,7 @@ export default function VerifyPage() {
       // Check server network API status to receive admin approval from another device/browser
       const queryId = user.id;
       if (queryId) {
-        fetch(`/api/auth/status?userId=${encodeURIComponent(queryId)}`)
+        fetch(`/api/auth/status?userId=${encodeURIComponent(queryId)}&t=${Date.now()}`, { cache: 'no-store' })
           .then((r) => r.json())
           .then((data) => {
             if (data.ok && data.user) {

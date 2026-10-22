@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { approveServerUser, rejectServerUser } from '@/lib/server/user-store';
+import { approveServerUserAsync, rejectServerUserAsync } from '@/lib/server/user-store';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,20 +12,26 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === 'reject') {
-      const res = rejectServerUser(userId);
-      return NextResponse.json({ ok: res.success, error: res.error });
+      const res = await rejectServerUserAsync(userId);
+      return NextResponse.json(
+        { ok: res.success, error: res.error },
+        { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } }
+      );
     }
 
-    const res = approveServerUser(userId);
+    const res = await approveServerUserAsync(userId);
     if (!res.success) {
       return NextResponse.json({ ok: false, error: res.error }, { status: 400 });
     }
 
-    return NextResponse.json({
-      ok: true,
-      verification_code: res.verification_code,
-      user: res.user,
-    });
+    return NextResponse.json(
+      {
+        ok: true,
+        verification_code: res.verification_code,
+        user: res.user,
+      },
+      { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } }
+    );
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
