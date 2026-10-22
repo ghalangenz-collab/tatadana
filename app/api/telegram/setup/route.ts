@@ -10,9 +10,6 @@ function resolveProductionWebhookUrl(urlParam?: string | null): string {
   if (envBase && envBase.startsWith('https://') && !envBase.includes('localhost')) {
     return `${envBase.replace(/\/$/, '')}/api/telegram/webhook`;
   }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}/api/telegram/webhook`;
-  }
   return 'https://tatadana-steel.vercel.app/api/telegram/webhook';
 }
 

@@ -33,8 +33,6 @@ export async function POST(req: NextRequest) {
     const baseUrl =
       process.env.WEBHOOK_BASE_URL && !process.env.WEBHOOK_BASE_URL.includes('localhost') && process.env.WEBHOOK_BASE_URL.startsWith('https://')
         ? process.env.WEBHOOK_BASE_URL
-        : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
         : 'https://tatadana-steel.vercel.app';
     const webhookUrl = `${baseUrl.replace(/\/$/, '')}/api/telegram/webhook`;
     await setWebhook(rawToken, webhookUrl).catch((err) => {
