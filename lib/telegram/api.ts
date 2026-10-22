@@ -46,6 +46,28 @@ export async function setWebhook(botToken: string, webhookUrl: string): Promise<
   return data;
 }
 
+export async function getWebhookInfo(botToken: string): Promise<{ ok: boolean; result?: any; description?: string }> {
+  const token = botToken.trim();
+  if (token.startsWith('demo_') || token.includes('demo')) {
+    return {
+      ok: true,
+      result: {
+        url: 'https://tatadana-steel.vercel.app/api/telegram/webhook',
+        has_custom_certificate: false,
+        pending_update_count: 0,
+      },
+    };
+  }
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/getWebhookInfo`);
+    const data = await res.json();
+    return data;
+  } catch (err: any) {
+    return { ok: false, description: err.message };
+  }
+}
+
 export interface TelegramUpdate {
   update_id: number;
   message?: {

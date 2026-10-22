@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     }
 
     const chatId = message.chat?.id;
-    const text = message.text;
+    const text = message.text || message.caption || '';
     const photo = message.photo;
     const voice = message.voice;
     const from = message.from;

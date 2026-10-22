@@ -970,18 +970,41 @@ async function internalHandleTelegramMessage(
     }
   }
 
-  // 3. Photo Receipt Processing
+  // 3. Photo Receipt Processing (Expense receipts deduct balance, Top-Up receipts add balance)
   if (input.photoUrl) {
     try {
-      const scanResult = await parseReceiptPhoto(input.photoUrl, profile.plan);
-      const cat = categories.find((c) => c.name.toLowerCase().includes('belanja')) || categories[0];
+      const scanResult = await parseReceiptPhoto(input.photoUrl, profile.plan, input.text);
+      const isIncome = scanResult.type === 'income' || scanResult.receiptType === 'topup';
+
+      // Wallet resolution
+      const currentWallets = demoStore.getWallets();
+      let chosenWallet = defaultWallet;
+
+      if (scanResult.targetWalletName) {
+        const { wallet } = matchWalletFromText(scanResult.targetWalletName, currentWallets);
+        if (wallet) chosenWallet = wallet;
+      }
+      if (input.text) {
+        const { wallet } = matchWalletFromText(input.text, currentWallets);
+        if (wallet) chosenWallet = wallet;
+      }
+
+      // Category resolution
+      let cat = categories.find((c) => c.name.toLowerCase() === scanResult.categoryName.toLowerCase());
+      if (!cat) {
+        if (isIncome) {
+          cat = categories.find((c) => c.type === 'income' || c.name.toLowerCase().includes('pemasukan')) || categories[0];
+        } else {
+          cat = categories.find((c) => c.name.toLowerCase().includes('belanja') || c.type === 'expense') || categories[0];
+        }
+      }
 
       const { transaction } = demoStore.addTransaction({
-        wallet_id: defaultWallet.id,
+        wallet_id: chosenWallet.id,
         category_id: cat.id,
-        type: 'expense',
+        type: isIncome ? 'income' : 'expense',
         amount: scanResult.total,
-        description: `Struk ${scanResult.merchant}`,
+        description: isIncome ? `Top Up ${scanResult.merchant}` : `Struk ${scanResult.merchant}`,
         source: 'telegram_photo',
         has_receipt: true,
         receipt_url: input.photoUrl,
@@ -990,43 +1013,59 @@ async function internalHandleTelegramMessage(
       });
 
       const { day, dateStr, timeStr } = getWIBDateString();
-      const updatedWallet = demoStore.getWallets().find((w) => w.id === defaultWallet.id)!;
-      const freshBudgets = demoStore.getBudgets();
-      const budget = freshBudgets.find((b) => b.category_id === cat.id);
+      const updatedWallet = demoStore.getWallets().find((w) => w.id === chosenWallet.id)!;
 
-      let reply = `📅 ${day}, ${dateStr} — ${timeStr}\n`;
-      reply += `📸 Pengeluaran Struk Tercatat!\n`;
-      reply += `├ Merchant : 🏪 ${scanResult.merchant}\n`;
-      reply += `├ Total    : Rp${scanResult.total.toLocaleString('id-ID')}\n`;
-      reply += `├ Dompet   : 👛 ${updatedWallet.name}\n`;
-      reply += `├ Rincian  : ${scanResult.items.length} item tersimpan\n`;
-      reply += `└ Saldo    : Rp${updatedWallet.balance.toLocaleString('id-ID')}\n\n`;
+      if (isIncome) {
+        let reply = `📅 ${day}, ${dateStr} — ${timeStr}\n`;
+        reply += `📸 Bukti Top Up / Pemasukan Tercatat!\n`;
+        reply += `├ Sumber    : 📥 ${scanResult.merchant}\n`;
+        reply += `├ Total     : Rp${scanResult.total.toLocaleString('id-ID')}\n`;
+        reply += `├ Dompet    : 👛 ${updatedWallet.name}\n`;
+        reply += `├ Kategori  : 💼 ${cat.name}\n`;
+        reply += `└ Saldo Baru: Rp${updatedWallet.balance.toLocaleString('id-ID')}\n\n`;
+        reply += `💪 Saldo ${updatedWallet.name} kamu berhasil bertambah Rp${scanResult.total.toLocaleString('id-ID')}!`;
+        return asReply(reply);
+      } else {
+        // Expense receipt
+        const freshBudgets = demoStore.getBudgets();
+        const budget = freshBudgets.find((b) => b.category_id === cat.id);
 
-      reply += `*Item Terdeteksi:*\n`;
-      scanResult.items.forEach((item) => {
-        reply += `• ${item.name} (${item.qty}x) — Rp${item.price.toLocaleString('id-ID')}\n`;
-      });
+        let reply = `📅 ${day}, ${dateStr} — ${timeStr}\n`;
+        reply += `📸 Pengeluaran Struk Tercatat!\n`;
+        reply += `├ Merchant  : 🏪 ${scanResult.merchant}\n`;
+        reply += `├ Total     : Rp${scanResult.total.toLocaleString('id-ID')}\n`;
+        reply += `├ Dompet    : 👛 ${updatedWallet.name}\n`;
+        reply += `├ Rincian   : ${scanResult.items.length} item tersimpan\n`;
+        reply += `└ Sisa Saldo: Rp${updatedWallet.balance.toLocaleString('id-ID')}\n\n`;
 
-      if (budget) {
-        const spent = budget.current_spent || 0;
-        const percent = Math.round((spent / budget.monthly_limit) * 100);
-        const remaining = Math.max(0, budget.monthly_limit - spent);
-
-        reply += `\n\n📊 Budget ${cat.name} bulan ini:\n`;
-        reply += `${renderProgressBar(percent)} ${percent}% — sisa Rp${remaining.toLocaleString('id-ID')}\n`;
-        if (percent >= 100) {
-          reply += `🚨 Perhatian! Kamu sudah melebihi batas budget bulan ini!`;
-        } else if (percent >= 80) {
-          reply += `⚠️ Hati-hati, budget kategori ini sudah menipis!`;
+        if (scanResult.items.length > 0) {
+          reply += `*Item Terdeteksi:*\n`;
+          scanResult.items.forEach((item) => {
+            reply += `• ${item.name} (${item.qty}x) — Rp${item.price.toLocaleString('id-ID')}\n`;
+          });
         }
 
-        // Pro AI Financial Advisor automatic trigger
-        if (profile.plan === 'pro' && percent >= 80) {
-          reply += `\n\n` + generateFinancialAdvice(profile, budget, percent, transaction);
+        if (budget) {
+          const spent = budget.current_spent || 0;
+          const percent = Math.round((spent / budget.monthly_limit) * 100);
+          const remaining = Math.max(0, budget.monthly_limit - spent);
+
+          reply += `\n📊 Budget ${cat.name} bulan ini:\n`;
+          reply += `${renderProgressBar(percent)} ${percent}% — sisa Rp${remaining.toLocaleString('id-ID')}\n`;
+          if (percent >= 100) {
+            reply += `🚨 Perhatian! Kamu sudah melebihi batas budget bulan ini!`;
+          } else if (percent >= 80) {
+            reply += `⚠️ Hati-hati, budget kategori ini sudah menipis!`;
+          }
+
+          // Pro AI Financial Advisor automatic trigger
+          if (profile.plan === 'pro' && percent >= 80) {
+            reply += `\n\n` + generateFinancialAdvice(profile, budget, percent, transaction);
+          }
         }
+
+        return asReply(reply);
       }
-
-      return asReply(reply);
     } catch (err: any) {
       return asReply(err.message || 'Gagal memproses foto struk. Pastikan foto jelas dan terbaca.');
     }
@@ -1035,12 +1074,34 @@ async function internalHandleTelegramMessage(
   // 4. Voice Note Processing
   if (input.voiceUrl) {
     try {
-      const voiceResult = await processVoiceNote(input.voiceUrl);
+      const voiceResult = await processVoiceNote(input.voiceUrl, input.text);
       const parsed = voiceResult.parsed;
-      const matchedCat = categories.find((c) => c.name.toLowerCase() === parsed.categoryName.toLowerCase()) || categories[0];
+      const isIncome = parsed.type === 'income';
+
+      // Wallet resolution
+      const currentWallets = demoStore.getWallets();
+      let chosenWallet = defaultWallet;
+
+      if (voiceResult.targetWalletName) {
+        const { wallet } = matchWalletFromText(voiceResult.targetWalletName, currentWallets);
+        if (wallet) chosenWallet = wallet;
+      }
+      const { wallet: transcriptWallet } = matchWalletFromText(voiceResult.transcript, currentWallets);
+      if (transcriptWallet) chosenWallet = transcriptWallet;
+      if (input.text) {
+        const { wallet: inputWallet } = matchWalletFromText(input.text, currentWallets);
+        if (inputWallet) chosenWallet = inputWallet;
+      }
+
+      const matchedCat =
+        categories.find((c) => c.name.toLowerCase() === parsed.categoryName.toLowerCase()) ||
+        (isIncome
+          ? categories.find((c) => c.type === 'income')
+          : categories.find((c) => c.type === 'expense')) ||
+        categories[0];
 
       const { transaction } = demoStore.addTransaction({
-        wallet_id: defaultWallet.id,
+        wallet_id: chosenWallet.id,
         category_id: matchedCat.id,
         type: parsed.type,
         amount: parsed.amount,
@@ -1050,7 +1111,7 @@ async function internalHandleTelegramMessage(
       });
 
       const { day, dateStr, timeStr } = getWIBDateString();
-      const updatedWallet = demoStore.getWallets().find((w) => w.id === defaultWallet.id)!;
+      const updatedWallet = demoStore.getWallets().find((w) => w.id === chosenWallet.id)!;
       const freshBudgets = demoStore.getBudgets();
       const budget = freshBudgets.find((b) => b.category_id === matchedCat.id);
 
@@ -1058,11 +1119,11 @@ async function internalHandleTelegramMessage(
       reply += `📅 ${day}, ${dateStr} — ${timeStr}\n`;
       if (parsed.type === 'expense') {
         reply += `💸 Pengeluaran tercatat!\n`;
-        reply += `├ Nominal : Rp${parsed.amount.toLocaleString('id-ID')}\n`;
-        reply += `├ Kategori : ${matchedCat.icon} ${matchedCat.name}\n`;
-        reply += `├ Dompet : 👛 ${updatedWallet.name}\n`;
-        reply += `├ Catatan : ${parsed.description}\n`;
-        reply += `└ Saldo : Rp${updatedWallet.balance.toLocaleString('id-ID')}`;
+        reply += `├ Nominal   : Rp${parsed.amount.toLocaleString('id-ID')}\n`;
+        reply += `├ Kategori  : ${matchedCat.icon || '🍜'} ${matchedCat.name}\n`;
+        reply += `├ Dompet    : 👛 ${updatedWallet.name}\n`;
+        reply += `├ Catatan   : ${parsed.description}\n`;
+        reply += `└ Saldo sisa: Rp${updatedWallet.balance.toLocaleString('id-ID')}`;
 
         if (budget) {
           const spent = budget.current_spent || 0;
@@ -1084,11 +1145,12 @@ async function internalHandleTelegramMessage(
         }
       } else {
         reply += `💰 Pemasukan tercatat!\n`;
-        reply += `├ Nominal : Rp${parsed.amount.toLocaleString('id-ID')}\n`;
-        reply += `├ Kategori : 💼 Pemasukan\n`;
-        reply += `├ Dompet : 👛 ${updatedWallet.name}\n`;
-        reply += `└ Saldo baru : Rp${updatedWallet.balance.toLocaleString('id-ID')}\n\n`;
-        reply += `💪 Semangat terus! Jangan lupa sisihkan untuk tabungan ya.`;
+        reply += `├ Nominal   : Rp${parsed.amount.toLocaleString('id-ID')}\n`;
+        reply += `├ Kategori  : 💼 Pemasukan\n`;
+        reply += `├ Dompet    : 👛 ${updatedWallet.name}\n`;
+        reply += `├ Catatan   : ${parsed.description}\n`;
+        reply += `└ Saldo baru: Rp${updatedWallet.balance.toLocaleString('id-ID')}\n\n`;
+        reply += `💪 Semangat terus! Saldo dompet ${updatedWallet.name} bertambah Rp${parsed.amount.toLocaleString('id-ID')}.`;
       }
 
       return asReply(reply);

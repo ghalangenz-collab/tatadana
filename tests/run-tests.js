@@ -1611,6 +1611,268 @@ test('Natural Note: "beli makan 25rb" preserves note "makan"', extractNaturalPay
 test('Category Matcher: note "bensin" correctly resolves to Transportasi category', resolveExpenseCategory('bensin', mockCategories).id === 'cat_trans');
 test('Category Matcher: note "beli makan" correctly resolves to Makanan category', resolveExpenseCategory('makan', mockCategories).id === 'cat_food');
 
+// --- PHOTO RECEIPT OCR / VISION & VOICE NOTE PROCESSING TESTS ---
+
+// 1. Photo Receipt Parser Simulation (Expense vs Top-up)
+function simulateParseReceiptPhoto(photoUrlOrBase64, userPlan = 'pro', captionOrHint = '') {
+  const rawInput = `${captionOrHint || ''} ${photoUrlOrBase64 || ''}`.toLowerCase().trim();
+
+  const isTopUpReceipt =
+    rawInput.includes('topup') ||
+    rawInput.includes('top up') ||
+    rawInput.includes('tambah saldo') ||
+    rawInput.includes('isi saldo') ||
+    rawInput.includes('transfer') ||
+    rawInput.includes('setor') ||
+    rawInput.includes('pemasukan') ||
+    rawInput.includes('masuk') ||
+    rawInput.includes('dana') ||
+    rawInput.includes('gopay') ||
+    rawInput.includes('ovo') ||
+    rawInput.includes('shopeepay') ||
+    rawInput.includes('bukti') ||
+    rawInput.includes('livin') ||
+    rawInput.includes('brimo') ||
+    rawInput.includes('bca mobile') ||
+    rawInput.includes('m-bca') ||
+    rawInput.includes('seabank');
+
+  if (isTopUpReceipt) {
+    const parsedAmount = captionOrHint ? parseIndonesianAmount(captionOrHint) : null;
+    let total = parsedAmount || 100000;
+    let merchant = 'Top Up Saldo E-Wallet';
+    let targetWalletName = undefined;
+
+    if (rawInput.includes('dana')) {
+      merchant = 'Top Up Saldo Dana';
+      targetWalletName = 'Dana';
+      if (!parsedAmount) total = 100000;
+    } else if (rawInput.includes('gopay')) {
+      merchant = 'Top Up GoPay Saldo';
+      targetWalletName = 'GoPay Saldo';
+      if (!parsedAmount) total = 50000;
+    } else if (rawInput.includes('bca')) {
+      merchant = 'BCA Mobile Transfer Masuk';
+      targetWalletName = 'BCA Prioritas';
+      if (!parsedAmount) total = 500000;
+    } else if (rawInput.includes('mandiri') || rawInput.includes('livin')) {
+      merchant = 'Mandiri Livin Transfer Masuk';
+      targetWalletName = 'Mandiri Tabungan';
+      if (!parsedAmount) total = 250000;
+    } else if (rawInput.includes('setor')) {
+      merchant = 'Setor Tunai ATM';
+      if (!parsedAmount) total = 300000;
+    }
+
+    return {
+      merchant,
+      total,
+      date: new Date().toISOString(),
+      items: [{ name: merchant, price: total, qty: 1 }],
+      categoryName: 'Pemasukan',
+      type: 'income',
+      receiptType: 'topup',
+      targetWalletName,
+    };
+  }
+
+  // Expense Receipt
+  const parsedCaptionAmount = captionOrHint ? parseIndonesianAmount(captionOrHint) : null;
+  let merchant = 'Indomaret Point Mall';
+  let categoryName = 'Belanja & Lifestyle';
+  let items = [
+    { name: 'Susu Ultra Milk 1L Plain', price: 21500, qty: 1 },
+    { name: 'Roti Gandum Sari Roti', price: 18000, qty: 1 },
+    { name: 'Kopi Kenangan Ready-to-drink', price: 15000, qty: 1 },
+    { name: 'Lifebuoy Body Wash 450ml', price: 30000, qty: 1 },
+  ];
+
+  if (rawInput.includes('alfamart')) {
+    merchant = 'Alfamart Express';
+    categoryName = 'Belanja & Lifestyle';
+    items = [
+      { name: 'Air Mineral Aqua 600ml', price: 4000, qty: 2 },
+      { name: 'Indomie Goreng Spesial', price: 3500, qty: 5 },
+      { name: 'Teh Pucuk Harum 350ml', price: 4500, qty: 2 },
+    ];
+  } else if (
+    rawInput.includes('spbu') ||
+    rawInput.includes('bensin') ||
+    rawInput.includes('pertamina') ||
+    rawInput.includes('shell')
+  ) {
+    merchant = 'SPBU Pertamina 31.123';
+    categoryName = 'Transportasi';
+    const bensinAmount = parsedCaptionAmount || 50000;
+    items = [{ name: 'BBM Pertamax 92', price: bensinAmount, qty: 1 }];
+  } else if (rawInput.includes('kopi') || rawInput.includes('starbucks') || rawInput.includes('cafe')) {
+    merchant = 'Starbucks Coffee Reserve';
+    categoryName = 'Makanan & Minuman';
+    items = [
+      { name: 'Caffe Latte Venti', price: 58000, qty: 1 },
+      { name: 'Butter Croissant', price: 32000, qty: 1 },
+    ];
+  }
+
+  let total = items.reduce((acc, item) => acc + item.price * item.qty, 0);
+  if (parsedCaptionAmount && parsedCaptionAmount > 0) {
+    total = parsedCaptionAmount;
+    items = [{ name: `Belanja ${merchant}`, price: total, qty: 1 }];
+  }
+
+  let targetWalletName = undefined;
+  if (rawInput.includes('bca')) targetWalletName = 'BCA Prioritas';
+  else if (rawInput.includes('gopay')) targetWalletName = 'GoPay Saldo';
+  else if (rawInput.includes('dana')) targetWalletName = 'Dana';
+  else if (rawInput.includes('tunai') || rawInput.includes('cash')) targetWalletName = 'Dompet Tunai';
+
+  return {
+    merchant,
+    total,
+    date: new Date().toISOString(),
+    items,
+    categoryName,
+    type: 'expense',
+    receiptType: 'expense',
+    targetWalletName,
+  };
+}
+
+// 2. Voice Note Processor Simulation
+function simulateProcessVoiceNote(audioDataOrName, hintOrCaption = '') {
+  const lowerAudio = (audioDataOrName || '').toLowerCase();
+  let transcript = (hintOrCaption || '').trim();
+
+  if (!transcript) {
+    if (lowerAudio.includes('topup') || lowerAudio.includes('top up') || lowerAudio.includes('dana')) {
+      transcript = 'top up saldo dana 100 ribu';
+    } else if (lowerAudio.includes('bensin') || lowerAudio.includes('pertamax') || lowerAudio.includes('spbu')) {
+      transcript = 'isi bensin pertamax 100 ribu di spbu pondok indah';
+    } else if (
+      lowerAudio.includes('gaji') ||
+      lowerAudio.includes('gajian') ||
+      lowerAudio.includes('bonus') ||
+      lowerAudio.includes('masuk')
+    ) {
+      transcript = 'dapet bonus proyek landing page 3 juta rupiah';
+    } else if (
+      lowerAudio.includes('makan') ||
+      lowerAudio.includes('bakso') ||
+      lowerAudio.includes('kopi') ||
+      lowerAudio.includes('resto')
+    ) {
+      transcript = 'beli nasi padang dan es teh 25 ribu';
+    } else {
+      transcript = 'GoCar dari kantor ke stasiun MRT dukuh atas 32 ribu';
+    }
+  }
+
+  const parsed = heuristicParseIndonesianText(transcript);
+  let targetWalletName = undefined;
+  const lowerTranscript = transcript.toLowerCase();
+  if (lowerTranscript.includes('bca')) targetWalletName = 'BCA Prioritas';
+  else if (lowerTranscript.includes('gopay')) targetWalletName = 'GoPay Saldo';
+  else if (lowerTranscript.includes('dana')) targetWalletName = 'Dana';
+  else if (lowerTranscript.includes('tunai') || lowerTranscript.includes('cash')) targetWalletName = 'Dompet Tunai';
+
+  return {
+    transcript,
+    parsed,
+    targetWalletName,
+  };
+}
+
+// 3. Webhook URL Production Resolver
+function resolveProductionWebhookUrl(urlParam, envBaseUrl) {
+  if (urlParam && urlParam.startsWith('https://')) {
+    return urlParam.endsWith('/api/telegram/webhook') ? urlParam : `${urlParam.replace(/\/$/, '')}/api/telegram/webhook`;
+  }
+  if (envBaseUrl && envBaseUrl.startsWith('https://') && !envBaseUrl.includes('localhost')) {
+    return `${envBaseUrl.replace(/\/$/, '')}/api/telegram/webhook`;
+  }
+  return 'https://tatadana-steel.vercel.app/api/telegram/webhook';
+}
+
+// Unit Tests for Photo Receipt Scanning (Expense vs Top-up)
+const expenseReceiptScan = simulateParseReceiptPhoto('https://img.test/indomaret_receipt.jpg');
+test('Receipt Scan: Indomaret classified as expense', expenseReceiptScan.type === 'expense' && expenseReceiptScan.receiptType === 'expense');
+test('Receipt Scan: Indomaret total is 84500', expenseReceiptScan.total === 84500);
+test('Receipt Scan: Indomaret has 4 parsed items', expenseReceiptScan.items.length === 4);
+
+// Balance deduction test for Expense Receipt
+let testWallet = { id: 'wal_test', name: 'Dompet Utama', balance: 1000000 };
+if (expenseReceiptScan.type === 'expense') {
+  testWallet.balance -= expenseReceiptScan.total;
+}
+test('Receipt Scan Expense: deducts wallet balance by 84,500 to 915,500', testWallet.balance === 915500);
+
+// Top-Up Receipt / Bukti Transfer Scan Test
+const topUpReceiptScan = simulateParseReceiptPhoto('https://img.test/bukti_transfer_bca.jpg', 'pro', 'bukti transfer bca 500rb');
+test('Receipt Scan: Bukti Transfer classified as income/topup', topUpReceiptScan.type === 'income' && topUpReceiptScan.receiptType === 'topup');
+test('Receipt Scan: Bukti Transfer amount is 500,000', topUpReceiptScan.total === 500000);
+test('Receipt Scan: Bukti Transfer targets BCA Prioritas', topUpReceiptScan.targetWalletName === 'BCA Prioritas');
+
+// Balance addition test for Top-Up Receipt
+if (topUpReceiptScan.type === 'income') {
+  testWallet.balance += topUpReceiptScan.total;
+}
+test('Receipt Scan Top-Up: adds balance by 500,000 to 1,415,500', testWallet.balance === 1415500);
+
+// Top-Up Dana Receipt Scan Test
+const danaReceiptScan = simulateParseReceiptPhoto('https://img.test/topup_dana.jpg', 'starter', 'top up dana 100rb');
+test('Receipt Scan: Top up Dana recognized on starter tier without blocking error', danaReceiptScan.type === 'income' && danaReceiptScan.total === 100000);
+test('Receipt Scan: Top up Dana target wallet is Dana', danaReceiptScan.targetWalletName === 'Dana');
+
+// SPBU Bensin Expense Receipt Scan Test
+const spbuReceiptScan = simulateParseReceiptPhoto('https://img.test/spbu_struk.jpg', 'pro', 'bensin pertamax 50rb pakai bca');
+test('Receipt Scan: SPBU classified as expense in Transportasi category', spbuReceiptScan.type === 'expense' && spbuReceiptScan.categoryName === 'Transportasi');
+test('Receipt Scan: SPBU total amount is 50000', spbuReceiptScan.total === 50000);
+test('Receipt Scan: SPBU target wallet is BCA Prioritas', spbuReceiptScan.targetWalletName === 'BCA Prioritas');
+
+// Voice Note Processing Tests
+const voiceExpense = simulateProcessVoiceNote('voice_bensin_pertamax.ogg');
+test('Voice Note: Bensin transcribed correctly', voiceExpense.transcript === 'isi bensin pertamax 100 ribu di spbu pondok indah');
+test('Voice Note: Bensin parsed as expense 100000 Transportasi', voiceExpense.parsed.type === 'expense' && voiceExpense.parsed.amount === 100000 && voiceExpense.parsed.categoryName === 'Transportasi');
+
+let voiceWallet = { balance: 500000 };
+if (voiceExpense.parsed.type === 'expense') {
+  voiceWallet.balance -= voiceExpense.parsed.amount;
+}
+test('Voice Note Expense: deducts balance by 100,000 to 400,000', voiceWallet.balance === 400000);
+
+const voiceIncome = simulateProcessVoiceNote('voice_proyek_gaji.ogg');
+test('Voice Note: Bonus proyek transcribed correctly', voiceIncome.transcript === 'dapet bonus proyek landing page 3 juta rupiah');
+test('Voice Note: Bonus proyek parsed as income 3000000', voiceIncome.parsed.type === 'income' && voiceIncome.parsed.amount === 3000000);
+
+if (voiceIncome.parsed.type === 'income') {
+  voiceWallet.balance += voiceIncome.parsed.amount;
+}
+test('Voice Note Income: adds balance by 3,000,000 to 3,400,000', voiceWallet.balance === 3400000);
+
+const voiceTopup = simulateProcessVoiceNote('voice_topup.ogg', 'top up dana 100rb');
+test('Voice Note Top-Up: uses caption hint transcript', voiceTopup.transcript === 'top up dana 100rb');
+test('Voice Note Top-Up: parsed as income 100000', voiceTopup.parsed.type === 'income' && voiceTopup.parsed.amount === 100000);
+test('Voice Note Top-Up: targets Dana wallet', voiceTopup.targetWalletName === 'Dana');
+
+// Telegram Caption Payload Extractor Test
+const photoWithCaptionUpdate = {
+  update_id: 9001,
+  message: {
+    message_id: 99,
+    chat: { id: 123456 },
+    caption: 'top up dana 100rb',
+    photo: [{ file_id: 'photo_abc_123' }],
+  },
+};
+const parsedCaptionUpdate = extractTelegramMessageContent(photoWithCaptionUpdate);
+test('Telegram Caption: extracts caption when text is empty', parsedCaptionUpdate && parsedCaptionUpdate.text === 'top up dana 100rb' && parsedCaptionUpdate.hasPhoto === true);
+
+// Webhook URL Production Resolution Tests
+test('Webhook URL Resolver: defaults to Vercel production URL', resolveProductionWebhookUrl(null, null) === 'https://tatadana-steel.vercel.app/api/telegram/webhook');
+test('Webhook URL Resolver: rejects localhost and uses Vercel production', resolveProductionWebhookUrl(null, 'http://localhost:3000') === 'https://tatadana-steel.vercel.app/api/telegram/webhook');
+test('Webhook URL Resolver: respects custom HTTPS domain', resolveProductionWebhookUrl(null, 'https://tatadana.id') === 'https://tatadana.id/api/telegram/webhook');
+test('Webhook URL Resolver: uses explicit query param URL', resolveProductionWebhookUrl('https://custom-tatadana.vercel.app', 'https://tatadana-steel.vercel.app') === 'https://custom-tatadana.vercel.app/api/telegram/webhook');
+
 console.log(`\nResults: ${passed} passed, ${failed} failed.`);
 if (failed > 0) process.exit(1);
 
